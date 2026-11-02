@@ -36,3 +36,4 @@ class RegisterController extends Controller
         return redirect()->route('applicant.dashboard');
     }
 }
+// gg
