@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 @section('title', 'Program Studi')
 
 @section('content')
@@ -14,25 +14,30 @@
                 <th class="text-left px-4 py-3">Kode</th>
                 <th class="text-left px-4 py-3">Nama</th>
                 <th class="text-left px-4 py-3">Fakultas</th>
+                <th class="text-left px-4 py-3">Jenjang</th>
                 <th class="text-left px-4 py-3">Kuota</th>
-                <th class="text-left px-4 py-3">Status</th>
                 <th class="px-4 py-3"></th>
             </tr>
         </thead>
         <tbody>
             @forelse($programs as $p)
                 <tr class="border-t">
-                    <td class="px-4 py-3 font-mono font-bold">{{ $p->code }}</td>
-                    <td class="px-4 py-3 font-medium">{{ $p->name }}</td>
-                    <td class="px-4 py-3 text-gray-600">{{ $p->faculty }}</td>
-                    <td class="px-4 py-3">{{ $p->quota ?? '∞' }}</td>
+                    <td class="px-4 py-3 font-mono font-bold">{{ $p->kode }}</td>
+                    <td class="px-4 py-3 font-medium">{{ $p->nama }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ $p->fakultas->nama }}</td>
+                    <td class="px-4 py-3 text-gray-600">{{ $p->jenjang }}</td>
+                    <td class="px-4 py-3">{{ $p->kuota ?? '∞' }}</td>
                     <td class="px-4 py-3">
-                        <span class="px-2 py-0.5 rounded text-xs {{ $p->is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500' }}">
-                            {{ $p->is_active ? 'Aktif' : 'Nonaktif' }}
-                        </span>
-                    </td>
-                    <td class="px-4 py-3">
-                        <a href="{{ route('admin.program-studi.edit', $p) }}" class="text-blue-600 hover:underline text-xs">Edit</a>
+                        <div class="flex items-center gap-3">
+                            <a href="{{ route('admin.program-studi.edit', $p) }}" class="text-blue-600 hover:underline text-xs">Edit</a>
+
+                            <form method="POST" action="{{ route('admin.program-studi.destroy', $p) }}"
+                                onsubmit="return confirm('Hapus program studi ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-600 hover:underline text-xs">Hapus</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @empty

@@ -27,7 +27,7 @@ class LoginController extends Controller
                 return redirect()->route('admin.dashboard');
             }
 
-            return redirect()->route('applicant.dashboard');
+            return redirect()->route('pendaftar.dashboard');
         }
 
         return back()->withErrors(['email' => 'Email atau password salah.']);

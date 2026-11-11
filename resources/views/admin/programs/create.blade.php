@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 @section('title', 'Tambah Program Studi')
 
 @section('content')
@@ -9,36 +9,44 @@
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Kode Prodi <span class="text-red-500">*</span></label>
-                <input type="text" name="code" value="{{ old('code') }}"
-                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 @error('code') border-red-500 @enderror"
-                    placeholder="cth: TI" required>
-                @error('code')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+                <input type="text" name="kode" value="{{ old('kode') }}"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 @error('kode') border-red-500 @enderror"
+                    placeholder="cth: TGF" required>
+                @error('kode')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Nama Program Studi <span class="text-red-500">*</span></label>
-                <input type="text" name="name" value="{{ old('name') }}"
+                <input type="text" name="nama" value="{{ old('nama') }}"
                     class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500" required>
+                @error('nama')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Fakultas <span class="text-red-500">*</span></label>
-                <input type="text" name="faculty" value="{{ old('faculty') }}"
+                <select name="fakultas_id" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500" required>
+                    <option value="">-- Pilih Fakultas --</option>
+                    @foreach($fakultas as $f)
+                        <option value="{{ $f->id }}" {{ old('fakultas_id') == $f->id ? 'selected' : '' }}>
+                            {{ $f->nama }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('fakultas_id')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-1">Jenjang <span class="text-red-500">*</span></label>
+                <input type="text" name="jenjang" value="{{ old('jenjang', 'S1') }}"
                     class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500" required>
+                @error('jenjang')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Deskripsi</label>
-                <textarea name="description" rows="3"
-                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">{{ old('description') }}</textarea>
-            </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium mb-1">Kuota (kosongkan jika tak terbatas)</label>
-                <input type="number" name="quota" value="{{ old('quota') }}" min="1"
-                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
+                <textarea name="deskripsi" rows="3"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">{{ old('deskripsi') }}</textarea>
             </div>
             <div class="mb-6">
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" name="is_active" value="1" checked>
-                    <span class="text-sm font-medium">Aktif (bisa dipilih pendaftar)</span>
-                </label>
+                <label class="block text-sm font-medium mb-1">Kuota (kosongkan jika tak terbatas)</label>
+                <input type="number" name="kuota" value="{{ old('kuota') }}" min="1"
+                    class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
             </div>
             <div class="flex gap-3">
                 <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Simpan</button>

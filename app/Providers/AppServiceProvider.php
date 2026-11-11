@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Application;
-use App\Policies\ApplicationPolicy;
+use App\Models\Pembayaran;
+use App\Models\Pendaftaran;
+use App\Policies\PembayaranPolicy;
+use App\Policies\PendaftaranPolicy;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(MidtransGateway::class, MidtransService::class);
     }
 
     /**
@@ -22,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::policy(Application::class, ApplicationPolicy::class);
+        // Tampilan tanggal berbahasa Indonesia (mis. "01 Januari 2026").
+        Carbon::setLocale('id');
+
+        // Kebijakan akses: pendaftar hanya boleh melihat data milik sendiri.
+        Gate::policy(Pendaftaran::class, PendaftaranPolicy::class);
+        Gate::policy(Pembayaran::class, PembayaranPolicy::class);
     }
 }

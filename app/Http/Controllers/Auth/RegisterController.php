@@ -28,12 +28,12 @@ class RegisterController extends Controller
             'name'     => $validated['name'],
             'email'    => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role'     => 'applicant',
+            'role'     => 'pendaftar',
         ]);
 
         Auth::login($user, remember: true);
 
-        return redirect()->route('applicant.dashboard');
+        return redirect()->route('pendaftar.dashboard');
     }
 }
 // gg

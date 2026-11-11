@@ -41,4 +41,48 @@ AKUN DEFAULT
 Admin:
 Email    : admin@pmb.ac.id
 Password : admin123
+---------------------------------------------------------------------
+Pendaftar:
+Email    : pendaftar@pmb.ac.id
+Password : pendaftar123
+=======================================================================
+
+
+=======================================================================
+KONFIGURASI MIDTRANS (PEMBAYARAN SNAP)
+=======================================================================
+Isi kredensial sandbox Midtrans pada file .env:
+
+MIDTRANS_SERVER_KEY=...        # Server Key dari dashboard Midtrans
+MIDTRANS_CLIENT_KEY=...        # Client Key (opsional)
+MIDTRANS_IS_PRODUCTION=false   # true saat sudah produksi
+
+Alur pembayaran:
+1. Admin memverifikasi pendaftar -> tagihan otomatis dibuat (UKT, dan
+   biaya pendaftaran untuk jalur Mandiri).
+2. Pendaftar membayar lewat /pendaftar/pembayaran (Midtrans Snap).
+3. Midtrans memanggil callback POST /midtrans/callback -> status tagihan
+   terupdate menjadi Lunas / Kedaluwarsa / Gagal.
+4. Tombol "Unggah Bukti" tersedia sebagai cara manual jika tidak bisa
+   memakai Midtrans; bukti menunggu peninjauan panitia.
+
+Tanpa MIDTRANS_SERVER_KEY, tombol Snap akan menampilkan pesan bahwa
+konfigurasi Midtrans belum lengkap (uji otomatis tetap jalan memakai
+mock gateway pada tests/Feature/PembayaranMidtransTest.php).
+=======================================================================
+
+
+=======================================================================
+FASE 10 — PENGUMUMAN, KARTU PESERTA, DAN POLISH
+=======================================================================
+Fitur baru:
+- Admin /admin/pengumuman: set hasil kelulusan (lulus/tidak_lulus/belum)
+  per pendaftar atau bulk via checkbox, dengan filter periode/jalur/status.
+- Admin /admin/pembayaran/verifikasi: verifikasi pembayaran manual
+  (paid/failed) dengan bukti transfer.
+- Pendaftar /pendaftar/pengumuman: lihat hasil kelulusan.
+- Pendaftar /pendaftar/kartu: kartu peserta dengan barcode, hanya jika
+  lulus dan semua tagihan lunas. Bisa dicetak (Ctrl+P).
+- Notifikasi di dashboard pendaftar saat hasil kelulusan dikeluarkan.
+- Kebijakan akses (Policy): pendaftar hanya bisa akses data milik sendiri.
 ========================================================================

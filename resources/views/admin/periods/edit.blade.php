@@ -1,47 +1,41 @@
-@extends('layouts.app')
-@section('title', 'Edit Periode')
+@extends('layouts.admin')
+@section('title', 'Edit Periode PMB')
 
 @section('content')
 <div class="max-w-lg mx-auto">
-    <h1 class="text-2xl font-bold mb-6">Edit Periode</h1>
+    <h1 class="text-2xl font-bold mb-6">Edit Periode PMB</h1>
     <div class="bg-white shadow rounded-xl p-6">
         <form method="POST" action="{{ route('admin.periode.update', $periode) }}">
             @csrf @method('PUT')
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Nama Periode</label>
-                <input type="text" name="name" value="{{ old('name', $periode->name) }}"
+                <input type="text" name="nama" value="{{ old('nama', $periode->nama) }}"
                     class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500" required>
+                @error('nama')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
             </div>
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Tahun Akademik</label>
-                <input type="text" name="academic_year" value="{{ old('academic_year', $periode->academic_year) }}"
+                <input type="text" name="tahun_akademik" value="{{ old('tahun_akademik', $periode->tahun_akademik) }}"
                     class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500" required>
+                @error('tahun_akademik')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
             </div>
             <div class="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                    <label class="block text-sm font-medium mb-1">Tanggal Buka</label>
-                    <input type="datetime-local" name="starts_at"
-                        value="{{ old('starts_at', $periode->starts_at->format('Y-m-d\TH:i')) }}"
+                    <label class="block text-sm font-medium mb-1">Tanggal Mulai</label>
+                    <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai', $periode->tanggal_mulai->format('Y-m-d')) }}"
                         class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium mb-1">Tanggal Tutup</label>
-                    <input type="datetime-local" name="ends_at"
-                        value="{{ old('ends_at', $periode->ends_at->format('Y-m-d\TH:i')) }}"
+                    <label class="block text-sm font-medium mb-1">Tanggal Selesai</label>
+                    <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai', $periode->tanggal_selesai->format('Y-m-d')) }}"
                         class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500" required>
                 </div>
             </div>
-            <div class="mb-4">
-                <label class="block text-sm font-medium mb-1">Biaya (Rp)</label>
-                <input type="number" name="registration_fee" value="{{ old('registration_fee', $periode->registration_fee) }}"
-                    min="0" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
-            </div>
             <div class="mb-6">
-                <label class="block text-sm font-medium mb-1">Status</label>
-                <select name="status" class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500">
-                    <option value="closed" {{ $periode->status === 'closed' ? 'selected' : '' }}>Tutup</option>
-                    <option value="open" {{ $periode->status === 'open' ? 'selected' : '' }}>Buka</option>
-                </select>
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" name="is_active" value="1" {{ old('is_active', $periode->is_active) ? 'checked' : '' }}>
+                    <span class="text-sm font-medium">Aktif</span>
+                </label>
             </div>
             <div class="flex gap-3">
                 <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700">Update</button>

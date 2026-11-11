@@ -13,7 +13,13 @@ return Application::configure(basePath: dirname(__DIR__))
     
     ->withMiddleware(function (Middleware $middleware) {
     $middleware->alias([
-        'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
+        'admin'    => \App\Http\Middleware\EnsureUserIsAdmin::class,
+        'pendaftar' => \App\Http\Middleware\EnsureUserIsPendaftar::class,
+    ]);
+
+    // Notifikasi Midtrans dipanggil dari server Midtrans tanpa token CSRF.
+    $middleware->validateCsrfTokens(except: [
+        'midtrans/callback',
     ]);
 })
     ->withExceptions(function (Exceptions $exceptions): void {
