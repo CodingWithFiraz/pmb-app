@@ -24,12 +24,14 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             if (Auth::user()->isAdmin()) {
-                return redirect()->route('admin.dashboard');
+                return redirect()->intended(route('admin.dashboard'));
             }
 
-            return redirect()->route('pendaftar.dashboard');
+            return redirect()->intended(route('pendaftar.dashboard'));
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah.']);
+        return back()
+            ->onlyInput('email')
+            ->withErrors(['email' => 'Email atau password salah.']);
     }
 }

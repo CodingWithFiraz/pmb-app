@@ -63,12 +63,20 @@ class ProfilController extends Controller
         $user = $request->user();
         $profile = $user->profile()->first();
 
+        $golongan = GolonganUkt::orderBy('kode')->get();
+
         return view('pendaftar.profil.step', [
-            'step'      => $step,
-            'profile'   => $profile,
-            'steps'     => self::STEPS,
-            'completed' => $this->completedSteps($profile),
-            'golongan'  => GolonganUkt::orderBy('kode')->get(),
+            'step'       => $step,
+            'profile'    => $profile,
+            'steps'      => self::STEPS,
+            'completed'  => $this->completedSteps($profile),
+            'golongan'   => $golongan,
+            'rentangUkt' => config('ukt.penghasilan'),
+            'golonganJs' => $golongan->map(fn (GolonganUkt $g): array => [
+                'kode'      => $g->kode,
+                'nama'      => $g->nama,
+                'deskripsi' => $g->deskripsi,
+            ])->values(),
         ]);
     }
 
@@ -86,10 +94,26 @@ class ProfilController extends Controller
             $this->attributes()
         );
 
-        PendaftarProfile::updateOrCreate(
+        if ($step === 4) {
+            unset($validated['golongan_id']);
+            $validated['golongan_id'] = GolonganUkt::dariPenghasilan(
+                (int) $validated['penghasilan_ortu']
+            )->id;
+        }
+
+        $profile = PendaftarProfile::updateOrCreate(
             ['user_id' => $user->id],
             $validated
         );
+
+        if ($step === 4) {
+            $user->pendaftaran()
+                ->get()
+                ->filter(fn ($pendaftaran) => ! $pendaftaran->pilihanTerkunci())
+                ->each(fn ($pendaftaran) => $pendaftaran->update([
+                    'golongan_id' => $profile->golongan_id,
+                ]));
+        }
 
         if ($step < count(self::STEPS)) {
             return redirect()
@@ -168,7 +192,6 @@ class ProfilController extends Controller
                 'nama_ortu'        => ['required', 'string', 'max:255'],
                 'pekerjaan_ortu'   => ['required', 'string', 'max:255'],
                 'penghasilan_ortu' => ['required', 'integer', 'min:0'],
-                'golongan_id'      => ['required', 'exists:golongan_ukt,id'],
             ],
         };
     }

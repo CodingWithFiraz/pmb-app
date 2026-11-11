@@ -16,6 +16,36 @@ class GolonganUkt extends Model
         'kode', 'nama', 'deskripsi',
     ];
 
+    /**
+     * Kode golongan UKT berdasarkan penghasilan orang tua per bulan.
+     */
+    public static function kodeDariPenghasilan(int $penghasilan): string
+    {
+        foreach (config('ukt.penghasilan', []) as $rentang) {
+            $min = (int) $rentang['min'];
+            $max = $rentang['max'];
+
+            if ($penghasilan < $min) {
+                continue;
+            }
+
+            if ($max !== null && $penghasilan > (int) $max) {
+                continue;
+            }
+
+            return (string) $rentang['kode'];
+        }
+
+        return 'V';
+    }
+
+    public static function dariPenghasilan(int $penghasilan): self
+    {
+        return static::query()
+            ->where('kode', static::kodeDariPenghasilan($penghasilan))
+            ->firstOrFail();
+    }
+
     public function tarifUkt(): HasMany
     {
         return $this->hasMany(TarifUkt::class, 'golongan_id');

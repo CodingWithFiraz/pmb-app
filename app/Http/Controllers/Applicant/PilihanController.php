@@ -49,15 +49,18 @@ class PilihanController extends Controller
         $terkunci = $pendaftaran?->pilihanTerkunci() ?? false;
 
         $selected = [
-            'jalur_id'   => (int) old('jalur_id', $pendaftaran?->jalur_id ?? 0),
-            'prodi_1_id' => (int) old('prodi_1_id', $pendaftaran?->prodi_1_id ?? 0),
-            'prodi_2_id' => (int) old('prodi_2_id', $pendaftaran?->prodi_2_id ?? 0),
-            'golongan_id' => (int) old('golongan_id', $pendaftaran?->golongan_id ?? $profile->golongan_id),
+            'jalur_id'    => (int) old('jalur_id', $pendaftaran?->jalur_id ?? 0),
+            'prodi_1_id'  => (int) old('prodi_1_id', $pendaftaran?->prodi_1_id ?? 0),
+            'prodi_2_id'  => (int) old('prodi_2_id', $pendaftaran?->prodi_2_id ?? 0),
+            'golongan_id' => (int) $profile->golongan_id,
         ];
+
+        $profile->loadMissing('golongan');
 
         return view('pendaftar.pilihan', [
             'periode'    => $periode,
             'pendaftaran' => $pendaftaran,
+            'profile'    => $profile,
             'terkunci'   => $terkunci,
             'selected'   => $selected,
             'jalur'      => JalurMasuk::orderBy('urutan')->get(),
@@ -95,20 +98,18 @@ class PilihanController extends Controller
 
         $validated = $request->validate(
             [
-                'jalur_id'    => ['required', 'exists:jalur_masuk,id'],
-                'prodi_1_id'  => ['required', 'exists:prodi,id'],
-                'prodi_2_id'  => ['nullable', 'exists:prodi,id'],
-                'golongan_id' => ['required', 'exists:golongan_ukt,id'],
+                'jalur_id'   => ['required', 'exists:jalur_masuk,id'],
+                'prodi_1_id' => ['required', 'exists:prodi,id'],
+                'prodi_2_id' => ['nullable', 'exists:prodi,id'],
             ],
             [
                 'required' => 'Kolom :attribute wajib diisi.',
                 'exists'   => 'Pilihan :attribute tidak valid.',
             ],
             [
-                'jalur_id'    => 'jalur masuk',
-                'prodi_1_id'  => 'program studi pilihan pertama',
-                'prodi_2_id'  => 'program studi pilihan kedua',
-                'golongan_id' => 'golongan UKT',
+                'jalur_id'   => 'jalur masuk',
+                'prodi_1_id' => 'program studi pilihan pertama',
+                'prodi_2_id' => 'program studi pilihan kedua',
             ]
         );
 
@@ -131,7 +132,7 @@ class PilihanController extends Controller
             'jalur_id'    => $validated['jalur_id'],
             'prodi_1_id'  => $validated['prodi_1_id'],
             'prodi_2_id'  => $validated['prodi_2_id'] ?? null,
-            'golongan_id' => $validated['golongan_id'],
+            'golongan_id' => $profile->golongan_id,
         ]);
 
         if (! $pendaftaran->exists) {
@@ -140,9 +141,6 @@ class PilihanController extends Controller
         }
 
         $pendaftaran->save();
-
-        // Golongan terakhir yang dipilih disinkronkan ke profil pendaftar.
-        $profile->update(['golongan_id' => $validated['golongan_id']]);
 
         return redirect()
             ->route('pendaftar.pilihan')

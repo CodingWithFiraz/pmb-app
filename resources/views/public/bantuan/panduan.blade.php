@@ -19,8 +19,8 @@
                 'isi'   => 'Setelah masuk ke dashboard, lengkapi data pribadi dan data pendidikan Anda, seperti NIK, NISN, tempat dan tanggal lahir, alamat lengkap, asal sekolah, serta data orang tua dan penghasilan orang tua. Data ini menentukan golongan UKT Anda.',
             ],
             [
-                'judul' => 'Memilih Jalur Masuk, Program Studi, dan Golongan UKT',
-                'isi'   => 'Pilih jalur masuk yang sesuai dengan prestasi dan kemampuan Anda, kemudian tentukan program studi pilihan utama dan pilihan kedua. Pastikan Anda memilih golongan UKT yang benar sesuai penghasilan orang tua/wali.',
+                'judul' => 'Memilih Jalur Masuk dan Program Studi',
+                'isi'   => 'Pilih jalur masuk yang sesuai dengan prestasi dan kemampuan Anda, kemudian tentukan program studi pilihan utama dan pilihan kedua. Golongan UKT ditetapkan otomatis berdasarkan penghasilan orang tua/wali.',
             ],
             [
                 'judul' => 'Mengunggah Dokumen Persyaratan',

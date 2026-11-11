@@ -194,7 +194,7 @@
             @foreach([
                 ['judul' => 'Daftar Akun', 'isi' => 'Buat akun pendaftar menggunakan email aktif dan password yang aman.'],
                 ['judul' => 'Lengkapi Data Diri', 'isi' => 'Isi data pribadi, data pendidikan, serta data orang tua atau wali.'],
-                ['judul' => 'Pilih Jalur, Prodi & UKT', 'isi' => 'Tentukan jalur masuk, program studi pilihan, dan golongan UKT.'],
+                ['judul' => 'Pilih Jalur & Prodi', 'isi' => 'Tentukan jalur masuk dan program studi. Golongan UKT dihitung otomatis dari penghasilan orang tua.'],
                 ['judul' => 'Unggah Dokumen', 'isi' => 'Lengkapi dokumen persyaratan sesuai jalur masuk yang dipilih.'],
                 ['judul' => 'Verifikasi & Pembayaran', 'isi' => 'Panitia memverifikasi berkas. Jalur Mandiri melakukan pembayaran biaya pendaftaran.'],
                 ['judul' => 'Pengumuman Kelulusan', 'isi' => 'Pantau hasil seleksi melalui dashboard dan email yang terdaftar.'],

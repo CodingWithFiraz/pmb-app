@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     public function isPendaftar(): bool
     {
-        return $this->role === 'pendaftar';
+        return in_array($this->role, ['pendaftar', 'applicant'], true);
     }
 
     public function profile(): HasOne

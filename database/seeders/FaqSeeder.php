@@ -18,7 +18,7 @@ class FaqSeeder extends Seeder
             ],
             [
                 'pertanyaan' => 'Bagaimana cara menentukan golongan UKT saya?',
-                'jawaban'    => 'Golongan UKT ditentukan berdasarkan penghasilan orang tua/wali yang sah dan dapat diverifikasi. Penghasilan lebih dari Rp5.000.000 per bulan termasuk Golongan I, sedangkan penghasilan paling rendah termasuk Golongan V.',
+                'jawaban'    => 'Golongan UKT ditetapkan otomatis dari penghasilan orang tua/wali per bulan: Golongan I untuk penghasilan sampai Rp2.999.999, Golongan II untuk Rp3.000.000–Rp4.999.999, Golongan III untuk Rp5.000.000–Rp8.999.999, dan Golongan V untuk penghasilan Rp9.000.000 atau lebih. Pendaftar tidak dapat memilih golongan secara manual.',
                 'kategori'   => 'Biaya',
                 'urutan'     => 2,
             ],

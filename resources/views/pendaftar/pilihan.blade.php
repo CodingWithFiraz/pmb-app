@@ -101,25 +101,21 @@
                     @enderror
                 </div>
 
-                {{-- Golongan UKT --}}
+                {{-- Golongan UKT (otomatis dari penghasilan, tidak bisa diubah di sini) --}}
                 <div>
-                    <label for="golongan_id" class="block text-sm font-medium text-gray-700">
-                        Golongan UKT <span class="text-red-500">*</span>
-                    </label>
-                    <select name="golongan_id" id="golongan_id"
-                        class="mt-1 block w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
-                        @foreach($golongan as $g)
-                            <option value="{{ $g->id }}" @selected($selected['golongan_id'] === $g->id)>
-                                {{ $g->nama }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <span class="block text-sm font-medium text-gray-700">Golongan UKT</span>
+                    <input type="hidden" id="golongan_id" value="{{ $selected['golongan_id'] }}">
+                    <div class="mt-1 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
+                        <p class="text-sm font-semibold text-gray-800">{{ $profile->golongan?->nama ?? '-' }}</p>
+                        @if($profile->golongan?->deskripsi)
+                            <p class="mt-0.5 text-xs text-gray-500">{{ $profile->golongan->deskripsi }}</p>
+                        @endif
+                    </div>
                     <p class="mt-1 text-xs text-gray-500">
-                        Golongan awal berasal dari profil. Perubahan di sini akan memperbarui data profil.
+                        Ditetapkan otomatis dari penghasilan orang tua. Ubah penghasilan di
+                        <a href="{{ route('pendaftar.profil.step', 4) }}" class="text-blue-600 hover:underline">data orang tua</a>
+                        jika perlu.
                     </p>
-                    @error('golongan_id')
-                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
                 </div>
             </fieldset>
 

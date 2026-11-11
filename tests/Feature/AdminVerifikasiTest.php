@@ -354,6 +354,24 @@ class AdminVerifikasiTest extends TestCase
         ]);
     }
 
+    public function test_verifikasi_bisa_dilakukan_saat_semua_berkas_opsional_valid(): void
+    {
+        // Buat pendaftaran tanpa berkas wajib (hanya piagam prestasi yang opsional)
+        DokumenMaster::query()->update(['is_wajib' => false]);
+
+        $pendaftaran = $this->buatPendaftaran('SNBP', 'menunggu_verifikasi', ['KTP']);
+
+        $response = $this->actingAs($this->admin)->get(route('admin.pendaftaran.show', $pendaftaran));
+        $response->assertOk();
+        $response->assertSee('Semua berkas persyaratan yang diunggah sudah berstatus');
+
+        $this->actingAs($this->admin)
+            ->post(route('admin.pendaftaran.verifikasi', $pendaftaran))
+            ->assertSessionHas('success');
+
+        $this->assertSame('terverifikasi', $pendaftaran->fresh()->status);
+    }
+
     /**
      * Buat record dokumen pendaftar beserta berkasnya.
      */

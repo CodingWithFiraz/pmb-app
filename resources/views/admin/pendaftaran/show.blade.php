@@ -224,23 +224,41 @@
             </p>
         @else
             @if($siapVerifikasi)
-                <p class="text-sm text-gray-600 mb-3">Semua dokumen wajib sudah valid. Pendaftaran dapat diverifikasi.</p>
+                <p class="text-sm text-gray-600 mb-3">Semua berkas persyaratan yang diunggah sudah berstatus <strong>Valid</strong>. Pendaftaran dapat diverifikasi.</p>
 
                 <form method="POST" action="{{ route('admin.pendaftaran.verifikasi', $pendaftaran) }}">
                     @csrf
                     <button type="submit"
-                        class="rounded-lg bg-green-600 px-5 py-2 text-sm font-semibold text-white hover:bg-green-700">
+                        class="rounded-lg bg-green-600 px-5 py-2 text-sm font-semibold text-white hover:bg-green-700 shadow-sm transition">
                         Verifikasi Pendaftar
                     </button>
                 </form>
             @else
-                <p class="text-sm text-gray-600 mb-2">Tombol verifikasi aktif setelah semua dokumen wajib berstatus Valid.</p>
+                @php
+                    $pendingWajib = $dokumen->filter(fn ($item) => $item['wajib'] && $item['status'] !== 'valid');
+                    $pendingUpload = $dokumen->filter(fn ($item) => ! $item['wajib'] && $item['upload'] !== null && $item['status'] !== 'valid');
+                @endphp
 
-                <ul class="space-y-1 text-sm text-amber-700">
-                    @foreach($dokumen->filter(fn ($item) => $item['wajib'] && $item['status'] !== 'valid') as $item)
-                        <li>- {{ $item['master']->nama }} ({{ $item['status'] === 'belum' ? 'belum diunggah' : $item['status'] }})</li>
-                    @endforeach
-                </ul>
+                <p class="text-sm text-gray-600 mb-2">Tombol verifikasi akan aktif setelah seluruh berkas persyaratan berstatus <strong>Valid</strong>.</p>
+
+                @if($pendingWajib->isNotEmpty() || $pendingUpload->isNotEmpty())
+                    <ul class="space-y-1 text-sm text-amber-700 mb-3">
+                        @foreach($pendingWajib as $item)
+                            <li>- {{ $item['master']->nama }} ({{ $item['status'] === 'belum' ? 'wajib, belum diunggah' : $item['status'] }})</li>
+                        @endforeach
+                        @foreach($pendingUpload as $item)
+                            <li>- {{ $item['master']->nama }} ({{ $item['status'] }})</li>
+                        @endforeach
+                    </ul>
+                @elseif($dokumen->isNotEmpty() && $dokumen->every(fn ($item) => $item['upload'] === null))
+                    <p class="text-sm text-amber-700 mb-3">Pendaftar belum mengunggah berkas persyaratan apapun.</p>
+                @endif
+
+                <button type="button" disabled
+                    class="cursor-not-allowed rounded-lg bg-gray-300 px-5 py-2 text-sm font-semibold text-gray-500 shadow-sm"
+                    title="Berkas belum valid">
+                    Verifikasi Pendaftar
+                </button>
             @endif
 
             <div class="mt-6 border-t border-gray-100 pt-4">

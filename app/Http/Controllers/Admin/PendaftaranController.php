@@ -137,13 +137,17 @@ class PendaftaranController extends Controller
 
         $dokumen = $this->daftarDokumen($pendaftaran);
 
-        $belumValid = $dokumen
-            ->filter(fn (array $item): bool => $item['wajib'] && $item['status'] !== 'valid')
-            ->pluck('master.nama')
-            ->all();
+        if (! $this->siapVerifikasi($dokumen)) {
+            $belumValid = $dokumen
+                ->filter(fn (array $item): bool => ($item['wajib'] || $item['upload'] !== null) && $item['status'] !== 'valid')
+                ->pluck('master.nama')
+                ->all();
 
-        if ($belumValid !== []) {
-            return back()->with('error', 'Dokumen wajib belum valid: '.implode(', ', $belumValid).'.');
+            $pesan = $belumValid !== []
+                ? 'Dokumen belum valid: '.implode(', ', $belumValid).'.'
+                : 'Dokumen persyaratan belum lengkap atau belum valid.';
+
+            return back()->with('error', $pesan);
         }
 
         DB::transaction(function () use ($pendaftaran, $tagihanService) {
@@ -286,12 +290,29 @@ class PendaftaranController extends Controller
      */
     private function siapVerifikasi($dokumen): bool
     {
-        $wajib = $dokumen->filter(fn (array $item): bool => $item['wajib']);
+        // Jika tidak ada persyaratan dokumen sama sekali di jalur ini
+        if ($dokumen->isEmpty()) {
+            return true;
+        }
 
-        if ($wajib->isEmpty()) {
+        $wajib = $dokumen->filter(fn (array $item): bool => $item['wajib']);
+        $uploaded = $dokumen->filter(fn (array $item): bool => $item['upload'] !== null);
+
+        // Jika ada dokumen wajib, semua dokumen wajib harus sudah diunggah dan berstatus valid
+        if ($wajib->isNotEmpty() && ! $wajib->every(fn (array $item): bool => $item['status'] === 'valid')) {
             return false;
         }
 
-        return $wajib->every(fn (array $item): bool => $item['status'] === 'valid');
+        // Semua berkas yang diunggah oleh pendaftar harus berstatus 'valid' (tidak boleh 'menunggu' atau 'ditolak')
+        if ($uploaded->isNotEmpty() && ! $uploaded->every(fn (array $item): bool => $item['status'] === 'valid')) {
+            return false;
+        }
+
+        // Jika tidak ada dokumen wajib, setidaknya harus ada berkas yang diunggah dan berstatus valid
+        if ($wajib->isEmpty() && $uploaded->isEmpty()) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -44,7 +44,8 @@ class PendaftarPilihanTest extends TestCase
         $periode = PeriodePmb::active()->firstOrFail();
         $jalur = JalurMasuk::where('kode', 'SNBT')->firstOrFail();
         $prodi = Prodi::where('kode', 'TGF')->firstOrFail();
-        $golongan = GolonganUkt::where('kode', 'III')->firstOrFail();
+        $golonganProfil = $user->profile->golongan_id;
+        $golonganLain = GolonganUkt::where('kode', 'III')->firstOrFail();
 
         $this->actingAs($user)
             ->post('/pendaftar/pilihan', [
@@ -52,7 +53,7 @@ class PendaftarPilihanTest extends TestCase
                 'prodi_1_id'  => $prodi->id,
                 // Pilihan kedua boleh sama dengan pilihan pertama.
                 'prodi_2_id'  => $prodi->id,
-                'golongan_id' => $golongan->id,
+                'golongan_id' => $golonganLain->id,
             ])
             ->assertRedirect(route('pendaftar.pilihan'));
 
@@ -62,12 +63,11 @@ class PendaftarPilihanTest extends TestCase
             'jalur_id'    => $jalur->id,
             'prodi_1_id'  => $prodi->id,
             'prodi_2_id'  => $prodi->id,
-            'golongan_id' => $golongan->id,
+            'golongan_id' => $golonganProfil,
             'status'      => 'draft',
         ]);
 
-        // Golongan terpilih ikut disinkronkan ke profil.
-        $this->assertSame($golongan->id, $user->fresh()->profile->golongan_id);
+        $this->assertSame($golonganProfil, $user->fresh()->profile->golongan_id);
     }
 
     public function test_prodi_1_wajib_diisi(): void

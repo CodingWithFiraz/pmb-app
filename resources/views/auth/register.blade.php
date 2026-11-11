@@ -26,9 +26,11 @@
 
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Password</label>
-                <input type="password" name="password"
-                    class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                <input type="password" name="password" minlength="8"
+                    class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 @error('password') border-red-500 @enderror"
                     required>
+                @error('password')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+                <p class="text-gray-500 text-xs mt-1">Minimal 8 karakter.</p>
             </div>
 
             <div class="mb-6">

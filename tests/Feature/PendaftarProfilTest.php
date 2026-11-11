@@ -78,20 +78,54 @@ class PendaftarProfilTest extends TestCase
             'tahun_lulus'  => 2024,
         ])->assertRedirect(route('pendaftar.profil.step', 4));
 
-        // Langkah 4: orang tua & golongan UKT.
+        // Langkah 4: orang tua; golongan UKT dihitung dari penghasilan.
         $golongan = GolonganUkt::where('kode', 'II')->firstOrFail();
 
         $this->post(route('pendaftar.profil.step.update', 4), [
             'nama_ortu'        => 'Budi Penguji',
             'pekerjaan_ortu'   => 'Karyawan',
             'penghasilan_ortu' => 4_500_000,
-            'golongan_id'      => $golongan->id,
         ])->assertRedirect(route('pendaftar.pilihan'));
 
         $profile->refresh();
 
         $this->assertSame(100, $profile->completionPercentage());
         $this->assertSame($golongan->id, $profile->golongan_id);
+    }
+
+    public function test_golongan_ukt_dihitung_dari_penghasilan_bukan_pilihan_user(): void
+    {
+        $user = User::factory()->create(['role' => 'pendaftar']);
+        $this->actingAs($user);
+
+        $this->post(route('pendaftar.profil.step.update', 1), [
+            'nik'           => '3171012305980004',
+            'nisn'          => '0123456792',
+            'tempat_lahir'  => 'Depok',
+            'tanggal_lahir' => '2006-04-12',
+            'jenis_kelamin' => 'L',
+        ]);
+        $this->post(route('pendaftar.profil.step.update', 2), [
+            'alamat'   => 'Jl. Uji Golongan',
+            'provinsi' => 'Jawa Barat',
+            'kota'     => 'Depok',
+        ]);
+        $this->post(route('pendaftar.profil.step.update', 3), [
+            'asal_sekolah' => 'SMA Negeri 1 Depok',
+            'tahun_lulus'  => 2024,
+        ]);
+
+        $golongan1 = GolonganUkt::where('kode', 'I')->firstOrFail();
+        $golongan5 = GolonganUkt::where('kode', 'V')->firstOrFail();
+
+        $this->post(route('pendaftar.profil.step.update', 4), [
+            'nama_ortu'        => 'Siti Penguji',
+            'pekerjaan_ortu'   => 'Wiraswasta',
+            'penghasilan_ortu' => 9_000_000,
+            'golongan_id'      => $golongan1->id,
+        ])->assertRedirect(route('pendaftar.pilihan'));
+
+        $this->assertSame($golongan5->id, $user->fresh()->profile->golongan_id);
     }
 
     public function test_langkah_1_mewajibkan_field_dan_format_nik_nisn(): void
@@ -156,6 +190,17 @@ class PendaftarProfilTest extends TestCase
                 ->assertOk()
                 ->assertSee('Langkah '.$step);
         }
+    }
+
+    public function test_langkah_4_tidak_menampilkan_pilihan_manual_golongan(): void
+    {
+        $user = $this->pendaftar();
+
+        $this->actingAs($user)
+            ->get(route('pendaftar.profil.step', 4))
+            ->assertOk()
+            ->assertSee('Ditentukan otomatis dari penghasilan orang tua')
+            ->assertDontSee('name="golongan_id"', false);
     }
 
     public function test_langkah_tidak_dikenal_menghasilkan_404(): void

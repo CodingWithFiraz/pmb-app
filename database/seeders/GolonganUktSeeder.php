@@ -11,29 +11,29 @@ class GolonganUktSeeder extends Seeder
     {
         $golongan = [
             [
-                'kode'       => 'I',
-                'nama'       => 'Golongan I',
-                'deskripsi'  => 'Penghasilan orang tua paling tinggi, tarif UKT paling rendah.',
+                'kode'      => 'I',
+                'nama'      => 'Golongan I',
+                'deskripsi' => 'Penghasilan orang tua ≤ Rp2.999.999 per bulan.',
             ],
             [
-                'kode'       => 'II',
-                'nama'       => 'Golongan II',
-                'deskripsi'  => 'Penghasilan orang tua tinggi, tarif UKT rendah.',
+                'kode'      => 'II',
+                'nama'      => 'Golongan II',
+                'deskripsi' => 'Penghasilan orang tua Rp3.000.000–Rp4.999.999 per bulan.',
             ],
             [
-                'kode'       => 'III',
-                'nama'       => 'Golongan III',
-                'deskripsi'  => 'Penghasilan orang tua menengah, tarif UKT menengah.',
+                'kode'      => 'III',
+                'nama'      => 'Golongan III',
+                'deskripsi' => 'Penghasilan orang tua Rp5.000.000–Rp8.999.999 per bulan.',
             ],
             [
-                'kode'       => 'IV',
-                'nama'       => 'Golongan IV',
-                'deskripsi'  => 'Penghasilan orang tua menengah ke bawah, tarif UKT tinggi.',
+                'kode'      => 'IV',
+                'nama'      => 'Golongan IV',
+                'deskripsi' => 'Tidak ditetapkan otomatis dari penghasilan orang tua.',
             ],
             [
-                'kode'       => 'V',
-                'nama'       => 'Golongan V',
-                'deskripsi'  => 'Penghasilan orang tua terendah, tarif UKT paling tinggi.',
+                'kode'      => 'V',
+                'nama'      => 'Golongan V',
+                'deskripsi' => 'Penghasilan orang tua ≥ Rp9.000.000 per bulan.',
             ],
         ];
 

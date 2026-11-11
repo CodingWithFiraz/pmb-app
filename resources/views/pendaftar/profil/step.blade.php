@@ -53,7 +53,7 @@
                     Isi data sekolah asal dan tahun kelulusan.
                     @break
                 @case(4)
-                    Isi data orang tua/wali dan pilih golongan UKT yang sesuai dengan penghasilan.
+                    Isi data orang tua/wali. Golongan UKT ditentukan otomatis dari penghasilan.
                     @break
             @endswitch
         </p>

@@ -17,6 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
         'pendaftar' => \App\Http\Middleware\EnsureUserIsPendaftar::class,
     ]);
 
+    $middleware->redirectUsersTo(function () {
+        return auth()->user()?->isAdmin()
+            ? route('admin.dashboard')
+            : route('pendaftar.dashboard');
+    });
+
     // Notifikasi Midtrans dipanggil dari server Midtrans tanpa token CSRF.
     $middleware->validateCsrfTokens(except: [
         'midtrans/callback',
