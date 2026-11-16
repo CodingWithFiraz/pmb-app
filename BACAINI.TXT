@@ -1,0 +1,44 @@
+========================================================================
+CARA MENJALANKAN WEBSITE PMB (PENGGUNAAN HARIAN)
+========================================================================
+
+1. Buka Terminal 1 (di dalam folder pmb-app):
+   npm run dev
+
+2. Buka Terminal 2 (di dalam folder pmb-app):
+   php artisan serve --port=8001
+
+3. Buka browser:
+   http://localhost:8001
+
+
+========================================================================
+⚠️ PERINGATAN PENTING TENTANG DATABASE (BACA INI!)
+========================================================================
+
+JANGAN PERNAH menjalankan perintah ini saat membuka aplikasi:
+❌ php artisan migrate:fresh --seed   <-- INI AKAN MENGHAPUS SEMUA DATA!
+
+Perintah `migrate:fresh` berfungsi untuk DROP (MENGHAPUS BERSIH) seluruh 
+tabel database beserta akun pendaftar dan formulir yang sudah tersimpan.
+
+Jika Anda menjalankan `migrate:fresh` setiap hari, maka:
+- Semua akun pendaftar yang sudah dibuat akan terhapus.
+- Semua data formulir dan berkas yang sudah diinput akan hilang.
+- Database kembali bersih seperti saat pertama kali dibuat.
+
+Gunakan perintah database berikut sesuai kebutuhan:
+- Untuk update struktur migrasi baru tanpa menghapus data:
+  php artisan migrate
+
+- HANYA gunakan `migrate:fresh --seed` jika Anda MEMANG SENGAJA ingin
+  mereset total database ke kondisi awal demo/pabrik.
+
+
+========================================================================
+AKUN DEFAULT
+========================================================================
+Admin:
+Email    : admin@pmb.ac.id
+Password : admin123
+========================================================================

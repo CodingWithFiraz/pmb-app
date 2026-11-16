@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Sora:wght@100..800&display=swap');
+@import "tailwindcss";
+/* @plugin "@tailwindcss/forms"; */
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-heading: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    --font-numeric: 'Sora', ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+    /* Centralized Typography Tokens */
+    --font-primary-heading: 'Sora', sans-serif;
+    --font-secondary-body: 'DM Sans', sans-serif;
+
+    /* Centralized Design Tokens (Matching User Specifications) */
+    --color-bg-web: #F2F5FF;
+    --color-text-primary: #000000;
+    --color-text-secondary: #818CA2;
+    --color-hero-heading: #FFFFFF;
+    --color-hero-subtitle: #E4E7FF;
+    
+    /* Icon & Brand Tokens */
+    --color-icon-bg: #F2F5FF;
+    --color-icon-primary: #606ADF;
+    --color-brand-primary: #606ADF;
+    --color-brand-hover: #4F58CC;
+    
+    /* Card Tokens */
+    --color-card-bg: #FFFFFF;
+    --color-card-border: #E5EAFC;
+
+    /* Hero Gradient Palette (Mandatory colors from Image 2) */
+    --hero-g-lavender: #9D80EC;
+    --hero-g-magenta: #EA5FE2;
+    --hero-g-blush: #F7C3CE;
+    --hero-g-lilac: #E6E0EB;
+
+    /* Soft Form Gradient Palette */
+    --soft-g-periwinkle: #CECFFE;
+    --soft-g-lilac: #E3CEFE;
+    --soft-g-ice: #E8EBFF;
+}
+
+/* Organic, Soft Multicolor Gradient for Hero (Image 2 style) */
+.hero-gradient-surface {
+    background-color: var(--hero-g-lavender);
+    background-image:
+        radial-gradient(ellipse 75% 65% at 5% 15%, var(--hero-g-magenta) 0%, transparent 65%),
+        radial-gradient(ellipse 65% 55% at 92% 12%, var(--hero-g-lavender) 0%, transparent 60%),
+        radial-gradient(ellipse 75% 65% at 92% 85%, var(--hero-g-magenta) 0%, transparent 65%),
+        radial-gradient(ellipse 70% 60% at 18% 88%, var(--hero-g-blush) 0%, transparent 65%),
+        radial-gradient(ellipse 65% 55% at 65% 52%, var(--hero-g-lilac) 0%, transparent 60%),
+        linear-gradient(135deg, var(--hero-g-lavender) 0%, #ab8ef5 35%, var(--hero-g-magenta) 70%, var(--hero-g-blush) 100%);
+}
+
+/* Soft Pastel Gradient for Form Pages (Exact colors: #CECFFE, #E3CEFE, #E8EBFF) */
+.bg-soft-gradient {
+    background-color: var(--soft-g-ice) !important;
+    background-image:
+        radial-gradient(circle 900px at 15% 15%, var(--soft-g-periwinkle) 0%, transparent 65%),
+        radial-gradient(circle 900px at 85% 25%, var(--soft-g-lilac) 0%, transparent 65%),
+        radial-gradient(circle 800px at 30% 85%, var(--soft-g-periwinkle) 0%, transparent 60%),
+        radial-gradient(circle 900px at 85% 85%, var(--soft-g-lilac) 0%, transparent 60%),
+        linear-gradient(135deg, var(--soft-g-ice) 0%, var(--soft-g-lilac) 50%, var(--soft-g-periwinkle) 100%) !important;
+    background-attachment: fixed !important;
+}
+
+/* Subtle Square Grid Pattern over Gradient */
+.hero-grid-pattern {
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 44px 44px;
+}
+
+/* Compact Soft Gradient for Dashboard Period Banner (#9D80EC dominant, #EA5FE2 second, #F7C3CE third) */
+.admin-banner-gradient {
+    background-color: var(--hero-g-lavender);
+    background-image:
+        /* 3rd Dominant: Soft blush/light glow in the upper right (#F7C3CE) */
+        radial-gradient(ellipse 65% 75% at 70% 12%, rgba(247, 195, 206, 0.5) 0%, transparent 65%),
+        /* 2nd Dominant: Vibrant magenta glow in the bottom-right (#EA5FE2) */
+        radial-gradient(ellipse 75% 85% at 85% 90%, var(--hero-g-magenta) 0%, rgba(234, 95, 226, 0.55) 45%, transparent 75%),
+        /* 1st Most Dominant: Rich lavender base covering left & center (#9D80EC) */
+        linear-gradient(135deg, var(--hero-g-lavender) 0%, var(--hero-g-lavender) 48%, #b37eed 72%, rgba(234, 95, 226, 0.85) 100%);
+}
+
+/* Compact Subtle Grid Pattern Proportionate to Smaller Banner */
+.banner-grid-pattern-compact {
+    background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+    background-size: 26px 26px;
+}
+
+/* Matte Glass Button (Adapts seamlessly to background colors) */
+.btn-matte-glass {
+    background-color: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #FFFFFF;
+}
+
+.btn-matte-glass:hover {
+    background-color: rgba(255, 255, 255, 0.32);
+    border-color: rgba(255, 255, 255, 0.55);
+}
+
+/* ==========================================================================
+   Global Typography System
+   Primary Typeface: Sora (Headings, Section Titles, Card Titles, Page Titles, Highlighted Numerics)
+   Secondary Typeface: DM Sans (Body, Navigation, Buttons, Form Inputs, Dropdowns, Tables, Metadata)
+   ========================================================================== */
+
+/* Global Body Font & Background */
+body {
+    background-color: var(--color-bg-web);
+    font-family: var(--font-secondary-body);
+}
+
+/* Headings default to Sora */
+h1, h2, h3, h4, h5, h6,
+.font-heading,
+.font-numeric {
+    font-family: var(--font-primary-heading);
+}
+
+/* Body paragraphs, interface text, navigation, buttons, and form controls default to DM Sans */
+p, span, label, input, textarea, select, button,
+table, th, td, tr, thead, tbody, tfoot,
+nav, ul, ol, li, dl, dt, dd,
+a, time, small, blockquote, figure, figcaption {
+    font-family: var(--font-secondary-body);
+}
+
+/* Ensure child elements in headings inherit Sora */
+h1 *, h2 *, h3 *, h4 *, h5 *, h6 *,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+h1 span, h2 span, h3 span, h4 span, h5 span, h6 span,
+h1 strong, h2 strong, h3 strong, h4 strong, h5 strong, h6 strong,
+.font-heading *,
+.font-numeric * {
+    font-family: var(--font-primary-heading);
+}
+
+/* Form controls & buttons strictly honor DM Sans */
+button, input, select, textarea, optgroup, option {
+    font-family: var(--font-secondary-body);
+}
+
+/* Monospace overrides */
+code, kbd, samp, pre, .font-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+/* Global Color Consistency across all pages */
+
+.bg-blue-600 {
+    background-color: var(--color-brand-primary) !important;
+}
+
+.bg-blue-600:hover, .hover\:bg-blue-700:hover {
+    background-color: var(--color-brand-hover) !important;
+}
+
+.bg-blue-700 {
+    background-color: var(--color-brand-hover) !important;
+}
+
+.text-blue-600, .text-blue-700 {
+    color: var(--color-brand-primary) !important;
+}
+
+.border-blue-600 {
+    border-color: var(--color-brand-primary) !important;
+}
+
+.border-blue-200, .border-blue-300 {
+    border-color: #D6DCFC !important;
+}
+
+.bg-blue-50 {
+    background-color: var(--color-icon-bg) !important;
+}
+
+.bg-blue-100 {
+    background-color: #E8ECFF !important;
+}
+
+.focus\:ring-blue-500:focus {
+    --tw-ring-color: var(--color-brand-primary) !important;
+}
