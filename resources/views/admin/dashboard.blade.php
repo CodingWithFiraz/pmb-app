@@ -3,7 +3,21 @@
 
 @section('content')
 {{-- Dashboard Heading --}}
-<h1 class="text-2xl sm:text-3xl font-extrabold text-black mb-6 tracking-tight">Dashboard Admin PMB</h1>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+    <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Dashboard Admin PMB</h1>
+        <p class="text-sm text-[#818CA2] mt-1">Pusat kendali seleksi penerimaan mahasiswa baru dan verifikasi berkas</p>
+    </div>
+    <div class="flex items-center gap-3">
+        <a href="{{ route('admin.applications.index') }}" 
+           class="inline-flex items-center gap-2 bg-white border border-[#DBDCFA] px-4 py-2 rounded-xl text-xs font-semibold text-black hover:bg-[#F2F5FF] transition shadow-xs">
+            <svg class="w-4 h-4 text-[#606ADF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+            </svg>
+            <span>Semua Pendaftar</span>
+        </a>
+    </div>
+</div>
 
 {{-- Periode Aktif Banner with Soft Scaled Gradient & Grid --}}
 @if($activePeriod)
@@ -33,64 +47,179 @@
     </div>
 @endif
 
-{{-- Status Stats Container (White Big Card Matching Reference Image) --}}
-<div class="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5EAFC] shadow-xs mb-8">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
-        {{-- Total --}}
-        <div class="rounded-xl p-5 bg-[#EEF2FF]">
-            <div class="text-sm font-bold text-gray-800">Total</div>
-            <div class="text-3xl sm:text-4xl font-extrabold text-[#4F46E5] mt-1.5 font-numeric">{{ $stats['total'] }}</div>
+{{-- Section 1: Metrics (Redesigned with Watermelon Tallie 2-Tier Visual Hierarchy & Proportions) --}}
+<div class="bg-white rounded-2xl p-6 sm:p-7 border border-[#E5EAFC] shadow-xs mb-8">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-5">
+        <div>
+            <h2 class="text-base font-bold text-black flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[#606ADF]"></span>
+                Ringkasan Metrik Pendaftaran
+            </h2>
+            <p class="text-xs text-[#818CA2] mt-0.5">Statistik dan status terkini seluruh berkas calon mahasiswa baru</p>
+        </div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-[#F2F5FF] text-[#606ADF] border border-[#DBDCFA]">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#16A34A] animate-pulse"></span>
+            Real-Time Data
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3.5">
+        {{-- 1. Total (Purple / Indigo) --}}
+        <div class="flex flex-col justify-between h-36 rounded-xl border border-[#E0E7FF] bg-[#EEF2FF] p-4 transition-all duration-150 hover:shadow-xs hover:-translate-y-0.5">
+            <div class="flex items-start justify-between gap-2">
+                <span class="text-xs sm:text-sm font-semibold tracking-tight text-[#4F46E5]">Total</span>
+                <div class="w-7 h-7 rounded-lg bg-[#4F46E5]/15 text-[#4F46E5] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="text-3xl font-extrabold text-[#4F46E5] leading-none font-numeric tracking-tight">
+                    {{ $stats['total'] }}
+                </div>
+                <div class="text-[11px] font-medium text-[#4F46E5]/80 flex items-center gap-1">
+                    <span>Semua akun pendaftar</span>
+                </div>
+            </div>
         </div>
 
-        {{-- Menunggu --}}
-        <div class="rounded-xl p-5 bg-[#EFF6FF]">
-            <div class="text-sm font-bold text-gray-800">Menunggu</div>
-            <div class="text-3xl sm:text-4xl font-extrabold text-[#2563EB] mt-1.5 font-numeric">{{ $stats['submitted'] }}</div>
+        {{-- 2. Menunggu (Blue) --}}
+        <div class="flex flex-col justify-between h-36 rounded-xl border border-[#DBEAFE] bg-[#EFF6FF] p-4 transition-all duration-150 hover:shadow-xs hover:-translate-y-0.5">
+            <div class="flex items-start justify-between gap-2">
+                <span class="text-xs sm:text-sm font-semibold tracking-tight text-[#2563EB]">Menunggu</span>
+                <div class="w-7 h-7 rounded-lg bg-[#2563EB]/15 text-[#2563EB] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="text-3xl font-extrabold text-[#2563EB] leading-none font-numeric tracking-tight">
+                    {{ $stats['submitted'] }}
+                </div>
+                <div class="text-[11px] font-medium text-[#2563EB]/80 flex items-center gap-1">
+                    <span>Menunggu verifikasi</span>
+                </div>
+            </div>
         </div>
 
-        {{-- Diperiksa --}}
-        <div class="rounded-xl p-5 bg-[#FEFCE8]">
-            <div class="text-sm font-bold text-gray-800">Diperiksa</div>
-            <div class="text-3xl sm:text-4xl font-extrabold text-[#D97706] mt-1.5 font-numeric">{{ $stats['under_review'] }}</div>
+        {{-- 3. Diperiksa (Amber / Yellow) --}}
+        <div class="flex flex-col justify-between h-36 rounded-xl border border-[#FEF08A] bg-[#FEFCE8] p-4 transition-all duration-150 hover:shadow-xs hover:-translate-y-0.5">
+            <div class="flex items-start justify-between gap-2">
+                <span class="text-xs sm:text-sm font-semibold tracking-tight text-[#D97706]">Diperiksa</span>
+                <div class="w-7 h-7 rounded-lg bg-[#D97706]/15 text-[#D97706] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="text-3xl font-extrabold text-[#D97706] leading-none font-numeric tracking-tight">
+                    {{ $stats['under_review'] }}
+                </div>
+                <div class="text-[11px] font-medium text-[#D97706]/80 flex items-center gap-1">
+                    <span>Dalam review admin</span>
+                </div>
+            </div>
         </div>
 
-        {{-- Perlu direvisi --}}
-        <div class="rounded-xl p-5 bg-[#FFF7ED]">
-            <div class="text-sm font-bold text-gray-800">Perlu direvisi</div>
-            <div class="text-3xl sm:text-4xl font-extrabold text-[#EA580C] mt-1.5 font-numeric">{{ $stats['revision_required'] }}</div>
+        {{-- 4. Perlu direvisi (Orange) --}}
+        <div class="flex flex-col justify-between h-36 rounded-xl border border-[#FFEDD5] bg-[#FFF7ED] p-4 transition-all duration-150 hover:shadow-xs hover:-translate-y-0.5">
+            <div class="flex items-start justify-between gap-2">
+                <span class="text-xs sm:text-sm font-semibold tracking-tight text-[#EA580C]">Perlu Revisi</span>
+                <div class="w-7 h-7 rounded-lg bg-[#EA580C]/15 text-[#EA580C] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
+                    </svg>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="text-3xl font-extrabold text-[#EA580C] leading-none font-numeric tracking-tight">
+                    {{ $stats['revision_required'] }}
+                </div>
+                <div class="text-[11px] font-medium text-[#EA580C]/80 flex items-center gap-1">
+                    <span>Berkas perlu perbaikan</span>
+                </div>
+            </div>
         </div>
 
-        {{-- Lulus --}}
-        <div class="rounded-xl p-5 bg-[#F0FDF4]">
-            <div class="text-sm font-bold text-gray-800">Lulus</div>
-            <div class="text-3xl sm:text-4xl font-extrabold text-[#16A34A] mt-1.5 font-numeric">{{ $stats['passed'] }}</div>
+        {{-- 5. Lulus (Emerald / Green) --}}
+        <div class="flex flex-col justify-between h-36 rounded-xl border border-[#DCFCE7] bg-[#F0FDF4] p-4 transition-all duration-150 hover:shadow-xs hover:-translate-y-0.5">
+            <div class="flex items-start justify-between gap-2">
+                <span class="text-xs sm:text-sm font-semibold tracking-tight text-[#16A34A]">Lulus</span>
+                <div class="w-7 h-7 rounded-lg bg-[#16A34A]/15 text-[#16A34A] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="text-3xl font-extrabold text-[#16A34A] leading-none font-numeric tracking-tight">
+                    {{ $stats['passed'] }}
+                </div>
+                <div class="text-[11px] font-medium text-[#16A34A]/80 flex items-center gap-1">
+                    <span>Lolos verifikasi berkas</span>
+                </div>
+            </div>
         </div>
 
-        {{-- Tidak lulus --}}
-        <div class="rounded-xl p-5 bg-[#FEF2F2]">
-            <div class="text-sm font-bold text-gray-800">Tidak lulus</div>
-            <div class="text-3xl sm:text-4xl font-extrabold text-[#DC2626] mt-1.5 font-numeric">{{ $stats['not_passed'] }}</div>
+        {{-- 6. Tidak lulus (Red) --}}
+        <div class="flex flex-col justify-between h-36 rounded-xl border border-[#FEE2E2] bg-[#FEF2F2] p-4 transition-all duration-150 hover:shadow-xs hover:-translate-y-0.5">
+            <div class="flex items-start justify-between gap-2">
+                <span class="text-xs sm:text-sm font-semibold tracking-tight text-[#DC2626]">Tidak Lulus</span>
+                <div class="w-7 h-7 rounded-lg bg-[#DC2626]/15 text-[#DC2626] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="text-3xl font-extrabold text-[#DC2626] leading-none font-numeric tracking-tight">
+                    {{ $stats['not_passed'] }}
+                </div>
+                <div class="text-[11px] font-medium text-[#DC2626]/80 flex items-center gap-1">
+                    <span>Tidak memenuhi syarat</span>
+                </div>
+            </div>
         </div>
 
-        {{-- Draft --}}
-        <div class="rounded-xl p-5 bg-[#F1F5F9]">
-            <div class="text-sm font-bold text-gray-800">Draft</div>
-            <div class="text-3xl sm:text-4xl font-extrabold text-[#0D9488] mt-1.5 font-numeric">{{ $stats['draft'] }}</div>
+        {{-- 7. Draft (Teal / Slate) --}}
+        <div class="flex flex-col justify-between h-36 rounded-xl border border-[#E2E8F0] bg-[#F1F5F9] p-4 transition-all duration-150 hover:shadow-xs hover:-translate-y-0.5">
+            <div class="flex items-start justify-between gap-2">
+                <span class="text-xs sm:text-sm font-semibold tracking-tight text-[#0D9488]">Draft</span>
+                <div class="w-7 h-7 rounded-lg bg-[#0D9488]/15 text-[#0D9488] flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                    </svg>
+                </div>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="text-3xl font-extrabold text-[#0D9488] leading-none font-numeric tracking-tight">
+                    {{ $stats['draft'] }}
+                </div>
+                <div class="text-[11px] font-medium text-[#0D9488]/80 flex items-center gap-1">
+                    <span>Belum diajukan pendaftar</span>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-{{-- Lower Section: Navigation Menu on the Left, Pendaftar Terbaru on the Right --}}
+{{-- Section 2: Lower Section (Navigation & Tallie-Inspired Pendaftar Terbaru Table) --}}
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
     {{-- Left Column: Navigation Card + Export CSV Button --}}
     <div class="lg:col-span-4 space-y-3">
-        <div class="bg-white rounded-2xl p-2.5 border border-[#E5EAFC] shadow-xs">
+        <div class="bg-white rounded-2xl p-3 border border-[#E5EAFC] shadow-xs">
+            <div class="px-3 pt-2 pb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-[#818CA2]">Menu Pengelolaan</span>
+            </div>
             <nav class="space-y-1">
                 {{-- Daftar Pendaftar (Users Icon) --}}
                 <a href="{{ route('admin.applications.index') }}" 
-                   class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-800 hover:text-black hover:bg-[#F2F5FF] font-semibold text-sm transition group">
-                    <div class="w-8 h-8 rounded-lg bg-[#F2F5FF] group-hover:bg-white flex items-center justify-center shrink-0 transition">
-                        <svg class="w-4.5 h-4.5 text-[#606ADF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                   class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl text-gray-800 hover:text-black hover:bg-[#F2F5FF] font-semibold text-sm transition group">
+                    <div class="w-8 h-8 rounded-lg bg-[#F2F5FF] group-hover:bg-white text-[#606ADF] flex items-center justify-center shrink-0 border border-[#DBDCFA]/60 transition">
+                        <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                         </svg>
                     </div>
@@ -99,20 +228,20 @@
 
                 {{-- Periode (Calendar Icon) --}}
                 <a href="{{ route('admin.periode.index') }}" 
-                   class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-800 hover:text-black hover:bg-[#F2F5FF] font-semibold text-sm transition group">
-                    <div class="w-8 h-8 rounded-lg bg-[#F2F5FF] group-hover:bg-white flex items-center justify-center shrink-0 transition">
-                        <svg class="w-4.5 h-4.5 text-[#606ADF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                   class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl text-gray-800 hover:text-black hover:bg-[#F2F5FF] font-semibold text-sm transition group">
+                    <div class="w-8 h-8 rounded-lg bg-[#F2F5FF] group-hover:bg-white text-[#606ADF] flex items-center justify-center shrink-0 border border-[#DBDCFA]/60 transition">
+                        <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
                         </svg>
                     </div>
-                    <span>Periode</span>
+                    <span>Periode pendaftaran</span>
                 </a>
 
                 {{-- Program Studi (Graduation Cap Icon) --}}
                 <a href="{{ route('admin.program-studi.index') }}" 
-                   class="flex items-center gap-3.5 px-4 py-3 rounded-xl text-gray-800 hover:text-black hover:bg-[#F2F5FF] font-semibold text-sm transition group">
-                    <div class="w-8 h-8 rounded-lg bg-[#F2F5FF] group-hover:bg-white flex items-center justify-center shrink-0 transition">
-                        <svg class="w-4.5 h-4.5 text-[#606ADF]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                   class="flex items-center gap-3.5 px-3.5 py-3 rounded-xl text-gray-800 hover:text-black hover:bg-[#F2F5FF] font-semibold text-sm transition group">
+                    <div class="w-8 h-8 rounded-lg bg-[#F2F5FF] group-hover:bg-white text-[#606ADF] flex items-center justify-center shrink-0 border border-[#DBDCFA]/60 transition">
+                        <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
                         </svg>
                     </div>
@@ -121,85 +250,143 @@
             </nav>
         </div>
 
-        {{-- Export CSV (Black Button Matching Image) --}}
+        {{-- Export CSV (Black Button with Tallie Precision) --}}
         <a href="{{ route('admin.applications.export') }}" 
-           class="bg-black text-white w-full py-3.5 px-5 rounded-2xl font-semibold text-sm hover:bg-gray-800 transition flex items-center justify-center gap-2.5 shadow-xs">
+           class="bg-black text-white w-full py-3.5 px-5 rounded-2xl font-bold text-sm hover:bg-gray-800 transition flex items-center justify-center gap-2.5 shadow-xs">
             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
             </svg>
-            <span>Export CSV</span>
+            <span>Export Data Pendaftar (CSV)</span>
         </a>
     </div>
 
-    {{-- Right Column: Pendaftar Terbaru Beside the Menu --}}
+    {{-- Right Column: Redesigned Pendaftar Terbaru Table (Watermelon Tallie Table Structure) --}}
     <div class="lg:col-span-8">
-        <div class="bg-white rounded-2xl p-6 sm:p-7 border border-[#E5EAFC] shadow-xs">
-            <div class="flex items-center justify-between mb-5 pb-3 border-b border-[#E5EAFC]">
+        <div class="bg-white rounded-2xl border border-[#E5EAFC] shadow-xs overflow-hidden">
+            {{-- Table Section Header --}}
+            <div class="p-5 sm:p-6 border-b border-[#E5EAFC] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white">
                 <div>
-                    <h2 class="font-bold text-lg text-black">Pendaftar Terbaru</h2>
-                    <p class="text-xs text-[#818CA2] mt-0.5">Daftar pendaftaran terbaru yang masuk ke sistem</p>
+                    <div class="flex items-center gap-2.5">
+                        <h2 class="font-extrabold text-base sm:text-lg text-black tracking-tight">Pendaftar Terbaru</h2>
+                        @if($recentApplicants->isNotEmpty())
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-[#F2F5FF] text-[#606ADF] border border-[#DBDCFA]">
+                                {{ $recentApplicants->count() }} Data
+                            </span>
+                        @endif
+                    </div>
+                    <p class="text-xs text-[#818CA2] mt-0.5">Daftar calon mahasiswa baru yang baru saja mengajukan berkas</p>
                 </div>
                 <a href="{{ route('admin.applications.index') }}" 
-                   class="text-xs font-semibold text-[#606ADF] hover:text-[#4F58CC] hover:underline flex items-center gap-1">
-                    Lihat Semua
+                   class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#606ADF] hover:text-[#4F58CC] transition py-1 px-2.5 rounded-lg hover:bg-[#F2F5FF]">
+                    <span>Lihat Semua Pendaftar</span>
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>
                 </a>
             </div>
 
+            {{-- Table Body Container --}}
             @if($recentApplicants->isEmpty())
-                <div class="text-center py-10 text-[#818CA2]">
-                    <div class="w-12 h-12 rounded-xl bg-[#F2F5FF] text-[#606ADF] flex items-center justify-center mx-auto mb-3">
+                <div class="text-center py-14 px-6 text-[#818CA2]">
+                    <div class="w-12 h-12 rounded-2xl bg-[#F2F5FF] text-[#606ADF] flex items-center justify-center mx-auto mb-3 border border-[#DBDCFA]">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                         </svg>
                     </div>
-                    <p class="font-medium text-sm">Belum ada pendaftar terbaru.</p>
+                    <p class="font-bold text-sm text-black">Belum Ada Pendaftar Terbaru</p>
+                    <p class="text-xs text-[#818CA2] mt-1 max-w-sm mx-auto">Data pendaftaran yang baru masuk akan langsung ditampilkan di sini.</p>
                 </div>
             @else
                 <div class="overflow-x-auto">
-                    <table class="w-full text-sm">
-                        <thead>
-                            <tr class="text-left text-[#818CA2] text-xs uppercase tracking-wider border-b border-[#E5EAFC]">
-                                <th class="pb-3 font-semibold">Nama</th>
-                                <th class="pb-3 font-semibold">Prodi</th>
-                                <th class="pb-3 font-semibold">Status</th>
-                                <th class="pb-3 text-right">Aksi</th>
+                    <table class="w-full text-left text-sm">
+                        {{-- Tallie-Style Table Head --}}
+                        <thead class="bg-[#F8FAFC] border-b border-[#E5EAFC]">
+                            <tr class="text-[#818CA2] text-[11px] uppercase tracking-wider font-semibold">
+                                <th scope="col" class="py-3.5 px-5">Pendaftar</th>
+                                <th scope="col" class="py-3.5 px-4">Program Studi</th>
+                                <th scope="col" class="py-3.5 px-4">Status Verifikasi</th>
+                                <th scope="col" class="py-3.5 px-4 text-right">Aksi</th>
                             </tr>
                         </thead>
+                        {{-- Tallie-Style Table Body with Clean Dividers & Spacing --}}
                         <tbody class="divide-y divide-[#E5EAFC]">
                             @foreach($recentApplicants as $app)
-                                <tr class="hover:bg-[#F2F5FF]/50 transition">
-                                    <td class="py-3.5 pr-3 font-semibold text-black">
-                                        <div class="text-sm">{{ $app->full_name }}</div>
-                                        @if($app->registration_number)
-                                            <div class="text-xs font-mono text-[#818CA2] font-normal mt-0.5">{{ $app->registration_number }}</div>
-                                        @endif
+                                <tr class="hover:bg-[#F8FAFC]/80 transition duration-150 group">
+                                    {{-- Column 1: Applicant Info (2-Tier Hierarchy with Avatar) --}}
+                                    <td class="py-4 px-5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-9 h-9 rounded-xl bg-[#EEF2FF] text-[#4F46E5] font-bold text-xs flex items-center justify-center shrink-0 border border-[#E0E7FF]">
+                                                {{ strtoupper(substr($app->full_name, 0, 2)) }}
+                                            </div>
+                                            <div class="flex flex-col min-w-0">
+                                                <span class="font-bold text-sm text-black group-hover:text-[#606ADF] transition truncate">
+                                                    {{ $app->full_name }}
+                                                </span>
+                                                <span class="text-xs font-mono text-[#818CA2] mt-0.5">
+                                                    {{ $app->registration_number ?? 'No. Reg: -' }}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </td>
-                                    <td class="py-3.5 px-3 text-gray-700 text-xs sm:text-sm">
-                                        {{ $app->studyProgram->name }}
+
+                                    {{-- Column 2: Program Studi --}}
+                                    <td class="py-4 px-4 text-xs sm:text-sm">
+                                        <div class="font-medium text-black">
+                                            {{ $app->studyProgram->name }}
+                                        </div>
+                                        <div class="text-[11px] text-[#818CA2] mt-0.5">
+                                            {{ $app->admissionPeriod->name ?? 'Reguler' }}
+                                        </div>
                                     </td>
-                                    <td class="py-3.5 px-3">
+
+                                    {{-- Column 3: Status Badge (Tallie Status Chip with Semantics) --}}
+                                    <td class="py-4 px-4 whitespace-nowrap">
                                         @php
-                                            $statusStyles = [
-                                                'draft' => 'bg-gray-100 text-gray-600',
-                                                'submitted' => 'bg-blue-50 text-blue-700 border border-blue-200',
-                                                'under_review' => 'bg-amber-50 text-amber-700 border border-amber-200',
-                                                'revision_required' => 'bg-orange-50 text-orange-700 border border-orange-200',
-                                                'passed' => 'bg-emerald-50 text-emerald-700 border border-emerald-200',
-                                                'not_passed' => 'bg-red-50 text-red-700 border border-red-200',
+                                            $statusConfig = [
+                                                'draft' => [
+                                                    'badge' => 'bg-[#F1F5F9] text-[#475569] border-[#E2E8F0]',
+                                                    'dot' => 'bg-[#94A3B8]',
+                                                ],
+                                                'submitted' => [
+                                                    'badge' => 'bg-[#EFF6FF] text-[#2563EB] border-[#DBEAFE]',
+                                                    'dot' => 'bg-[#2563EB]',
+                                                ],
+                                                'under_review' => [
+                                                    'badge' => 'bg-[#FEFCE8] text-[#D97706] border-[#FEF08A]',
+                                                    'dot' => 'bg-[#D97706]',
+                                                ],
+                                                'revision_required' => [
+                                                    'badge' => 'bg-[#FFF7ED] text-[#EA580C] border-[#FFEDD5]',
+                                                    'dot' => 'bg-[#EA580C]',
+                                                ],
+                                                'passed' => [
+                                                    'badge' => 'bg-[#F0FDF4] text-[#16A34A] border-[#DCFCE7]',
+                                                    'dot' => 'bg-[#16A34A]',
+                                                ],
+                                                'not_passed' => [
+                                                    'badge' => 'bg-[#FEF2F2] text-[#DC2626] border-[#FEE2E2]',
+                                                    'dot' => 'bg-[#DC2626]',
+                                                ],
                                             ];
-                                            $badgeStyle = $statusStyles[$app->status] ?? 'bg-gray-100 text-gray-700';
+                                            $cfg = $statusConfig[$app->status] ?? [
+                                                'badge' => 'bg-[#F1F5F9] text-[#475569] border-[#E2E8F0]',
+                                                'dot' => 'bg-[#94A3B8]',
+                                            ];
                                         @endphp
-                                        <span class="px-2.5 py-1 rounded-lg text-xs font-semibold inline-block {{ $badgeStyle }}">
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border {{ $cfg['badge'] }}">
+                                            <span class="w-1.5 h-1.5 rounded-full {{ $cfg['dot'] }}"></span>
                                             {{ $app->status_label }}
                                         </span>
                                     </td>
-                                    <td class="py-3.5 pl-3 text-right">
+
+                                    {{-- Column 4: Action Button (Tallie-Inspired Outline Pill Action) --}}
+                                    <td class="py-4 px-5 text-right whitespace-nowrap">
                                         <a href="{{ route('admin.applications.show', $app) }}" 
-                                           class="inline-flex items-center text-xs font-semibold text-[#606ADF] hover:text-[#4F58CC] hover:underline">
-                                            Detail →
+                                           class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-[#DBDCFA] bg-white text-xs font-semibold text-[#606ADF] hover:bg-[#606ADF] hover:text-white hover:border-[#606ADF] transition shadow-2xs">
+                                            <span>Detail</span>
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                            </svg>
                                         </a>
                                     </td>
                                 </tr>
