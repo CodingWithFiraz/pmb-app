@@ -3,17 +3,10 @@
 
 @section('content')
 {{-- Section Header --}}
-<div class="mb-10 sm:mb-12">
-    <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-[#DBDCFA] bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#5F4AF7] shadow-xs">
-        <span class="w-2 h-2 rounded-full bg-[#16A34A]"></span>
-        PILIHAN PROGRAM STUDI
-    </div>
-    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-black font-heading tracking-tight leading-tight">
-        Program Studi Unggulan
+<div class="mb-8">
+    <h1 class="text-2xl sm:text-3xl font-extrabold text-black font-heading tracking-tight">
+        Program Studi
     </h1>
-    <p class="text-sm sm:text-base text-[#818CA2] mt-2 max-w-2xl leading-relaxed">
-        Pilih program studi yang sesuai dengan bakat dan cita-citamu untuk memulai perjalanan akademik profesional bersama kami.
-    </p>
 </div>
 
 {{-- Programs Grid (Astrix Metric Card Style with Light Lavender Accents) --}}
@@ -28,8 +21,9 @@
         @endphp
 
         <article class="group relative rounded-2xl bg-white border border-[#DBDCFA] p-6 shadow-xs hover:border-[#5F4AF7]/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between gap-6">
-            {{-- Top Row: Decorative Icon inside Lavender Box & Quota Badge --}}
-            <div class="flex items-center justify-between gap-3">
+            {{-- Top Row: Decorative Icon on Left & Quota on Top-Right (No enclosing box) --}}
+            <div class="flex items-start justify-between gap-3">
+                {{-- Decorative Icon inside Lavender Box --}}
                 <div class="w-10 h-10 rounded-xl bg-[#F2F5FF] border border-[#DBDCFA] text-[#5F4AF7] flex items-center justify-center shrink-0 group-hover:bg-[#5F4AF7] group-hover:text-white transition duration-200">
                     @if($isTech)
                         {{-- Computer / Code Icon --}}
@@ -59,15 +53,14 @@
                     @endif
                 </div>
 
+                {{-- Kuota (Pojok Kanan Atas, Tanpa Kotak) --}}
                 @if($program->quota)
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#F2F5FF] text-[#5F4AF7] border border-[#DBDCFA]">
-                        <span class="text-[#818CA2] font-normal">Kuota:</span>
-                        <span class="font-bold">{{ $program->quota }}</span>
+                    <div class="text-right">
+                        <span class="text-[11px] font-semibold uppercase tracking-wider text-[#818CA2] block">Kuota</span>
+                        <span class="text-lg sm:text-xl font-extrabold text-[#5F4AF7] font-numeric leading-none mt-0.5 block">
+                            {{ $program->quota }}
+                        </span>
                     </div>
-                @elseif($program->code)
-                    <span class="text-xs font-mono font-bold text-[#818CA2] bg-[#F8FAFC] border border-[#E5EAFC] px-2.5 py-1 rounded-lg">
-                        {{ $program->code }}
-                    </span>
                 @endif
             </div>
 
