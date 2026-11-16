@@ -12,9 +12,15 @@
             </span>
 
             {{-- Prominent Elegant Main Heading --}}
-            <h1 class="text-3xl font-extrabold tracking-tight text-black sm:text-4xl md:text-5xl leading-[1.18]">
+            <h1 class="text-3xl font-extrabold tracking-tight text-black sm:text-4xl md:text-5xl leading-[1.18] mb-6">
                 Pendaftaran Mahasiswa Baru Telah Resmi Dibuka
             </h1>
+
+            {{-- Tombol Daftar Sekarang: Background putih, stroke lebih gelap, teks hitam --}}
+            <a href="{{ auth()->check() ? (auth()->user()->isAdmin() ? route('admin.dashboard') : route('applicant.dashboard')) : route('register') }}" 
+               class="inline-flex items-center justify-center px-7 py-3 rounded-xl bg-white border border-gray-300 text-black font-bold text-sm hover:bg-gray-50 hover:border-gray-400 transition shadow-xs">
+                Daftar sekarang
+            </a>
         </div>
 
         {{-- 3-Column Card Metrics: Buka, Tutup, Biaya Pendaftaran (Astrix Style) --}}
