@@ -1,82 +1,87 @@
 @extends('layouts.app')
 @section('title', 'Beranda')
 
+@section('header-class', 'absolute top-0 left-0 right-0 z-40 bg-transparent')
+@section('logo-class', 'text-white')
+@section('hamburger-class', 'text-white hover:bg-white/10')
+
 @section('full-width-content')
 
-{{-- ===== HERO SECTION (Matching Image 1 Layout + Image 2 Soft Gradient & Grid) ===== --}}
-<section class="relative w-full overflow-hidden hero-gradient-surface">
+{{-- ===== HERO SECTION (Stepped Typography Layout with Authentic Gradient & Grid + Student Cutout) ===== --}}
+<section class="relative w-full overflow-hidden hero-gradient-surface select-none">
     {{-- Subtle white square grid pattern over gradient --}}
     <div class="absolute inset-0 hero-grid-pattern pointer-events-none"></div>
 
     {{-- Hero Content Container --}}
-    <div class="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 sm:py-24 lg:py-28">
-        <div class="max-w-2xl text-left">
-            {{-- Main Heading: #FFFFFF --}}
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#FFFFFF] tracking-tight leading-[1.15]">
-                Penerimaan<br>Mahasiswa Baru
-            </h1>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative min-h-[580px] sm:min-h-[660px] md:min-h-[720px] lg:min-h-[800px] xl:min-h-[860px] flex flex-col justify-between pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-10 sm:pb-14 lg:pb-18">
+        
+        {{-- Giant Typography Stack (Positioned behind student cutout on the left) --}}
+        <div class="relative z-10 w-full flex flex-col pointer-events-none">
+            {{-- Line 1: Pendaftaran (Top Left / Center) --}}
+            <div class="text-left pl-2 sm:pl-8 md:pl-16 lg:pl-20">
+                <span class="inline-block text-white font-heading font-black tracking-[-0.04em] leading-[0.88] text-[11.5vw] sm:text-[9.5vw] md:text-[8.5vw] lg:text-[7.6rem] xl:text-[8.8rem] whitespace-nowrap">
+                    Pendaftaran
+                </span>
+            </div>
 
-            {{-- Supporting Description: #E4E7FF --}}
-            <p class="text-[#E4E7FF] text-base sm:text-lg mt-5 font-normal leading-relaxed">
-                Daftarkan dirimu dan mulai perjalanan akademikmu bersama kami — dari pendaftaran hingga penerimaan.
-            </p>
+            {{-- Line 2: Mahasiswa (Middle / Right aligned) --}}
+            <div class="text-right pr-2 sm:pr-4 md:pr-8 lg:pr-12 mt-1 sm:mt-2 lg:mt-3">
+                <span class="inline-block text-white font-heading font-black tracking-[-0.04em] leading-[0.88] text-[11.5vw] sm:text-[9.5vw] md:text-[8.5vw] lg:text-[7.6rem] xl:text-[8.8rem] whitespace-nowrap">
+                    Mahasiswa
+                </span>
+            </div>
 
-            {{-- Registration Information (Date, Year, Free / Fee) --}}
-            @if($activePeriod)
-                <div class="flex flex-wrap items-center gap-2.5 text-sm font-medium text-[#E4E7FF] mt-6">
-                    <svg class="w-4 h-4 text-[#E4E7FF] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-                    </svg>
-                    <span>{{ $activePeriod->starts_at->format('d M Y') }} — {{ $activePeriod->ends_at->format('d M Y') }}</span>
-                    <span class="text-[#E4E7FF]/60">•</span>
-                    @if($activePeriod->registration_fee > 0)
-                        <span>Biaya: Rp {{ number_format($activePeriod->registration_fee, 0, ',', '.') }}</span>
-                    @else
-                        <span>Gratis</span>
-                    @endif
-                </div>
-            @else
-                <div class="flex items-center gap-2 text-sm text-[#E4E7FF] mt-6">
-                    <svg class="w-4 h-4 text-[#E4E7FF] shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
-                    </svg>
-                    <span>Saat ini belum ada periode pendaftaran aktif. Pantau terus informasi kami.</span>
-                </div>
-            @endif
+            {{-- Line 3: Baru (Bottom Right aligned) --}}
+            <div class="text-right pr-2 sm:pr-4 md:pr-8 lg:pr-12 mt-1 sm:mt-2 lg:mt-3">
+                <span class="inline-block text-white font-heading font-black tracking-[-0.04em] leading-[0.88] text-[11.5vw] sm:text-[9.5vw] md:text-[8.5vw] lg:text-[7.6rem] xl:text-[8.8rem] whitespace-nowrap">
+                    Baru
+                </span>
+            </div>
+        </div>
 
-            {{-- CTA Buttons --}}
-            <div class="flex flex-wrap items-center gap-4 mt-8">
+        {{-- Bottom-Right Action Buttons (Aligned below 'Baru' on the right side) --}}
+        <div class="relative z-30 flex justify-end items-center pr-2 sm:pr-4 md:pr-8 lg:pr-12 mt-6 sm:mt-8 md:mt-10">
+            <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 sm:gap-4">
                 @auth
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}"
-                           class="inline-flex items-center justify-center bg-white text-[#000000] font-semibold text-sm px-7 py-3 rounded-xl shadow-xs hover:bg-gray-100 transition duration-200">
+                           class="inline-flex items-center justify-center bg-white text-black font-semibold text-sm px-7 py-3.5 rounded-xl shadow-xs hover:bg-gray-100 transition duration-200">
                             Buka Dashboard Admin
                         </a>
                     @else
                         <a href="{{ route('applicant.dashboard') }}"
-                           class="inline-flex items-center justify-center bg-white text-[#000000] font-semibold text-sm px-7 py-3 rounded-xl shadow-xs hover:bg-gray-100 transition duration-200">
+                           class="inline-flex items-center justify-center bg-white text-black font-semibold text-sm px-7 py-3.5 rounded-xl shadow-xs hover:bg-gray-100 transition duration-200">
                             Buka Dashboard Saya
                         </a>
                     @endif
+                    <a href="{{ route('public.info') }}"
+                       class="btn-matte-glass inline-flex items-center justify-center font-medium text-sm px-7 py-3.5 rounded-xl transition duration-200">
+                        Lihat informasi
+                    </a>
                 @else
                     <a href="{{ route('register') }}"
-                       class="inline-flex items-center justify-center bg-white text-[#000000] font-semibold text-sm px-7 py-3 rounded-xl shadow-xs hover:bg-gray-100 transition duration-200">
+                       class="inline-flex items-center justify-center bg-white text-black font-semibold text-sm px-7 py-3.5 rounded-xl shadow-xs hover:bg-gray-100 transition duration-200">
                         Daftar sekarang
                     </a>
+                    <a href="{{ route('public.info') }}"
+                       class="btn-matte-glass inline-flex items-center justify-center font-medium text-sm px-7 py-3.5 rounded-xl transition duration-200">
+                        Lihat informasi
+                    </a>
                 @endauth
-
-                {{-- Secondary Button: Matte Glass (Adapts to gradient behind it) --}}
-                <a href="{{ route('public.info') }}"
-                   class="btn-matte-glass inline-flex items-center justify-center font-medium text-sm px-7 py-3 rounded-xl transition duration-200">
-                    Lihat informasi
-                </a>
             </div>
+        </div>
+
+        {{-- Students Cutout Image (Positioned at bottom-left in front of text, with bottom fade out) --}}
+        <div class="absolute bottom-0 -left-6 sm:-left-10 md:-left-12 lg:-left-14 z-20 pointer-events-none h-[68%] sm:h-[75%] md:h-[80%] lg:h-[85%] max-h-[720px] flex items-end">
+            <img src="{{ asset('assets/images/Gambar landing.png') }}"
+                 alt="Mahasiswa PMB Online"
+                 class="h-full w-auto max-w-[85vw] sm:max-w-[70vw] md:max-w-[58vw] lg:max-w-[52vw] object-contain object-bottom block photo-fade-bottom">
         </div>
     </div>
 </section>
 
-{{-- ===== REGISTRATION INFORMATION CARDS (Matching Image 1) ===== --}}
-<section class="w-full bg-[#F2F5FF] py-10 sm:py-12">
+{{-- ===== REGISTRATION PROCESS CARDS (3 Steps) ===== --}}
+<section class="w-full bg-[#F2F5FF] py-12 sm:py-16">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
@@ -120,7 +125,7 @@
                 <div>
                     <h3 class="text-base font-bold text-[#000000] leading-snug">Pantau status</h3>
                     <p class="text-xs sm:text-sm text-[#818CA2] mt-1 leading-relaxed">
-                        Cek perkembangan pendaftaran kamu kapan saja.
+                        Cek proses verifikasi berkas hingga pengumuman hasil seleksi.
                     </p>
                 </div>
             </div>

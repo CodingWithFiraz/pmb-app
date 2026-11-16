@@ -12,10 +12,10 @@
 <body class="@yield('body-class', 'bg-[#F2F5FF]') text-black font-sans min-h-screen flex flex-col antialiased">
 
 {{-- Navigation Bar (Transparent: only Logo text, white pill nav, and black action button) --}}
-<header class="w-full bg-transparent">
+<header class="w-full @yield('header-class', 'bg-transparent')">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-5 flex items-center justify-between">
         {{-- Logo --}}
-        <a href="{{ route('home') }}" class="text-xl sm:text-2xl font-bold text-black tracking-tight hover:opacity-90 transition">
+        <a href="{{ route('home') }}" class="text-xl sm:text-2xl font-bold @yield('logo-class', 'text-black') tracking-tight hover:opacity-90 transition">
             PMB Online
         </a>
 
@@ -23,6 +23,7 @@
         <div class="hidden md:flex items-center gap-3">
             {{-- Nav links pill --}}
             <nav class="bg-white rounded-full border border-gray-200/90 shadow-xs px-6 py-2 flex items-center gap-6 text-sm font-medium text-gray-700">
+                <a href="{{ route('home') }}" class="hover:text-black transition">Home</a>
                 <a href="{{ route('public.info') }}" class="hover:text-black transition">Informasi</a>
                 <a href="{{ route('public.programs') }}" class="hover:text-black transition">Program studi</a>
                 @auth
@@ -40,12 +41,12 @@
             @auth
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
-                    <button type="submit" class="bg-black text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-gray-800 transition">
+                    <button type="submit" class="@yield('nav-action-btn', 'bg-black text-white hover:bg-gray-800') px-5 py-2 rounded-xl text-sm font-semibold transition">
                         Keluar
                     </button>
                 </form>
             @else
-                <a href="{{ route('register') }}" class="bg-black text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-gray-800 transition">
+                <a href="{{ route('register') }}" class="@yield('nav-action-btn', 'bg-black text-white hover:bg-gray-800') px-5 py-2 rounded-xl text-sm font-semibold transition">
                     Daftar
                 </a>
             @endauth
@@ -53,7 +54,7 @@
 
         {{-- Mobile Hamburger --}}
         <div class="md:hidden flex items-center">
-            <button id="mobile-menu-btn" type="button" class="p-2 text-gray-700 rounded-lg hover:bg-white focus:outline-none">
+            <button id="mobile-menu-btn" type="button" class="p-2 @yield('hamburger-class', 'text-gray-700 hover:bg-white') rounded-lg focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
@@ -64,6 +65,7 @@
     {{-- Mobile Menu Dropdown --}}
     <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
         <div class="bg-white rounded-2xl border border-gray-200 p-4 space-y-2 shadow-sm text-sm font-medium">
+            <a href="{{ route('home') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Home</a>
             <a href="{{ route('public.info') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Informasi</a>
             <a href="{{ route('public.programs') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Program studi</a>
             @auth

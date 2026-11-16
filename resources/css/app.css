@@ -113,6 +113,12 @@
     border-color: rgba(255, 255, 255, 0.55);
 }
 
+/* Fade out effect from bottom for student hero stock photo */
+.photo-fade-bottom {
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, rgba(0, 0, 0, 0) 98%);
+    mask-image: linear-gradient(to bottom, #000 60%, rgba(0, 0, 0, 0) 98%);
+}
+
 /* ==========================================================================
    Global Typography System
    Primary Typeface: Sora (Headings, Section Titles, Card Titles, Page Titles, Highlighted Numerics)
