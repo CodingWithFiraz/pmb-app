@@ -31,3 +31,7 @@ class DatabaseSeeder extends Seeder
             BeritaSeeder::class,
             FaqSeeder::class,
             PengaturanSeeder::class,
+        ]);
+    }
+}
+
