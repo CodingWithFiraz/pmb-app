@@ -119,6 +119,22 @@
     mask-image: linear-gradient(to bottom, #000 60%, rgba(0, 0, 0, 0) 98%);
 }
 
+/* Home process cards: match info-page metric size, slightly under so titles stay in-column */
+.process-card-title {
+    font-size: 1.5rem; /* text-2xl, same as info dates on small screens */
+    line-height: 1.1;
+}
+@media (min-width: 1024px) {
+    .process-card-title {
+        font-size: 1.75rem; /* just under info's text-3xl (1.875rem) */
+    }
+}
+
+.process-card-desc {
+    font-size: 0.9375rem; /* 15px: a step up from 12–14px, still far from the title */
+    line-height: 1.6;
+}
+
 /* ==========================================================================
    Global Typography System
    Primary Typeface: Sora (Headings, Section Titles, Card Titles, Page Titles, Highlighted Numerics)

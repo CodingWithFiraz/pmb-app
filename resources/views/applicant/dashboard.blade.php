@@ -100,6 +100,12 @@
                             Ringkasan & Kirim
                         </a>
                     @endif
+                    @if($application->canAccessUktPayment())
+                        <a href="{{ route('applicant.payment.show', $application) }}"
+                            class="bg-[#16A34A] hover:bg-[#15803D] text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-xs">
+                            Bayar UKT
+                        </a>
+                    @endif
                     <a href="{{ route('applicant.application.status', $application) }}"
                         class="bg-white border border-[#E5EAFC] text-[#818CA2] hover:text-black hover:bg-[#F2F5FF] px-4 py-2 rounded-xl text-xs font-semibold transition ml-auto">
                         Lihat Status Lengkap →

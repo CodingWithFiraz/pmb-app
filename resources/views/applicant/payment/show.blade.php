@@ -30,8 +30,7 @@
 
     {{-- Data Pendaftaran Card --}}
     <div class="bg-white rounded-2xl border border-[#E5EAFC] shadow-xs p-6 mb-5">
-        <h2 class="text-base font-bold text-black mb-4 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-[#5F4AF7]"></span>
+        <h2 class="text-base font-bold text-black mb-4">
             Data Pendaftaran
         </h2>
         <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
@@ -59,9 +58,8 @@
         <div class="bg-white rounded-2xl border border-[#E5EAFC] shadow-xs p-6 mb-5">
             <div class="flex flex-col sm:flex-row justify-between items-start gap-4 mb-6">
                 <div>
-                    <div class="text-xs uppercase tracking-wider text-[#818CA2]">Golongan UKT Ditetapkan</div>
+                    <div class="text-xs uppercase tracking-wider text-[#818CA2]">Golongan UKT</div>
                     <div class="text-2xl font-extrabold text-[#16A34A] mt-1">{{ $golonganLabels[$application->ukt_golongan] }}</div>
-                    <p class="text-xs text-[#818CA2] mt-1">{{ $golonganDescriptions[$application->ukt_golongan] }}</p>
                 </div>
                 <div class="text-left sm:text-right">
                     <div class="text-xs uppercase tracking-wider text-[#818CA2]">Total Tagihan UKT</div>
@@ -128,9 +126,8 @@
 
         {{-- Checkout Section --}}
         <div class="bg-white rounded-2xl border border-[#E5EAFC] shadow-xs p-6">
-            <h2 class="text-base font-bold text-black mb-3 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-[#5F4AF7]"></span>
-                Pembayaran Online Midtrans
+            <h2 class="text-base font-bold text-black mb-3">
+                Pembayaran
             </h2>
 
             @if($isPaid)

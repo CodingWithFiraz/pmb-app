@@ -151,9 +151,6 @@
     {{-- Left Column: Navigation Card + Export CSV Button --}}
     <div class="lg:col-span-4 space-y-3">
         <div class="bg-white rounded-2xl p-3 border border-[#E5EAFC] shadow-xs">
-            <div class="px-3 pt-2 pb-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-[#818CA2]">Menu Pengelolaan</span>
-            </div>
             <nav class="space-y-1">
                 {{-- Daftar Pendaftar (Users Icon) --}}
                 <a href="{{ route('admin.applications.index') }}" 
@@ -204,18 +201,7 @@
     <div class="lg:col-span-8">
         <div class="bg-white rounded-2xl border border-[#E5EAFC] shadow-xs overflow-hidden">
             {{-- Table Section Header --}}
-            <div class="p-5 sm:p-6 border-b border-[#E5EAFC] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white">
-                <div>
-                    <div class="flex items-center gap-2.5">
-                        <h2 class="font-extrabold text-base sm:text-lg text-black tracking-tight">Pendaftar Terbaru</h2>
-                        @if($recentApplicants->isNotEmpty())
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-[#F2F5FF] text-[#5F4AF7] border border-[#DBDCFA]">
-                                {{ $recentApplicants->count() }} Data
-                            </span>
-                        @endif
-                    </div>
-                    <p class="text-xs text-[#818CA2] mt-0.5">Daftar calon mahasiswa baru yang baru saja mengajukan berkas</p>
-                </div>
+            <div class="p-5 sm:p-6 border-b border-[#E5EAFC] flex items-center justify-end gap-3 bg-white">
                 <a href="{{ route('admin.applications.index') }}" 
                    class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5F4AF7] hover:text-[#4E39E5] transition py-1 px-2.5 rounded-lg hover:bg-[#F2F5FF]">
                     <span>Lihat Semua Pendaftar</span>
