@@ -79,8 +79,9 @@ class ApplicationController extends Controller
     public function decide(Request $request, Application $application)
     {
         $request->validate([
-            'decision' => 'required|in:passed,not_passed',
-            'note'     => 'nullable|string|max:1000',
+            'decision'      => 'required|in:passed,not_passed',
+            'note'          => 'nullable|string|max:1000',
+            'ukt_golongan'  => 'required_if:decision,passed|nullable|integer|between:1,5',
         ]);
 
         if (! in_array($application->status, ['under_review', 'submitted'])) {
@@ -94,11 +95,35 @@ class ApplicationController extends Controller
             $request->note
         );
 
-        $application->update(['admin_note' => $request->note]);
+        $payload = ['admin_note' => $request->note];
+
+        if ($request->decision === 'passed') {
+            $payload['ukt_golongan']   = $request->ukt_golongan;
+            $payload['payment_status'] = 'unpaid';
+        }
+
+        $application->update($payload);
 
         return back()->with('success', 'Keputusan seleksi berhasil disimpan.');
     }
 
+    public function updateUkt(Request $request, Application $application)
+    {
+        $request->validate([
+            'ukt_golongan' => 'required|integer|between:1,5',
+        ]);
+
+        if ($application->status !== 'passed') {
+            return back()->with('error', 'Golongan UKT hanya bisa ditetapkan untuk pendaftar yang lulus.');
+        }
+
+        $application->update([
+            'ukt_golongan'   => $request->ukt_golongan,
+            'payment_status' => $application->payment_status === 'not_required' ? 'unpaid' : $application->payment_status,
+        ]);
+
+        return back()->with('success', 'Golongan UKT berhasil disimpan.');
+    }
     public function downloadDocument(Application $application, \App\Models\ApplicationDocument $document)
     {
         return Storage::disk('private')->download(

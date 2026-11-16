@@ -12,7 +12,7 @@ class Application extends Model
         'birth_date', 'birth_place', 'religion', 'phone', 'address',
         'city', 'province', 'postal_code', 'school_name', 'school_city',
         'major', 'graduation_year', 'gpa', 'status', 'payment_status',
-        'submitted_at', 'reviewed_by', 'admin_note',
+        'ukt_golongan', 'submitted_at', 'reviewed_by', 'admin_note',
     ];
 
     protected $casts = [
@@ -50,6 +50,50 @@ class Application extends Model
         return $this->belongsTo(User::class, 'reviewed_by');
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function latestPayment()
+    {
+        return $this->hasOne(Payment::class)->latestOfMany();
+    }
+
+    public function canAccessUktPayment(): bool
+    {
+        return $this->status === 'passed';
+    }
+
+    public function uktAmount(): ?int
+    {
+        if (! $this->ukt_golongan) {
+            return null;
+        }
+
+        return config('ukt.golongan.' . $this->ukt_golongan);
+    }
+
+    public function getUktGolonganLabelAttribute(): ?string
+    {
+        if (! $this->ukt_golongan) {
+            return null;
+        }
+
+        return config('ukt.labels.' . $this->ukt_golongan);
+    }
+
+    public function getPaymentStatusLabelAttribute(): string
+    {
+        return match ($this->payment_status) {
+            'not_required'         => 'Tidak Diperlukan',
+            'unpaid'               => 'Belum Dibayar',
+            'pending_verification' => 'Menunggu Verifikasi',
+            'verified'             => 'Lunas',
+            'rejected'             => 'Ditolak',
+            default                => $this->payment_status,
+        };
+    }
     public function isEditable(): bool
     {
         return in_array($this->status, ['draft', 'revision_required']);

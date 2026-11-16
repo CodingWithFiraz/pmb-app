@@ -63,6 +63,15 @@
                         <strong>Pesan dari Panitia:</strong> {{ $application->admin_note }}
                     </div>
                 @endif
+                <div class="mt-5">
+                    <a href="{{ route('applicant.payment.show', $application) }}"
+                        class="inline-flex items-center gap-2 bg-[#16A34A] text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#15803D] transition shadow-xs">
+                        <span>Lanjut ke Pembayaran UKT</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                        </svg>
+                    </a>
+                </div>
             </div>
         @elseif($application->status === 'not_passed')
             <div class="mt-6 bg-[#FEF2F2] border border-[#DC2626]/20 rounded-2xl p-6 text-center text-[#B91C1C]">

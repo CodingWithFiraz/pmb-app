@@ -181,10 +181,22 @@
                 @csrf
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Keputusan Kelulusan</label>
-                    <select name="decision" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF]">
+                    <select name="decision" id="decision" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF]">
                         <option value="passed">✓ Dinyatakan Lulus</option>
                         <option value="not_passed">✗ Dinyatakan Tidak Lulus</option>
                     </select>
+                </div>
+                <div id="ukt-golongan-field">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Golongan UKT</label>
+                    <select name="ukt_golongan" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF]">
+                        <option value="">Pilih golongan 1–5</option>
+                        @foreach(config('ukt.golongan', []) as $golongan => $nominal)
+                            <option value="{{ $golongan }}">
+                                {{ config('ukt.labels.'.$golongan) }} — Rp {{ number_format($nominal, 0, ',', '.') }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <p class="text-xs text-[#818CA2] mt-1">Wajib diisi jika keputusan lulus. Nominal tagihan akan mengikuti golongan yang dipilih.</p>
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Catatan Keputusan (opsional)</label>
@@ -196,6 +208,37 @@
                     onclick="return confirm('Yakin ingin menetapkan keputusan seleksi ini? Keputusan ini akan diteruskan ke pendaftar.')"
                     class="bg-[#606ADF] hover:bg-[#4F58CC] text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition shadow-xs">
                     Tetapkan Keputusan Seleksi
+                </button>
+            </form>
+        </div>
+    @endif
+
+    {{-- UKT Ditetapkan (Ketika status lulus) --}}
+    @if($application->status === 'passed')
+        <div class="bg-white rounded-2xl p-6 sm:p-7 border border-[#E5EAFC] shadow-xs">
+            <h2 class="font-bold text-lg text-emerald-800 mb-3 pb-2 border-b border-[#E5EAFC]">UKT Ditetapkan</h2>
+            @if($application->ukt_golongan)
+                <p class="text-sm font-semibold text-emerald-900 mb-2">
+                    {{ $application->ukt_golongan_label }} — Rp {{ number_format($application->uktAmount() ?? 0, 0, ',', '.') }}
+                </p>
+                <p class="text-xs text-[#818CA2] mb-4">Status Pembayaran: <span class="font-semibold text-black">{{ $application->payment_status_label }}</span></p>
+            @else
+                <p class="text-sm text-amber-800 mb-4">Golongan UKT belum ditetapkan.</p>
+            @endif
+            <form method="POST" action="{{ route('admin.applications.ukt', $application) }}" class="flex flex-wrap gap-3 items-end">
+                @csrf
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Ubah Golongan UKT</label>
+                    <select name="ukt_golongan" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF]">
+                        @foreach(config('ukt.golongan', []) as $golongan => $nominal)
+                            <option value="{{ $golongan }}" @selected($application->ukt_golongan == $golongan)>
+                                {{ config('ukt.labels.'.$golongan) }} — Rp {{ number_format($nominal, 0, ',', '.') }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white px-5 py-2.5 rounded-xl font-semibold text-sm transition shadow-xs">
+                    Simpan Golongan
                 </button>
             </form>
         </div>
@@ -226,4 +269,19 @@
         @endif
     </div>
 </div>
+
+<script>
+    const decisionSelect = document.getElementById('decision');
+    const golonganField = document.getElementById('ukt-golongan-field');
+
+    function toggleGolongan() {
+        if (!decisionSelect || !golonganField) return;
+        golonganField.style.display = decisionSelect.value === 'passed' ? '' : 'none';
+    }
+
+    if (decisionSelect) {
+        decisionSelect.addEventListener('change', toggleGolongan);
+        toggleGolongan();
+    }
+</script>
 @endsection
