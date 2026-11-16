@@ -98,7 +98,7 @@ class ApplicationController extends Controller
         $payload = ['admin_note' => $request->note];
 
         if ($request->decision === 'passed') {
-            $payload['ukt_golongan']  = $request->ukt_golongan;
+            $payload['ukt_golongan']   = $request->ukt_golongan;
             $payload['payment_status'] = 'unpaid';
         }
 
@@ -124,7 +124,6 @@ class ApplicationController extends Controller
 
         return back()->with('success', 'Golongan UKT berhasil disimpan.');
     }
-
     public function downloadDocument(Application $application, \App\Models\ApplicationDocument $document)
     {
         return Storage::disk('private')->download(

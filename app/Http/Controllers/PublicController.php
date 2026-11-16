@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdmissionPeriod;
 use App\Models\Berita;
 use App\Models\BiayaPendaftaran;
 use App\Models\Fakultas;
@@ -10,6 +11,7 @@ use App\Models\JalurMasuk;
 use App\Models\Pengaturan;
 use App\Models\PeriodePmb;
 use App\Models\Prodi;
+use App\Models\StudyProgram;
 use App\Models\TarifUkt;
 use Illuminate\Http\Request;
 
@@ -17,38 +19,41 @@ class PublicController extends Controller
 {
     public function index(Request $request)
     {
-        $activePeriod = PeriodePmb::getActive();
+        $activePeriod = AdmissionPeriod::where('status', 'open')->first()
+            ?? (class_exists(PeriodePmb::class) ? PeriodePmb::getActive() : null);
 
         $statusPeriode = null;
 
         if ($activePeriod) {
             $sekarang = now();
+            $tanggalMulai = $activePeriod->starts_at ?? $activePeriod->tanggal_mulai;
+            $tanggalSelesai = $activePeriod->ends_at ?? $activePeriod->tanggal_selesai;
 
-            if ($sekarang->lt($activePeriod->tanggal_mulai)) {
+            if ($tanggalMulai && $sekarang->lt($tanggalMulai)) {
                 $statusPeriode = 'belum';
-            } elseif ($sekarang->gt($activePeriod->tanggal_selesai->copy()->endOfDay())) {
+            } elseif ($tanggalSelesai && $sekarang->gt($tanggalSelesai->copy()->endOfDay())) {
                 $statusPeriode = 'tutup';
             } else {
                 $statusPeriode = 'buka';
             }
         }
 
-        $berita = Berita::tayang()
-            ->latest('published_at')
-            ->take(3)
-            ->get();
+        $berita = class_exists(Berita::class)
+            ? Berita::tayang()->latest('published_at')->take(3)->get()
+            : collect();
 
-        $fakultas = Fakultas::with(['prodi' => fn ($q) => $q->orderBy('nama')])
-            ->withCount('prodi')
-            ->orderBy('nama')
-            ->get();
+        $fakultas = class_exists(Fakultas::class)
+            ? Fakultas::with(['prodi' => fn ($q) => $q->orderBy('nama')])->withCount('prodi')->orderBy('nama')->get()
+            : collect();
 
-        $jalur = JalurMasuk::orderBy('urutan')->get();
+        $jalur = class_exists(JalurMasuk::class)
+            ? JalurMasuk::orderBy('urutan')->get()
+            : collect();
 
         $biaya = collect();
         $uktMulai = collect();
 
-        if ($activePeriod) {
+        if ($activePeriod && class_exists(BiayaPendaftaran::class) && class_exists(TarifUkt::class)) {
             $biaya = BiayaPendaftaran::where('periode_id', $activePeriod->id)
                 ->get()
                 ->keyBy('jalur_id');
@@ -59,7 +64,9 @@ class PublicController extends Controller
                 ->pluck('nominal_minimal', 'jalur_id');
         }
 
-        $pengaturan = Pengaturan::many(['nama_kampus', 'nama_singkat', 'tagline']);
+        $pengaturan = class_exists(Pengaturan::class)
+            ? Pengaturan::many(['nama_kampus', 'nama_singkat', 'tagline'])
+            : [];
 
         return view('public.home', compact(
             'activePeriod',
@@ -73,6 +80,21 @@ class PublicController extends Controller
         ));
     }
 
+    public function info()
+    {
+        $periods = AdmissionPeriod::orderByDesc('created_at')->get();
+        return view('public.info', compact('periods'));
+    }
+
+    public function programs()
+    {
+        $programs = StudyProgram::where('is_active', true)->get();
+        if ($programs->isEmpty() && class_exists(Prodi::class)) {
+            $programs = Prodi::with('fakultas')->orderBy('nama')->get();
+        }
+        return view('public.programs', compact('programs'));
+    }
+
     public function tentangKampus()
     {
         $pengaturan = Pengaturan::many([
@@ -82,7 +104,6 @@ class PublicController extends Controller
         ]);
 
         $fakultas = Fakultas::withCount('prodi')->orderBy('nama')->get();
-
         $prodi = Prodi::count();
 
         return view('public.tentang-kampus', compact('pengaturan', 'fakultas', 'prodi'));
@@ -91,7 +112,6 @@ class PublicController extends Controller
     public function fakultas()
     {
         $fakultas = Fakultas::withCount('prodi')->orderBy('nama')->get();
-
         $pengaturan = Pengaturan::many(['nama_kampus', 'nama_singkat']);
 
         return view('public.fakultas.index', compact('fakultas', 'pengaturan'));
@@ -106,9 +126,7 @@ class PublicController extends Controller
 
     public function prodiIndex()
     {
-        $programs = Prodi::with('fakultas')->orderBy('nama')->get();
-
-        return view('public.programs', compact('programs'));
+        return $this->programs();
     }
 
     public function prodiDetail(Prodi $prodi)

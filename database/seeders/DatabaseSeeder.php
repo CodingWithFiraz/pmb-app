@@ -11,6 +11,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             // Master data
             UserSeeder::class,
+            AdminSeeder::class,
+            AdmissionPeriodSeeder::class,
+            StudyProgramSeeder::class,
             GolonganUktSeeder::class,
             JalurMasukSeeder::class,
             FakultasSeeder::class,
@@ -31,3 +34,4 @@ class DatabaseSeeder extends Seeder
         ]);
     }
 }
+

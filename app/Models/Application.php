@@ -94,7 +94,6 @@ class Application extends Model
             default                => $this->payment_status,
         };
     }
-
     public function isEditable(): bool
     {
         return in_array($this->status, ['draft', 'revision_required']);

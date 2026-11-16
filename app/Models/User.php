@@ -34,6 +34,11 @@ class User extends Authenticatable
         return in_array($this->role, ['pendaftar', 'applicant'], true);
     }
 
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
+    }
+
     public function profile(): HasOne
     {
         return $this->hasOne(PendaftarProfile::class, 'user_id');

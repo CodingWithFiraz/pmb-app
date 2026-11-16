@@ -1,52 +1,79 @@
-@extends('layouts.public')
+@extends('layouts.app')
 @section('title', 'Daftar Akun')
 
 @section('content')
-<div class="max-w-md mx-auto mt-8">
-    <div class="bg-white shadow rounded-xl p-8">
-        <h2 class="text-2xl font-bold mb-6 text-center">Buat Akun Baru</h2>
+<div class="max-w-md mx-auto mt-6 sm:mt-10">
+    <div class="bg-white shadow-xs border border-[#E5EAFC] rounded-2xl p-8">
+        <h2 class="text-2xl font-bold mb-6 text-center text-black">Buat Akun Baru</h2>
+
+        {{-- Global Validation Errors Alert --}}
+        @if ($errors->any())
+            <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl mb-6 text-sm">
+                <div class="font-bold mb-1">Gagal membuat akun:</div>
+                <ul class="list-disc list-inside space-y-0.5 text-xs">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
+            {{-- Nama Lengkap --}}
             <div class="mb-4">
-                <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
+                <label class="block text-sm font-semibold mb-1.5 text-black">Nama Lengkap</label>
                 <input type="text" name="name" value="{{ old('name') }}"
-                    class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 @error('name') border-red-500 @enderror"
-                    required>
-                @error('name')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+                    class="w-full border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] @error('name') border-red-500 @enderror"
+                    placeholder="Masukkan nama lengkap" required>
+                @error('name')
+                    <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p>
+                @enderror
             </div>
 
+            {{-- Email --}}
             <div class="mb-4">
-                <label class="block text-sm font-medium mb-1">Email</label>
+                <label class="block text-sm font-semibold mb-1.5 text-black">Email</label>
                 <input type="email" name="email" value="{{ old('email') }}"
-                    class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 @error('email') border-red-500 @enderror"
-                    required>
-                @error('email')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+                    class="w-full border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] @error('email') border-red-500 @enderror"
+                    placeholder="nama@email.com" required>
+                @error('email')
+                    <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p>
+                @enderror
             </div>
 
+            {{-- Password --}}
             <div class="mb-4">
-                <label class="block text-sm font-medium mb-1">Password</label>
-                <input type="password" name="password" minlength="8"
-                    class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 @error('password') border-red-500 @enderror"
-                    required>
-                @error('password')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
-                <p class="text-gray-500 text-xs mt-1">Minimal 8 karakter.</p>
+                <div class="flex items-center justify-between mb-1.5">
+                    <label class="block text-sm font-semibold text-black">Password</label>
+                    <span class="text-xs text-[#818CA2]">Min. 8 karakter</span>
+                </div>
+                <input type="password" name="password"
+                    class="w-full border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] @error('password') border-red-500 @enderror"
+                    placeholder="Minimal 8 karakter" required>
+                @error('password')
+                    <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p>
+                @enderror
             </div>
 
+            {{-- Konfirmasi Password --}}
             <div class="mb-6">
-                <label class="block text-sm font-medium mb-1">Konfirmasi Password</label>
+                <label class="block text-sm font-semibold mb-1.5 text-black">Konfirmasi Password</label>
                 <input type="password" name="password_confirmation"
-                    class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required>
+                    class="w-full border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] @error('password_confirmation') border-red-500 @enderror"
+                    placeholder="Ulangi password di atas" required>
+                @error('password_confirmation')
+                    <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p>
+                @enderror
             </div>
 
-            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700">
-                Buat Akun
+            <button type="submit" class="w-full py-3 text-sm font-semibold text-white bg-[#5F4AF7] hover:bg-[#4E39E5] rounded-xl shadow-xs transition duration-200">
+                Buat Akun Baru
             </button>
         </form>
 
-        <p class="text-center text-sm mt-4 text-gray-600">
-            Sudah punya akun? <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Masuk di sini</a>
+        <p class="text-center text-sm mt-6 text-[#818CA2]">
+            Sudah punya akun? <a href="{{ route('login') }}" class="text-[#5F4AF7] font-semibold hover:underline">Masuk di sini</a>
         </p>
     </div>
 </div>

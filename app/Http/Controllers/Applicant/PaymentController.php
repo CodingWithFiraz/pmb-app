@@ -42,7 +42,7 @@ class PaymentController extends Controller
             try {
                 $payment   = $this->midtrans->getOrCreateSnapToken($application);
                 $snapToken = $payment->snap_token;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 // Jika gagal generate token, lanjutkan halaman tanpa token
                 report($e);
             }

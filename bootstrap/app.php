@@ -13,14 +13,17 @@ return Application::configure(basePath: dirname(__DIR__))
     
     ->withMiddleware(function (Middleware $middleware) {
     $middleware->alias([
-        'admin'    => \App\Http\Middleware\EnsureUserIsAdmin::class,
+        'admin'     => \App\Http\Middleware\EnsureUserIsAdmin::class,
         'pendaftar' => \App\Http\Middleware\EnsureUserIsPendaftar::class,
     ]);
 
     $middleware->redirectUsersTo(function () {
-        return auth()->user()?->isAdmin()
-            ? route('admin.dashboard')
-            : route('pendaftar.dashboard');
+        if (auth()->user()?->isAdmin()) {
+            return route('admin.dashboard');
+        }
+        return \Illuminate\Support\Facades\Route::has('pendaftar.dashboard')
+            ? route('pendaftar.dashboard')
+            : route('applicant.dashboard');
     });
 
     // Notifikasi Midtrans dipanggil dari server Midtrans tanpa token CSRF.

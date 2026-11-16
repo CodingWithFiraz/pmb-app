@@ -85,4 +85,5 @@ Fitur baru:
   lulus dan semua tagihan lunas. Bisa dicetak (Ctrl+P).
 - Notifikasi di dashboard pendaftar saat hasil kelulusan dikeluarkan.
 - Kebijakan akses (Policy): pendaftar hanya bisa akses data milik sendiri.
+>>>>>>> origin/main
 ========================================================================
