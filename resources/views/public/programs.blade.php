@@ -23,8 +23,8 @@
         <article class="group relative rounded-2xl bg-white border border-[#DBDCFA] p-6 sm:p-7 shadow-xs hover:border-[#5F4AF7]/50 hover:shadow-md transition-all duration-200 flex flex-col justify-between gap-6">
             {{-- Top Row: Large Decorative Icon (No Enclosing Box) & Quota at Top Right --}}
             <div class="flex items-start justify-between gap-4">
-                {{-- Large Icon Directly in Card --}}
-                <div class="text-[#5F4AF7] group-hover:scale-105 transition-transform duration-200 shrink-0">
+                {{-- Large Icon Directly in Card (Matching Faculty Muted Color #818CA2) --}}
+                <div class="text-[#818CA2] group-hover:scale-105 transition-transform duration-200 shrink-0">
                     @if($isTech)
                         {{-- Computer / Code Icon --}}
                         <svg class="w-14 h-14 sm:w-16 sm:h-16" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
