@@ -2,84 +2,26 @@
 @section('title', 'Informasi PMB')
 
 @section('content')
-{{-- =========================================================================
-     1. SECTION HEADER (Inspired by Watermelon Team Block Editorial Layout)
-     ========================================================================= --}}
-<div class="mx-auto mb-10 sm:mb-14 flex max-w-3xl flex-col items-center text-center">
-    {{-- Status Badge / Label --}}
-    <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-[#DBDCFA] bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-[#5F4AF7] shadow-xs">
-        <span class="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse"></span>
-        STATUS PENDAFTARAN
-    </div>
-
-    {{-- Prominent Elegant Main Heading --}}
-    <h1 class="mb-4 text-3xl font-extrabold tracking-tight text-black sm:text-4xl md:text-5xl leading-[1.18]">
-        Pendaftaran Mahasiswa Baru Telah Resmi Dibuka
-    </h1>
-
-    {{-- Elegant Description in Muted Slate Gray --}}
-    <p class="max-w-2xl text-base sm:text-lg leading-relaxed text-[#818CA2]">
-        Temukan linimasa resmi, jadwal batas akhir pendaftaran, dan informasi biaya pendidikan untuk memulai perjalanan akademik Anda di kampus kami.
-    </p>
-</div>
-
-{{-- =========================================================================
-     PERIODS LOOP
-     ========================================================================= --}}
 @forelse($periods as $period)
-    <div class="space-y-6 sm:space-y-8 mb-14 last:mb-0">
-        {{-- =====================================================================
-             2. ACADEMIC YEAR BANNER (Inspired by Watermelon CTA Block 4 Layout)
-             ===================================================================== --}}
-        <div class="relative overflow-hidden admin-banner-gradient rounded-3xl p-6 sm:p-8 lg:p-10 text-white shadow-sm border border-white/20">
-            {{-- Compact subtle square grid pattern overlay --}}
-            <div class="absolute inset-0 banner-grid-pattern-compact pointer-events-none opacity-90"></div>
+    <div class="mb-14 last:mb-0">
+        {{-- Section Header --}}
+        <div class="mx-auto mb-10 sm:mb-12 flex max-w-3xl flex-col items-center text-center">
+            {{-- PMB Period Name: Lebih kecil dari judul, Abu-abu Gelap (#374151 / text-gray-700), ALL CAPS --}}
+            <span class="text-xs sm:text-sm font-bold uppercase tracking-widest text-gray-700 font-heading mb-2.5">
+                {{ $period->name }}
+            </span>
 
-            <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-                {{-- Banner Information Text --}}
-                <div class="space-y-2">
-                    <div class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/90 drop-shadow-xs">
-                        <span>Tahun Akademik {{ $period->academic_year }}</span>
-                        <span class="text-white/60">•</span>
-                        <span>Periode Penerimaan</span>
-                    </div>
-
-                    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight drop-shadow-xs">
-                        {{ $period->name }}
-                    </h2>
-
-                    <p class="text-sm sm:text-base text-white/90 max-w-xl font-normal drop-shadow-xs leading-relaxed">
-                        Jalur seleksi penerimaan reguler dengan kuota terintegrasi ke seluruh pilihan program studi unggulan.
-                    </p>
-                </div>
-
-                {{-- Banner Right Side Action / Status Pill --}}
-                <div class="flex flex-wrap items-center gap-3 shrink-0">
-                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold text-white bg-white/20 backdrop-blur-md border border-white/30 shadow-xs">
-                        <span class="w-2 h-2 rounded-full {{ $period->status === 'open' ? 'bg-[#16A34A] animate-pulse' : 'bg-gray-300' }}"></span>
-                        {{ $period->status === 'open' ? 'Sedang Dibuka' : 'Ditutup' }}
-                    </span>
-
-                    @if($period->status === 'open')
-                        <a href="{{ route('register') }}" 
-                           class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-black font-bold text-sm shadow-sm hover:bg-gray-100 hover:shadow-md transition">
-                            <span>Daftar Sekarang</span>
-                            <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </a>
-                    @endif
-                </div>
-            </div>
+            {{-- Prominent Elegant Main Heading --}}
+            <h1 class="text-3xl font-extrabold tracking-tight text-black sm:text-4xl md:text-5xl leading-[1.18]">
+                Pendaftaran Mahasiswa Baru Telah Resmi Dibuka
+            </h1>
         </div>
 
-        {{-- =====================================================================
-             3. CARD METRICS FOR DATES & FEES (Inspired by Astrix Dashboard Metrics Layout)
-             ===================================================================== --}}
+        {{-- 3-Column Card Metrics: Buka, Tutup, Biaya Pendaftaran (Astrix Style) --}}
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
             {{-- Metric Card 1: Tanggal Buka --}}
             <article class="group relative rounded-2xl bg-white border border-[#DBDCFA] p-5 sm:p-6 shadow-xs hover:border-[#5F4AF7]/40 hover:shadow-sm transition-all duration-200 flex flex-col justify-between gap-6">
-                {{-- Top Row: Label paired horizontally with Lucide-style Calendar Icon --}}
+                {{-- Top Row: Label paired horizontally with Calendar Icon --}}
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-[#F2F5FF] border border-[#DBDCFA] text-[#5F4AF7] flex items-center justify-center shrink-0 group-hover:bg-[#5F4AF7] group-hover:text-white transition duration-200">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -104,7 +46,7 @@
 
             {{-- Metric Card 2: Tanggal Tutup --}}
             <article class="group relative rounded-2xl bg-white border border-[#DBDCFA] p-5 sm:p-6 shadow-xs hover:border-[#5F4AF7]/40 hover:shadow-sm transition-all duration-200 flex flex-col justify-between gap-6">
-                {{-- Top Row: Label paired horizontally with Lucide-style Clock / Hourglass Icon --}}
+                {{-- Top Row: Label paired horizontally with Clock Icon --}}
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-[#F2F5FF] border border-[#DBDCFA] text-[#5F4AF7] flex items-center justify-center shrink-0 group-hover:bg-[#5F4AF7] group-hover:text-white transition duration-200">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -129,7 +71,7 @@
 
             {{-- Metric Card 3: Biaya Pendaftaran --}}
             <article class="group relative rounded-2xl bg-white border border-[#DBDCFA] p-5 sm:p-6 shadow-xs hover:border-[#5F4AF7]/40 hover:shadow-sm transition-all duration-200 flex flex-col justify-between gap-6">
-                {{-- Top Row: Label paired horizontally with Lucide-style Tag / Currency Icon --}}
+                {{-- Top Row: Label paired horizontally with Tag Icon --}}
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-[#F2F5FF] border border-[#DBDCFA] text-[#5F4AF7] flex items-center justify-center shrink-0 group-hover:bg-[#5F4AF7] group-hover:text-white transition duration-200">
                         <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
