@@ -1,0 +1,59 @@
+name: Auto Deploy Laravel to GRIV Cloud
+
+# BAGIAN A: Kapan robot ini bekerja?
+on:
+  push:
+    branches:
+      - main  # <-- CEK BAGIAN INI: Ganti jadi 'master' jika branch GitHub Anda bernama master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Robot mengambil kode terbaru dari GitHub
+      - name: Checkout kode
+        uses: actions/checkout@v4
+
+      # 2. Robot menyiapkan PHP & Composer (untuk folder vendor)
+      - name: Setup PHP & Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # <-- CEK BAGIAN INI: Sesuaikan dengan versi PHP di cPanel (misal '8.1' atau '8.3')
+
+      - name: Install Composer
+        run: composer install --no-dev --optimize-autoloader
+
+      # 3. Robot merakit CSS/JS tampilan (Vite/Tailwind)
+      - name: Build CSS & JS
+        run: |
+          npm ci
+          npm run build
+
+      # 4. Robot mengirim KODE INTI ke folder inti di cPanel
+      - name: Kirim ke folder inti Laravel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /pmb_core/ # <-- CEK BAGIAN INI: Ganti sesuai nama folder inti di File Manager cPanel Anda
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .env
+            public/**
+
+      # 5. Robot mengirim TAMPILAN (CSS/JS/Gambar) ke folder subdomain di cPanel
+      - name: Kirim ke folder subdomain
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./public/
+          server-dir: /pmb.firasporto.my.id/ # <-- CEK BAGIAN INI: Ganti sesuai nama folder subdomain di cPanel Anda
+          exclude: |
+            index.php
+            .htaccess
