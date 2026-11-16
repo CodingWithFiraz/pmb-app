@@ -8,7 +8,7 @@
         <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#818CA2] mb-1">
             <a href="{{ route('admin.dashboard') }}" class="hover:text-black transition">Dashboard</a>
             <span>/</span>
-            <span class="text-[#606ADF]">Pendaftar</span>
+            <span class="text-[#5F4AF7]">Pendaftar</span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Daftar Pendaftar</h1>
     </div>
@@ -29,13 +29,13 @@
         <div class="relative flex-1">
             <input type="text" name="search" value="{{ request('search') }}"
                 placeholder="Cari nama, nomor pendaftaran, atau email..."
-                class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl pl-10 pr-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl pl-10 pr-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
             <svg class="w-4 h-4 text-[#818CA2] absolute left-3.5 top-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
             </svg>
         </div>
         <select name="status" 
-            class="bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+            class="bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
             <option value="">Semua Status</option>
             @php
                 $statusLabels = [
@@ -52,7 +52,7 @@
             @endforeach
         </select>
         <button type="submit" 
-            class="bg-[#606ADF] text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#4F58CC] transition shadow-xs">
+            class="bg-[#5F4AF7] text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#4E39E5] transition shadow-xs">
             Filter
         </button>
         @if(request('search') || request('status'))
@@ -81,7 +81,7 @@
             <tbody class="divide-y divide-[#E5EAFC]">
                 @forelse($applications as $app)
                     <tr class="hover:bg-[#F2F5FF]/50 transition">
-                        <td class="px-6 py-4 font-mono text-xs font-semibold text-[#606ADF]">
+                        <td class="px-6 py-4 font-mono text-xs font-semibold text-[#5F4AF7]">
                             {{ $app->registration_number ?? '-' }}
                         </td>
                         <td class="px-6 py-4">
@@ -112,7 +112,7 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             <a href="{{ route('admin.applications.show', $app) }}" 
-                               class="inline-flex items-center text-xs font-semibold text-[#606ADF] hover:text-[#4F58CC] hover:underline">
+                               class="inline-flex items-center text-xs font-semibold text-[#5F4AF7] hover:text-[#4E39E5] hover:underline">
                                 Detail →
                             </a>
                         </td>
@@ -120,7 +120,7 @@
                 @empty
                     <tr>
                         <td colspan="6" class="text-center py-12 text-[#818CA2]">
-                            <div class="w-12 h-12 rounded-xl bg-[#F2F5FF] text-[#606ADF] flex items-center justify-center mx-auto mb-3">
+                            <div class="w-12 h-12 rounded-xl bg-[#F2F5FF] text-[#5F4AF7] flex items-center justify-center mx-auto mb-3">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
                                 </svg>

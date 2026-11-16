@@ -11,7 +11,7 @@
                 <span>/</span>
                 <a href="{{ route('admin.applications.index') }}" class="hover:text-black transition">Pendaftar</a>
                 <span>/</span>
-                <span class="text-[#606ADF]">Detail</span>
+                <span class="text-[#5F4AF7]">Detail</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Detail Pendaftar</h1>
         </div>
@@ -30,7 +30,7 @@
             <div>
                 <h2 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">{{ $application->full_name }}</h2>
                 @if($application->registration_number)
-                    <div class="inline-block font-mono text-xs font-bold text-[#606ADF] bg-[#F2F5FF] border border-[#606ADF]/20 px-3 py-1 rounded-lg mt-3">
+                    <div class="inline-block font-mono text-xs font-bold text-[#5F4AF7] bg-[#F2F5FF] border border-[#5F4AF7]/20 px-3 py-1 rounded-lg mt-3">
                         {{ $application->registration_number }}
                     </div>
                 @endif
@@ -133,7 +133,7 @@
                             @endif
                         </div>
                         <a href="{{ route('admin.applications.document.download', [$application, $doc]) }}"
-                            class="bg-[#606ADF] hover:bg-[#4F58CC] text-white px-4 py-2 rounded-xl text-xs font-semibold transition inline-flex items-center gap-1.5 shadow-xs">
+                            class="bg-[#5F4AF7] hover:bg-[#4E39E5] text-white px-4 py-2 rounded-xl text-xs font-semibold transition inline-flex items-center gap-1.5 shadow-xs">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
@@ -153,7 +153,7 @@
                 @csrf
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Aksi Pemeriksaan</label>
-                    <select name="action" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF]">
+                    <select name="action" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7]">
                         @if($application->status === 'submitted')
                             <option value="under_review">Mulai Periksa (Under Review)</option>
                         @endif
@@ -163,7 +163,7 @@
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Catatan Pemeriksa (wajib diisi jika minta revisi)</label>
                     <textarea name="note" rows="3"
-                        class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF]"
+                        class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7]"
                         placeholder="Jelaskan apa yang perlu diperbaiki pendaftar..."></textarea>
                 </div>
                 <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition shadow-xs">
@@ -181,14 +181,14 @@
                 @csrf
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Keputusan Kelulusan</label>
-                    <select name="decision" id="decision" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF]">
+                    <select name="decision" id="decision" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7]">
                         <option value="passed">✓ Dinyatakan Lulus</option>
                         <option value="not_passed">✗ Dinyatakan Tidak Lulus</option>
                     </select>
                 </div>
                 <div id="ukt-golongan-field">
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Golongan UKT</label>
-                    <select name="ukt_golongan" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF]">
+                    <select name="ukt_golongan" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7]">
                         <option value="">Pilih golongan 1–5</option>
                         @foreach(config('ukt.golongan', []) as $golongan => $nominal)
                             <option value="{{ $golongan }}">
@@ -201,12 +201,12 @@
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Catatan Keputusan (opsional)</label>
                     <textarea name="note" rows="2"
-                        class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF]"
+                        class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7]"
                         placeholder="Berikan pesan kelulusan / alasan..."></textarea>
                 </div>
                 <button type="submit"
                     onclick="return confirm('Yakin ingin menetapkan keputusan seleksi ini? Keputusan ini akan diteruskan ke pendaftar.')"
-                    class="bg-[#606ADF] hover:bg-[#4F58CC] text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition shadow-xs">
+                    class="bg-[#5F4AF7] hover:bg-[#4E39E5] text-white px-6 py-2.5 rounded-xl font-semibold text-sm transition shadow-xs">
                     Tetapkan Keputusan Seleksi
                 </button>
             </form>
@@ -229,7 +229,7 @@
                 @csrf
                 <div class="flex-1 min-w-[200px]">
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Ubah Golongan UKT</label>
-                    <select name="ukt_golongan" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF]">
+                    <select name="ukt_golongan" class="w-full bg-[#F2F5FF]/60 border border-[#E5EAFC] rounded-xl px-4 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7]">
                         @foreach(config('ukt.golongan', []) as $golongan => $nominal)
                             <option value="{{ $golongan }}" @selected($application->ukt_golongan == $golongan)>
                                 {{ config('ukt.labels.'.$golongan) }} — Rp {{ number_format($nominal, 0, ',', '.') }}
@@ -257,7 +257,7 @@
                             {{ $h->created_at->format('d M Y, H:i') }}
                         </div>
                         <div class="flex-1 text-sm">
-                            <span class="font-semibold text-[#606ADF]">{{ $h->to_status }}</span>
+                            <span class="font-semibold text-[#5F4AF7]">{{ $h->to_status }}</span>
                             <span class="text-xs text-[#818CA2] ml-1.5">oleh {{ $h->changedBy->name }}</span>
                             @if($h->note)
                                 <div class="text-gray-700 text-xs mt-1 bg-white p-2.5 rounded-lg border border-[#E5EAFC]">{{ $h->note }}</div>

@@ -50,7 +50,7 @@
                         Program Studi <span class="text-red-500">*</span>
                     </label>
                     <select name="study_program_id" 
-                        class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                        class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                         @foreach($studyPrograms as $prodi)
                             <option value="{{ $prodi->id }}" {{ $application->study_program_id == $prodi->id ? 'selected' : '' }}>
                                 {{ $prodi->name }} ({{ $prodi->faculty }})
@@ -71,7 +71,7 @@
                         Nama Lengkap <span class="text-red-500">*</span>
                     </label>
                     <input type="text" name="full_name" value="{{ old('full_name', $application->full_name) }}"
-                        class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                        class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                     @error('full_name')<p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>@enderror
                 </div>
 
@@ -79,13 +79,13 @@
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">NIK</label>
                         <input type="text" name="nik" value="{{ old('nik', $application->nik) }}" maxlength="16"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
                             Jenis Kelamin <span class="text-red-500">*</span>
                         </label>
-                        <select name="gender" class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                        <select name="gender" class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                             <option value="male" {{ old('gender', $application->gender) == 'male' ? 'selected' : '' }}>Laki-laki</option>
                             <option value="female" {{ old('gender', $application->gender) == 'female' ? 'selected' : '' }}>Perempuan</option>
                         </select>
@@ -98,21 +98,21 @@
                             Tempat Lahir <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="birth_place" value="{{ old('birth_place', $application->birth_place) }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
                             Tanggal Lahir <span class="text-red-500">*</span>
                         </label>
                         <input type="date" name="birth_date" value="{{ old('birth_date', $application->birth_date?->format('Y-m-d')) }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Agama</label>
-                        <select name="religion" class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                        <select name="religion" class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
                             @foreach(['Islam','Kristen','Katolik','Hindu','Buddha','Konghucu','Lainnya'] as $r)
                                 <option value="{{ $r }}" {{ old('religion', $application->religion) == $r ? 'selected' : '' }}>{{ $r }}</option>
                             @endforeach
@@ -123,7 +123,7 @@
                             Nomor HP <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="phone" value="{{ old('phone', $application->phone) }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                     </div>
                 </div>
 
@@ -132,7 +132,7 @@
                         Alamat Lengkap <span class="text-red-500">*</span>
                     </label>
                     <textarea name="address" rows="3"
-                        class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>{{ old('address', $application->address) }}</textarea>
+                        class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>{{ old('address', $application->address) }}</textarea>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -141,19 +141,19 @@
                             Kota <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="city" value="{{ old('city', $application->city) }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
                             Provinsi <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="province" value="{{ old('province', $application->province) }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Kode Pos</label>
                         <input type="text" name="postal_code" value="{{ old('postal_code', $application->postal_code) }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
                     </div>
                 </div>
             </div>
@@ -170,19 +170,19 @@
                             Nama Sekolah <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="school_name" value="{{ old('school_name', $application->school_name) }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
                             Kota Sekolah <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="school_city" value="{{ old('school_city', $application->school_city) }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Jurusan</label>
                         <input type="text" name="major" value="{{ old('major', $application->major) }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
@@ -190,12 +190,12 @@
                         </label>
                         <input type="number" name="graduation_year" value="{{ old('graduation_year', $application->graduation_year) }}"
                             min="2000" max="{{ date('Y') + 1 }}"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                     </div>
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">Nilai Rata-rata</label>
                         <input type="number" name="gpa" value="{{ old('gpa', $application->gpa) }}" step="0.01" min="0" max="100"
-                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                            class="w-full bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
                     </div>
                 </div>
             </div>
@@ -203,7 +203,7 @@
             {{-- Submit Buttons --}}
             <div class="flex items-center gap-3 pt-2">
                 <button type="submit" 
-                    class="bg-[#606ADF] text-white px-8 py-3.5 rounded-xl font-semibold text-sm hover:bg-[#4F58CC] transition shadow-xs">
+                    class="bg-[#5F4AF7] text-white px-8 py-3.5 rounded-xl font-semibold text-sm hover:bg-[#4E39E5] transition shadow-xs">
                     Simpan Perubahan Formulir
                 </button>
                 <a href="{{ route('applicant.dashboard') }}" 

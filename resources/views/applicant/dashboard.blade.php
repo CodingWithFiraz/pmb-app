@@ -11,7 +11,7 @@
 {{-- Applications List / Empty State --}}
 @if($applications->isEmpty())
     <div class="bg-white shadow-xs border border-[#E5EAFC] rounded-2xl p-10 sm:p-14 text-center">
-        <div class="w-16 h-16 rounded-2xl bg-[#F2F5FF] text-[#606ADF] mx-auto flex items-center justify-center mb-5">
+        <div class="w-16 h-16 rounded-2xl bg-[#F2F5FF] text-[#5F4AF7] mx-auto flex items-center justify-center mb-5">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
             </svg>
@@ -38,7 +38,7 @@
             <div class="bg-white shadow-xs border border-[#E5EAFC] rounded-2xl p-6 sm:p-7 hover:shadow-md transition">
                 <div class="flex flex-wrap justify-between items-start gap-4">
                     <div>
-                        <div class="text-xs font-semibold uppercase tracking-wider text-[#606ADF] mb-1">
+                        <div class="text-xs font-semibold uppercase tracking-wider text-[#5F4AF7] mb-1">
                             {{ $application->admissionPeriod->name }}
                         </div>
                         <h2 class="text-xl sm:text-2xl font-extrabold text-black tracking-tight">
@@ -48,7 +48,7 @@
                             {{ $application->studyProgram->name }} ({{ $application->studyProgram->faculty }})
                         </div>
                         @if($application->registration_number)
-                            <div class="inline-block font-mono text-xs font-bold text-[#606ADF] bg-[#F2F5FF] border border-[#606ADF]/20 px-3 py-1 rounded-lg mt-3">
+                            <div class="inline-block font-mono text-xs font-bold text-[#5F4AF7] bg-[#F2F5FF] border border-[#5F4AF7]/20 px-3 py-1 rounded-lg mt-3">
                                 {{ $application->registration_number }}
                             </div>
                         @endif
@@ -88,7 +88,7 @@
                 <div class="mt-6 pt-5 border-t border-[#E5EAFC] flex flex-wrap items-center gap-3">
                     @if($application->isEditable())
                         <a href="{{ route('applicant.application.edit', $application) }}"
-                            class="bg-[#606ADF] hover:bg-[#4F58CC] text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-xs">
+                            class="bg-[#5F4AF7] hover:bg-[#4E39E5] text-white px-4 py-2 rounded-xl text-xs font-semibold transition shadow-xs">
                             Edit Formulir
                         </a>
                         <a href="{{ route('applicant.document.index', $application) }}"
@@ -96,7 +96,7 @@
                             Kelola Dokumen
                         </a>
                         <a href="{{ route('applicant.application.summary', $application) }}"
-                            class="border border-[#606ADF] text-[#606ADF] hover:bg-[#F2F5FF] px-4 py-2 rounded-xl text-xs font-semibold transition">
+                            class="border border-[#5F4AF7] text-[#5F4AF7] hover:bg-[#F2F5FF] px-4 py-2 rounded-xl text-xs font-semibold transition">
                             Ringkasan & Kirim
                         </a>
                     @endif

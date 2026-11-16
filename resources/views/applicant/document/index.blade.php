@@ -12,7 +12,7 @@
 
     {{-- Format Guidelines Notice --}}
     <div class="bg-[#F3F3FF] rounded-2xl p-5 border border-[#E5EAFC] shadow-xs flex items-center gap-4">
-        <div class="w-10 h-10 rounded-xl bg-[#FEFDFF] border border-[#DBDCFA] text-[#606ADF] flex items-center justify-center shrink-0">
+        <div class="w-10 h-10 rounded-xl bg-[#FEFDFF] border border-[#DBDCFA] text-[#5F4AF7] flex items-center justify-center shrink-0">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
             </svg>
@@ -75,7 +75,7 @@
                     </div>
                     @if($doc)
                         <a href="{{ route('applicant.document.download', $doc) }}"
-                            class="bg-[#FEFDFF] text-[#606ADF] border border-[#DBDCFA] hover:bg-[#606ADF] hover:text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold transition inline-flex items-center gap-1.5 shadow-2xs">
+                            class="bg-[#FEFDFF] text-[#5F4AF7] border border-[#DBDCFA] hover:bg-[#5F4AF7] hover:text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold transition inline-flex items-center gap-1.5 shadow-2xs">
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
                             </svg>
@@ -92,7 +92,7 @@
                         <input type="hidden" name="document_type" value="{{ $type }}">
                         <div class="flex flex-col sm:flex-row gap-3">
                             <input type="file" name="file" accept=".pdf,.jpg,.jpeg,.png" required
-                                class="flex-1 text-xs text-black bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-3 py-2 file:mr-3 file:py-1 file:px-3.5 file:rounded-lg file:border file:border-[#DBDCFA] file:bg-[#F3F3FF] file:text-black hover:file:bg-white file:text-xs file:font-semibold file:transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#606ADF]">
+                                class="flex-1 text-xs text-black bg-[#F3F3FF] border border-[#DBDCFA] rounded-xl px-3 py-2 file:mr-3 file:py-1 file:px-3.5 file:rounded-lg file:border file:border-[#DBDCFA] file:bg-[#F3F3FF] file:text-black hover:file:bg-white file:text-xs file:font-semibold file:transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#5F4AF7]">
                             <button type="submit"
                                 class="bg-black hover:bg-gray-800 text-white px-5 py-2 rounded-xl text-xs font-semibold transition shrink-0 inline-flex items-center justify-center gap-1.5 shadow-xs">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">

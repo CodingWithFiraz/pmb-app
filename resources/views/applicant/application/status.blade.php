@@ -9,7 +9,7 @@
             <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#818CA2] mb-1">
                 <a href="{{ route('applicant.dashboard') }}" class="hover:text-black transition">Dashboard</a>
                 <span>/</span>
-                <span class="text-[#606ADF]">Status Pendaftaran</span>
+                <span class="text-[#5F4AF7]">Status Pendaftaran</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Status Pendaftaran</h1>
         </div>
@@ -27,7 +27,7 @@
         @if($application->registration_number)
             <div class="mb-4">
                 <span class="text-xs uppercase tracking-wider font-semibold text-[#818CA2] block">Nomor Pendaftaran</span>
-                <span class="font-mono text-2xl sm:text-3xl font-extrabold text-[#606ADF] tracking-tight block mt-1">
+                <span class="font-mono text-2xl sm:text-3xl font-extrabold text-[#5F4AF7] tracking-tight block mt-1">
                     {{ $application->registration_number }}
                 </span>
             </div>
@@ -141,9 +141,9 @@
                                 @if($history->from_status)
                                     <span class="text-[#818CA2] font-normal">{{ $history->from_status }}</span>
                                     <span class="text-[#818CA2]">→</span>
-                                    <span class="text-[#606ADF]">{{ $history->to_status }}</span>
+                                    <span class="text-[#5F4AF7]">{{ $history->to_status }}</span>
                                 @else
-                                    <span class="text-[#606ADF]">{{ $history->to_status }}</span>
+                                    <span class="text-[#5F4AF7]">{{ $history->to_status }}</span>
                                 @endif
                             </div>
                             @if($history->note)

@@ -8,7 +8,7 @@
         <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#818CA2] mb-1">
             <a href="{{ route('applicant.dashboard') }}" class="hover:text-black transition">Dashboard</a>
             <span>/</span>
-            <span class="text-[#606ADF]">Ringkasan</span>
+            <span class="text-[#5F4AF7]">Ringkasan</span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Ringkasan Pendaftaran</h1>
         <p class="text-xs sm:text-sm text-[#818CA2] mt-0.5">Periksa kembali data diri dan kelengkapan dokumen kamu sebelum dikirim</p>
@@ -25,8 +25,8 @@
                 <span class="w-6 h-6 rounded-full bg-[#F0FDF4] text-[#16A34A] flex items-center justify-center text-xs font-bold">✓</span>
                 <span class="hidden sm:inline">Upload</span> Dokumen
             </a>
-            <div class="flex items-center justify-center gap-2 text-[#606ADF] pb-1 border-b-2 border-[#606ADF]">
-                <span class="w-6 h-6 rounded-full bg-[#F2F5FF] text-[#606ADF] flex items-center justify-center text-xs font-bold">3</span>
+            <div class="flex items-center justify-center gap-2 text-[#5F4AF7] pb-1 border-b-2 border-[#5F4AF7]">
+                <span class="w-6 h-6 rounded-full bg-[#F2F5FF] text-[#5F4AF7] flex items-center justify-center text-xs font-bold">3</span>
                 <span class="hidden sm:inline">Ringkasan &</span> Kirim
             </div>
         </div>
@@ -38,7 +38,7 @@
             <h2 class="font-bold text-lg text-black">Informasi Formulir Pendaftaran</h2>
             @if($application->isEditable())
                 <a href="{{ route('applicant.application.edit', $application) }}" 
-                   class="text-xs font-semibold text-[#606ADF] hover:underline">
+                   class="text-xs font-semibold text-[#5F4AF7] hover:underline">
                     Edit Data →
                 </a>
             @endif
@@ -85,7 +85,7 @@
             <h2 class="font-bold text-lg text-black">Kelengkapan Dokumen</h2>
             @if($application->isEditable())
                 <a href="{{ route('applicant.document.index', $application) }}" 
-                   class="text-xs font-semibold text-[#606ADF] hover:underline">
+                   class="text-xs font-semibold text-[#5F4AF7] hover:underline">
                     Kelola Dokumen →
                 </a>
             @endif
@@ -125,7 +125,7 @@
             <form method="POST" action="{{ route('applicant.application.submit', $application) }}">
                 @csrf
                 <label class="flex items-start gap-3 p-4 rounded-xl bg-[#F2F5FF]/50 border border-[#E5EAFC] mb-6 cursor-pointer">
-                    <input type="checkbox" required class="w-4 h-4 mt-0.5 text-[#606ADF] focus:ring-[#606ADF] border-gray-300 rounded">
+                    <input type="checkbox" required class="w-4 h-4 mt-0.5 text-[#5F4AF7] focus:ring-[#5F4AF7] border-gray-300 rounded">
                     <span class="text-xs sm:text-sm text-gray-800 font-medium">
                         Saya menyatakan bahwa seluruh data yang saya isikan adalah benar dan saya bertanggung jawab penuh atas keabsahan dokumen yang diunggah.
                     </span>
@@ -151,7 +151,7 @@
         <div class="bg-white rounded-2xl p-6 border border-[#E5EAFC] shadow-xs text-center">
             <p class="text-sm text-[#818CA2] mb-3">Pendaftaran ini sudah dikirimkan pada {{ $application->submitted_at?->format('d M Y, H:i') }}.</p>
             <a href="{{ route('applicant.application.status', $application) }}" 
-               class="bg-[#606ADF] text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#4F58CC] transition inline-block">
+               class="bg-[#5F4AF7] text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#4E39E5] transition inline-block">
                 Lihat Status Pendaftaran →
             </a>
         </div>

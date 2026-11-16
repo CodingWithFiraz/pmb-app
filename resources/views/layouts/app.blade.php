@@ -106,7 +106,7 @@
     @endif
     @if(session('info'))
         <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 mt-4">
-            <div class="bg-[#F2F5FF] border border-[#606ADF]/30 text-[#606ADF] px-5 py-3 rounded-xl text-sm font-medium">
+            <div class="bg-[#F2F5FF] border border-[#5F4AF7]/30 text-[#5F4AF7] px-5 py-3 rounded-xl text-sm font-medium">
                 {{ session('info') }}
             </div>
         </div>

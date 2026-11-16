@@ -11,7 +11,7 @@
                 <span>/</span>
                 <a href="{{ route('admin.program-studi.index') }}" class="hover:text-black transition">Program Studi</a>
                 <span>/</span>
-                <span class="text-[#606ADF]">Edit</span>
+                <span class="text-[#5F4AF7]">Edit</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Edit Program Studi</h1>
         </div>
@@ -36,7 +36,7 @@
                         Kode Prodi <span class="text-red-500">*</span>
                     </label>
                     <input type="text" name="code" value="{{ old('code', $programStudi->code) }}"
-                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm font-mono text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition @error('code') border-red-500 @enderror"
+                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm font-mono text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition @error('code') border-red-500 @enderror"
                         required>
                     @error('code')<p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>@enderror
                 </div>
@@ -45,7 +45,7 @@
                         Nama Program Studi <span class="text-red-500">*</span>
                     </label>
                     <input type="text" name="name" value="{{ old('name', $programStudi->name) }}"
-                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition"
+                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition"
                         required>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     Fakultas <span class="text-red-500">*</span>
                 </label>
                 <input type="text" name="faculty" value="{{ old('faculty', $programStudi->faculty) }}"
-                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition"
+                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition"
                     required>
             </div>
 
@@ -64,7 +64,7 @@
                     Deskripsi Program Studi
                 </label>
                 <textarea name="description" rows="3"
-                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">{{ old('description', $programStudi->description) }}</textarea>
+                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">{{ old('description', $programStudi->description) }}</textarea>
             </div>
 
             <div>
@@ -72,13 +72,13 @@
                     Kuota Mahasiswa
                 </label>
                 <input type="number" name="quota" value="{{ old('quota', $programStudi->quota) }}" min="1"
-                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
             </div>
 
             <div>
                 <label class="flex items-center gap-3 cursor-pointer p-3.5 rounded-xl border border-[#E5EAFC] bg-[#F2F5FF]/40 hover:bg-[#F2F5FF] transition">
                     <input type="checkbox" name="is_active" value="1" {{ $programStudi->is_active ? 'checked' : '' }}
-                        class="w-4 h-4 text-[#606ADF] focus:ring-[#606ADF] border-gray-300 rounded">
+                        class="w-4 h-4 text-[#5F4AF7] focus:ring-[#5F4AF7] border-gray-300 rounded">
                     <div>
                         <span class="text-sm font-semibold text-black block">Status Program Studi Aktif</span>
                         <span class="text-xs text-[#818CA2] block">Program studi ini dapat dipilih oleh calon pendaftar.</span>
@@ -88,7 +88,7 @@
 
             <div class="pt-4 border-t border-[#E5EAFC] flex items-center gap-3">
                 <button type="submit" 
-                    class="bg-[#606ADF] text-white px-7 py-3 rounded-xl font-semibold text-sm hover:bg-[#4F58CC] transition shadow-xs">
+                    class="bg-[#5F4AF7] text-white px-7 py-3 rounded-xl font-semibold text-sm hover:bg-[#4E39E5] transition shadow-xs">
                     Update Program Studi
                 </button>
                 <a href="{{ route('admin.program-studi.index') }}" 

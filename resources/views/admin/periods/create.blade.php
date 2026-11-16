@@ -11,7 +11,7 @@
                 <span>/</span>
                 <a href="{{ route('admin.periode.index') }}" class="hover:text-black transition">Periode</a>
                 <span>/</span>
-                <span class="text-[#606ADF]">Tambah</span>
+                <span class="text-[#5F4AF7]">Tambah</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Tambah Periode Penerimaan</h1>
         </div>
@@ -33,7 +33,7 @@
                     Nama Periode <span class="text-red-500">*</span>
                 </label>
                 <input type="text" name="name" value="{{ old('name') }}"
-                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition @error('name') border-red-500 @enderror"
+                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition @error('name') border-red-500 @enderror"
                     placeholder="Contoh: PMB Reguler Gelombang 1 2026/2027" required>
                 @error('name')<p class="text-red-500 text-xs mt-1 font-medium">{{ $message }}</p>@enderror
             </div>
@@ -43,7 +43,7 @@
                     Tahun Akademik <span class="text-red-500">*</span>
                 </label>
                 <input type="text" name="academic_year" value="{{ old('academic_year') }}"
-                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition"
+                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition"
                     placeholder="Contoh: 2026/2027" required>
             </div>
 
@@ -53,14 +53,14 @@
                         Tanggal & Waktu Buka <span class="text-red-500">*</span>
                     </label>
                     <input type="datetime-local" name="starts_at" value="{{ old('starts_at') }}"
-                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
                         Tanggal & Waktu Tutup <span class="text-red-500">*</span>
                     </label>
                     <input type="datetime-local" name="ends_at" value="{{ old('ends_at') }}"
-                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                 </div>
             </div>
 
@@ -69,7 +69,7 @@
                     Biaya Pendaftaran (Rp)
                 </label>
                 <input type="number" name="registration_fee" value="{{ old('registration_fee', 0) }}" min="0"
-                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
                 <p class="text-xs text-[#818CA2] mt-1">Isi 0 jika pendaftaran gratis tanpa biaya.</p>
             </div>
 
@@ -77,7 +77,7 @@
                 <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
                     Status Penerimaan
                 </label>
-                <select name="status" class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                <select name="status" class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
                     <option value="closed">Ditutup</option>
                     <option value="open">Dibuka</option>
                 </select>
@@ -85,7 +85,7 @@
 
             <div class="pt-4 border-t border-[#E5EAFC] flex items-center gap-3">
                 <button type="submit" 
-                    class="bg-[#606ADF] text-white px-7 py-3 rounded-xl font-semibold text-sm hover:bg-[#4F58CC] transition shadow-xs">
+                    class="bg-[#5F4AF7] text-white px-7 py-3 rounded-xl font-semibold text-sm hover:bg-[#4E39E5] transition shadow-xs">
                     Simpan Periode
                 </button>
                 <a href="{{ route('admin.periode.index') }}" 

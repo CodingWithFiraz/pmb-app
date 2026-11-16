@@ -7,12 +7,12 @@
         <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#818CA2] mb-1">
             <a href="{{ route('admin.dashboard') }}" class="hover:text-black transition">Dashboard</a>
             <span>/</span>
-            <span class="text-[#606ADF]">Periode</span>
+            <span class="text-[#5F4AF7]">Periode</span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Periode Penerimaan</h1>
     </div>
     <a href="{{ route('admin.periode.create') }}" 
-       class="bg-[#606ADF] text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#4F58CC] transition inline-flex items-center gap-2 shadow-xs">
+       class="bg-[#5F4AF7] text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#4E39E5] transition inline-flex items-center gap-2 shadow-xs">
         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
         </svg>
@@ -65,7 +65,7 @@
                         </td>
                         <td class="px-6 py-4 text-right">
                             <a href="{{ route('admin.periode.edit', $period) }}" 
-                               class="inline-flex items-center text-xs font-semibold text-[#606ADF] hover:text-[#4F58CC] hover:underline">
+                               class="inline-flex items-center text-xs font-semibold text-[#5F4AF7] hover:text-[#4E39E5] hover:underline">
                                 Edit →
                             </a>
                         </td>
@@ -73,7 +73,7 @@
                 @empty
                     <tr>
                         <td colspan="7" class="text-center py-12 text-[#818CA2]">
-                            <div class="w-12 h-12 rounded-xl bg-[#F2F5FF] text-[#606ADF] flex items-center justify-center mx-auto mb-3">
+                            <div class="w-12 h-12 rounded-xl bg-[#F2F5FF] text-[#5F4AF7] flex items-center justify-center mx-auto mb-3">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
                                 </svg>

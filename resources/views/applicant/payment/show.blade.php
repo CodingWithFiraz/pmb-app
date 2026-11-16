@@ -8,13 +8,13 @@
             <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#818CA2] mb-1">
                 <a href="{{ route('applicant.dashboard') }}" class="hover:text-black transition">Dashboard</a>
                 <span>/</span>
-                <span class="text-[#606ADF]">Pembayaran</span>
+                <span class="text-[#5F4AF7]">Pembayaran</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Pembayaran UKT</h1>
             <p class="text-sm text-[#818CA2] mt-1">Langkah lanjutan setelah dokumen pendaftaran dinyatakan lulus verifikasi.</p>
         </div>
         <a href="{{ route('applicant.dashboard') }}" 
-           class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#606ADF] bg-white border border-[#DBDCFA] px-4 py-2 rounded-xl hover:bg-[#F2F5FF] transition shadow-xs">
+           class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5F4AF7] bg-white border border-[#DBDCFA] px-4 py-2 rounded-xl hover:bg-[#F2F5FF] transition shadow-xs">
             ← Kembali ke Dashboard
         </a>
     </div>
@@ -31,7 +31,7 @@
     {{-- Data Pendaftaran Card --}}
     <div class="bg-white rounded-2xl border border-[#E5EAFC] shadow-xs p-6 mb-5">
         <h2 class="text-base font-bold text-black mb-4 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-[#606ADF]"></span>
+            <span class="w-2 h-2 rounded-full bg-[#5F4AF7]"></span>
             Data Pendaftaran
         </h2>
         <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-sm">
@@ -41,7 +41,7 @@
             </div>
             <div>
                 <dt class="text-xs uppercase tracking-wider text-[#818CA2]">Nomor Pendaftaran</dt>
-                <dd class="font-mono font-bold text-[#606ADF] mt-0.5">{{ $application->registration_number ?? '-' }}</dd>
+                <dd class="font-mono font-bold text-[#5F4AF7] mt-0.5">{{ $application->registration_number ?? '-' }}</dd>
             </div>
             <div>
                 <dt class="text-xs uppercase tracking-wider text-[#818CA2]">Program Studi Pilihan</dt>
@@ -85,7 +85,7 @@
                     @click="open = !open"
                     class="w-full flex items-center justify-between px-4 py-3 bg-[#F2F5FF]/60 hover:bg-[#F2F5FF] transition text-xs font-bold text-gray-700">
                     <span class="flex items-center gap-2">
-                        <svg class="w-4 h-4 text-[#606ADF]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="w-4 h-4 text-[#5F4AF7]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         Lihat Referensi Tabel Golongan UKT
@@ -129,7 +129,7 @@
         {{-- Checkout Section --}}
         <div class="bg-white rounded-2xl border border-[#E5EAFC] shadow-xs p-6">
             <h2 class="text-base font-bold text-black mb-3 flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-[#606ADF]"></span>
+                <span class="w-2 h-2 rounded-full bg-[#5F4AF7]"></span>
                 Pembayaran Online Midtrans
             </h2>
 

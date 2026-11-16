@@ -11,7 +11,7 @@
                 <span>/</span>
                 <a href="{{ route('admin.periode.index') }}" class="hover:text-black transition">Periode</a>
                 <span>/</span>
-                <span class="text-[#606ADF]">Edit</span>
+                <span class="text-[#5F4AF7]">Edit</span>
             </div>
             <h1 class="text-2xl sm:text-3xl font-extrabold text-black tracking-tight">Edit Periode Penerimaan</h1>
         </div>
@@ -35,7 +35,7 @@
                     Nama Periode <span class="text-red-500">*</span>
                 </label>
                 <input type="text" name="name" value="{{ old('name', $periode->name) }}"
-                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
             </div>
 
             <div>
@@ -43,7 +43,7 @@
                     Tahun Akademik <span class="text-red-500">*</span>
                 </label>
                 <input type="text" name="academic_year" value="{{ old('academic_year', $periode->academic_year) }}"
-                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -53,7 +53,7 @@
                     </label>
                     <input type="datetime-local" name="starts_at"
                         value="{{ old('starts_at', $periode->starts_at->format('Y-m-d\TH:i')) }}"
-                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                 </div>
                 <div>
                     <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
@@ -61,7 +61,7 @@
                     </label>
                     <input type="datetime-local" name="ends_at"
                         value="{{ old('ends_at', $periode->ends_at->format('Y-m-d\TH:i')) }}"
-                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition" required>
+                        class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition" required>
                 </div>
             </div>
 
@@ -70,14 +70,14 @@
                     Biaya Pendaftaran (Rp)
                 </label>
                 <input type="number" name="registration_fee" value="{{ old('registration_fee', $periode->registration_fee) }}" min="0"
-                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                    class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
             </div>
 
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5">
                     Status Penerimaan
                 </label>
-                <select name="status" class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#606ADF] focus:border-[#606ADF] transition">
+                <select name="status" class="w-full bg-[#F2F5FF]/50 border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] transition">
                     <option value="closed" {{ $periode->status === 'closed' ? 'selected' : '' }}>Ditutup</option>
                     <option value="open" {{ $periode->status === 'open' ? 'selected' : '' }}>Dibuka</option>
                 </select>
@@ -85,7 +85,7 @@
 
             <div class="pt-4 border-t border-[#E5EAFC] flex items-center gap-3">
                 <button type="submit" 
-                    class="bg-[#606ADF] text-white px-7 py-3 rounded-xl font-semibold text-sm hover:bg-[#4F58CC] transition shadow-xs">
+                    class="bg-[#5F4AF7] text-white px-7 py-3 rounded-xl font-semibold text-sm hover:bg-[#4E39E5] transition shadow-xs">
                     Update Periode
                 </button>
                 <a href="{{ route('admin.periode.index') }}" 
