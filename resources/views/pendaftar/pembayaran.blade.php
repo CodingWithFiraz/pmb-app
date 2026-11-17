@@ -69,10 +69,14 @@
                             Tagihan UKT dapat dibayar setelah tagihan biaya pendaftaran dilunasi.
                         </p>
                     @else
-                        <form method="POST" action="{{ route('pendaftar.pembayaran.snap', $t) }}" class="mt-4">
+                        <form method="POST" action="{{ route('pendaftar.pembayaran.snap', $t) }}" class="mt-4" id="form-snap-{{ $t->id }}">
                             @csrf
-                            <button type="submit"
-                                class="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                            <button type="button"
+                                class="btn-snap rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed"
+                                data-tagihan-id="{{ $t->id }}"
+                                data-snap-token="{{ $t->snap_token ?? '' }}"
+                                data-snap-action="{{ route('pendaftar.pembayaran.snap', $t) }}"
+                                data-csrf="{{ csrf_token() }}">
                                 Bayar via Midtrans
                             </button>
                         </form>
@@ -156,6 +160,97 @@
 
 <script>
     (function () {
+        // ----------------------------------------------------------------
+        // Konfigurasi Midtrans dari server
+        // ----------------------------------------------------------------
+        const midtransClientKey    = @json($midtransClientKey);
+        const midtransIsProduction = @json($midtransIsProduction);
+        const snapJsUrl = midtransIsProduction
+            ? 'https://app.midtrans.com/snap/snap.js'
+            : 'https://app.sandbox.midtrans.com/snap/snap.js';
+
+        // Load Snap.js secara dinamis
+        (function loadSnapJs() {
+            const s = document.createElement('script');
+            s.src = snapJsUrl;
+            s.setAttribute('data-client-key', midtransClientKey);
+            document.head.appendChild(s);
+        })();
+
+        // URL halaman pembayaran untuk redirect setelah pop-up ditutup / selesai
+        const pembayaranUrl = @json(route('pendaftar.pembayaran'));
+
+        // ----------------------------------------------------------------
+        // Handler tombol "Bayar via Midtrans"
+        // ----------------------------------------------------------------
+        document.addEventListener('click', async function (e) {
+            const btn = e.target.closest('.btn-snap');
+            if (!btn) return;
+
+            e.preventDefault();
+
+            btn.disabled = true;
+            const originalText = btn.textContent;
+            btn.textContent = 'Memuat...';
+
+            const action    = btn.dataset.snapAction;
+            const csrf      = btn.dataset.csrf;
+            let   snapToken = btn.dataset.snapToken;
+
+            try {
+                // Jika token belum ada, minta dari server terlebih dulu
+                if (!snapToken) {
+                    const res = await fetch(action, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrf,
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (!res.ok) {
+                        const err = await res.json().catch(() => ({}));
+                        throw new Error(err.message || 'Gagal membuat transaksi. Silakan coba lagi.');
+                    }
+
+                    const data = await res.json();
+                    snapToken  = data.snap_token;
+                    // Simpan di tombol agar tidak perlu fetch ulang jika pop-up ditutup
+                    btn.dataset.snapToken = snapToken;
+                }
+
+                // Panggil Snap pop-up Midtrans
+                window.snap.pay(snapToken, {
+                    onSuccess: function (result) {
+                        // Pembayaran berhasil → kembali ke halaman pembayaran
+                        window.location.href = pembayaranUrl;
+                    },
+                    onPending: function (result) {
+                        // Menunggu pembayaran → kembali ke halaman pembayaran
+                        window.location.href = pembayaranUrl;
+                    },
+                    onError: function (result) {
+                        // Terjadi error di pihak Midtrans → kembali ke halaman pembayaran
+                        window.location.href = pembayaranUrl;
+                    },
+                    onClose: function () {
+                        // Pengguna menutup pop-up tanpa menyelesaikan pembayaran
+                        // → kembali ke halaman pembayaran (bukan example.com)
+                        window.location.href = pembayaranUrl;
+                    },
+                });
+            } catch (err) {
+                alert(err.message || 'Terjadi kesalahan. Silakan coba lagi.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        });
+
+        // ----------------------------------------------------------------
+        // Polling status tagihan setiap 10 detik
+        // ----------------------------------------------------------------
         const endpoint = @json(route('pendaftar.pembayaran.status'));
 
         const labels = {
@@ -176,7 +271,7 @@
             try {
                 const response = await fetch(endpoint, { headers: { 'Accept': 'application/json' } });
 
-                if (! response.ok) {
+                if (!response.ok) {
                     return;
                 }
 

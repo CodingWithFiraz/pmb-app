@@ -6,6 +6,8 @@ use App\Models\Pembayaran;
 use App\Models\Pendaftaran;
 use App\Policies\PembayaranPolicy;
 use App\Policies\PendaftaranPolicy;
+use App\Contracts\MidtransGateway;
+use App\Services\MidtransService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;

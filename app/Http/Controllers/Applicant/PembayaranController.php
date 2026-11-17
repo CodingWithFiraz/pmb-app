@@ -33,18 +33,18 @@ class PembayaranController extends Controller
         $tagihan = $this->urutkanTagihan($pendaftaran);
 
         return view('pendaftar.pembayaran', [
-            'pendaftaran'        => $pendaftaran,
-            'tagihan'            => $tagihan,
-            'tagihanPendaftaran' => $tagihan->firstWhere('jenis', 'pendaftaran'),
-            'total'              => $tagihan->sum('nominal'),
-            'totalLunas'         => $tagihan->where('status', 'paid')->sum('nominal'),
+            'pendaftaran'          => $pendaftaran,
+            'tagihan'              => $tagihan,
+            'tagihanPendaftaran'   => $tagihan->firstWhere('jenis', 'pendaftaran'),
+            'total'                => $tagihan->sum('nominal'),
+            'totalLunas'           => $tagihan->where('status', 'paid')->sum('nominal'),
+            'midtransClientKey'    => config('midtrans.client_key', ''),
+            'midtransIsProduction' => config('midtrans.is_production', false),
         ]);
     }
 
-    /**
-     * Buat transaksi Snap lalu arahkan pendaftar ke halaman Midtrans.
-     */
-    public function snap(Request $request, Pembayaran $pembayaran, MidtransGateway $midtrans): RedirectResponse
+
+    public function snap(Request $request, Pembayaran $pembayaran, MidtransGateway $midtrans): RedirectResponse|JsonResponse
     {
         $pendaftaran = $this->pendaftaran($request);
 
@@ -93,11 +93,11 @@ class PembayaranController extends Controller
                 'phone'      => $user->phone ?? '',
             ],
             'enabled_payments' => ['bank_transfer', 'qris', 'gopay'],
-            'expiry' => [
-                'start_time' => now()->format('Y-m-d H:i:s'),
-                'unit'       => 'hour',
-                'duration'   => 24,
-            ],
+            // blok 'expiry' => [
+               // 'start_time' => now()->format('Y-m-d H:i:s 0'),
+              //  'unit'       => 'hour',
+               // 'duration'   => 24,
+           // ],
         ];
 
         try {
@@ -120,6 +120,15 @@ class PembayaranController extends Controller
             'metode'        => 'midtrans',
             'catatan_admin' => null,
         ]);
+
+        // Jika request dari JS (AJAX/fetch), kembalikan token sebagai JSON
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'snap_token'    => $result['snap_token'],
+                'client_key'    => config('midtrans.client_key'),
+                'is_production' => config('midtrans.is_production', false),
+            ]);
+        }
 
         return redirect()->away($result['snap_url']);
     }
@@ -238,9 +247,7 @@ class PembayaranController extends Controller
         return $pembayaran->status === 'paid';
     }
 
-    /**
-     * Order ID unik untuk transaksi Midtrans.
-     */
+  
     private function orderId(Pembayaran $pembayaran): string
     {
         return 'PMB-'.str_pad((string) $pembayaran->id, 6, '0', STR_PAD_LEFT)

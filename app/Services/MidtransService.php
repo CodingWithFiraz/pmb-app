@@ -6,6 +6,7 @@ use App\Contracts\MidtransGateway;
 use Exception;
 use Midtrans\Config;
 use Midtrans\Snap;
+use Carbon\Carbon;
 
 class MidtransService implements MidtransGateway
 {
@@ -20,6 +21,13 @@ class MidtransService implements MidtransGateway
     public function createSnapTransaction(array $params): array
     {
         $this->applyConfig();
+        if (!isset($params['expiry'])) {
+            $params['expiry'] = [
+                'start_time' => Carbon::now()->format('Y-m-d H:i:s O'),
+                'unit' => 'minutes',
+                'duration' => 60,
+            ];
+        }
 
         $transaction = Snap::createTransaction($params);
 
@@ -30,9 +38,7 @@ class MidtransService implements MidtransGateway
         ];
     }
 
-    /**
-     * Terapkan kredensial Midtrans dari konfigurasi aplikasi.
-     */
+ 
     private function applyConfig(): void
     {
         Config::$serverKey = (string) config('midtrans.server_key');
