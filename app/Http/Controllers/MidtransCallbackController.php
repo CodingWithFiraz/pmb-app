@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pembayaran;
-use App\Services\MidtransService;
 use App\Services\MidtransSignature;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,7 +12,7 @@ class MidtransCallbackController extends Controller
     /**
      * Callback / notifikasi pembayaran dari Midtrans.
      */
-    public function __invoke(Request $request, MidtransSignature $signature, MidtransService $midtrans): JsonResponse
+    public function __invoke(Request $request, MidtransSignature $signature): JsonResponse
     {
         $notif = $request->json()->all();
 
@@ -31,12 +30,6 @@ class MidtransCallbackController extends Controller
         $pembayaran = Pembayaran::where('order_id', $orderId)->first();
 
         if (! $pembayaran) {
-            $payment = $midtrans->handleNotification($notif);
-
-            if ($payment) {
-                return response()->json(['message' => 'OK']);
-            }
-
             return response()->json(['message' => 'Order ID tidak ditemukan.'], 404);
         }
 

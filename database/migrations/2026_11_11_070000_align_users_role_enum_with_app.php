@@ -16,27 +16,9 @@ return new class extends Migration
 
         if ($driver === 'mysql') {
             DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'applicant', 'pendaftar') NOT NULL DEFAULT 'pendaftar'");
-            if ($driver === 'sqlite') {
-            try {
-                DB::table('users')->where('role', 'applicant')->update(['role' => 'pendaftar']);
-            } catch (\Throwable $e) {
-                // SQLite check constraint allows 'applicant'; User::isPendaftar() handles both.
-            }
-            return;
-        }
-
-        DB::table('users')->where('role', 'applicant')->update(['role' => 'pendaftar']);
+            DB::table('users')->where('role', 'applicant')->update(['role' => 'pendaftar']);
             DB::statement("ALTER TABLE users MODIFY COLUMN role ENUM('admin', 'pendaftar') NOT NULL DEFAULT 'pendaftar'");
 
-            return;
-        }
-
-        if ($driver === 'sqlite') {
-            try {
-                DB::table('users')->where('role', 'applicant')->update(['role' => 'pendaftar']);
-            } catch (\Throwable $e) {
-                // SQLite check constraint allows 'applicant'; User::isPendaftar() handles both.
-            }
             return;
         }
 

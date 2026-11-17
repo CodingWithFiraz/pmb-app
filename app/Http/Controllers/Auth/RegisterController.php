@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
 
 class RegisterController extends Controller
 {
@@ -34,16 +32,12 @@ class RegisterController extends Controller
         $user = User::create([
             'name'     => $validated['name'],
             'email'    => $validated['email'],
-            'password' => Hash::make($validated['password']),
+            'password' => $validated['password'],
             'role'     => 'pendaftar',
         ]);
 
         Auth::login($user, remember: true);
 
-        $target = Route::has('applicant.dashboard')
-            ? route('applicant.dashboard')
-            : route('pendaftar.dashboard');
-
-        return redirect()->intended($target);
+        return redirect()->route('pendaftar.dashboard');
     }
 }

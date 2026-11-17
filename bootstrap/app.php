@@ -10,33 +10,26 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
+    
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'admin'     => \App\Http\Middleware\EnsureUserIsAdmin::class,
-            'pendaftar' => \App\Http\Middleware\EnsureUserIsPendaftar::class,
-        ]);
+    $middleware->alias([
+        'admin'    => \App\Http\Middleware\EnsureUserIsAdmin::class,
+        'pendaftar' => \App\Http\Middleware\EnsureUserIsPendaftar::class,
+    ]);
 
-        $middleware->redirectUsersTo(function () {
-            if (auth()->user()?->isAdmin()) {
-                return route('admin.dashboard');
-            }
-            return \Illuminate\Support\Facades\Route::has('pendaftar.dashboard')
-                ? route('pendaftar.dashboard')
-                : route('applicant.dashboard');
-        });
+    $middleware->redirectUsersTo(function () {
+        return auth()->user()?->isAdmin()
+            ? route('admin.dashboard')
+            : route('pendaftar.dashboard');
+    });
 
-        // Notifikasi Midtrans dipanggil dari server Midtrans tanpa token CSRF.
-        $middleware->validateCsrfTokens(except: [
-            'midtrans/callback',
-        ]);
-    })
+    // Notifikasi Midtrans dipanggil dari server Midtrans tanpa token CSRF.
+    $middleware->validateCsrfTokens(except: [
+        'midtrans/callback',
+    ]);
+})
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })
-    ->registered(function (Application $app) {
-        // Otomatis arahkan public_path ke folder subdomain saat di hosting cPanel
-        if (is_dir($app->basePath('../pmb.firasporto.my.id'))) {
-            $app->usePublicPath($app->basePath('../pmb.firasporto.my.id'));
-        }
-    })
-    ->create();
+    })->create();
+
+    

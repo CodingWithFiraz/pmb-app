@@ -11,7 +11,7 @@
 </head>
 <body class="@yield('body-class', 'bg-[#F2F5FF]') text-black font-sans min-h-screen flex flex-col antialiased">
 
-{{-- Navigation Bar (Transparent: only Logo text, white pill nav, and black action button) --}}
+{{-- Navigation Bar --}}
 <header class="w-full @yield('header-class', 'bg-transparent')">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-5 flex items-center justify-between">
         {{-- Logo --}}
@@ -19,18 +19,30 @@
             PMB Online
         </a>
 
-        {{-- Desktop Navigation (White pill button + black action button) --}}
+        {{-- Desktop Navigation --}}
         <div class="hidden md:flex items-center gap-3">
             {{-- Nav links pill --}}
-            <nav class="bg-white rounded-full border border-gray-200/90 shadow-xs px-6 py-2 flex items-center gap-6 text-sm font-medium text-gray-700">
+            <nav class="bg-white rounded-full border border-gray-200/90 shadow-xs px-5 py-2 flex items-center gap-5 text-sm font-medium text-gray-700">
                 <a href="{{ route('home') }}" class="hover:text-black transition">Home</a>
-                <a href="{{ route('public.info') }}" class="hover:text-black transition">Informasi</a>
+                <a href="{{ route('public.informasi-pmb') }}" class="hover:text-black transition">Informasi</a>
                 <a href="{{ route('public.programs') }}" class="hover:text-black transition">Program studi</a>
+
+                {{-- Menu halaman baru sistem (TODO Frontend untuk dirapikan ke dropdown/pill) --}}
+                <a href="{{ route('public.fakultas') }}" class="hover:text-black transition inline-flex items-center gap-1">
+                    Fakultas
+                    <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-semibold">Baru</span>
+                </a>
+                <a href="{{ route('public.berita') }}" class="hover:text-black transition inline-flex items-center gap-1">
+                    Berita
+                    <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-semibold">Baru</span>
+                </a>
+                <a href="{{ route('public.tentang-kampus') }}" class="hover:text-black transition">Tentang</a>
+
                 @auth
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="hover:text-black transition">Dashboard</a>
                     @else
-                        <a href="{{ route('applicant.dashboard') }}" class="hover:text-black transition">Dashboard</a>
+                        <a href="{{ route('pendaftar.dashboard') }}" class="hover:text-black transition">Dashboard</a>
                     @endif
                 @else
                     <a href="{{ route('login') }}" class="hover:text-black transition">Masuk</a>
@@ -66,13 +78,17 @@
     <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
         <div class="bg-white rounded-2xl border border-gray-200 p-4 space-y-2 shadow-sm text-sm font-medium">
             <a href="{{ route('home') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Home</a>
-            <a href="{{ route('public.info') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Informasi</a>
+            <a href="{{ route('public.informasi-pmb') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Informasi</a>
             <a href="{{ route('public.programs') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Program studi</a>
+            <a href="{{ route('public.fakultas') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Fakultas <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">TODO UI</span></a>
+            <a href="{{ route('public.berita') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Berita <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">TODO UI</span></a>
+            <a href="{{ route('public.tentang-kampus') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Tentang Kampus <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">TODO UI</span></a>
+            <a href="{{ route('public.bantuan.panduan') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Panduan &amp; Bantuan <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">TODO UI</span></a>
             @auth
                 @if(auth()->user()->isAdmin())
                     <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Dashboard</a>
                 @else
-                    <a href="{{ route('applicant.dashboard') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Dashboard</a>
+                    <a href="{{ route('pendaftar.dashboard') }}" class="block px-3 py-2 rounded-lg text-gray-700 hover:bg-[#F2F5FF]">Dashboard</a>
                 @endif
                 <form method="POST" action="{{ route('logout') }}" class="pt-2">
                     @csrf
@@ -129,7 +145,21 @@
 
 {{-- Footer --}}
 <footer class="mt-auto border-t border-[#E5EAFC]/60 bg-transparent py-8 text-center text-sm text-[#818CA2]">
-    <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-7xl mx-auto px-6 space-y-3">
+        {{-- Tautan Halaman Bantuan & Informasi Baru --}}
+        <div class="flex flex-wrap justify-center gap-4 text-xs font-medium text-gray-600">
+            <a href="{{ route('public.fakultas') }}" class="hover:text-[#5F4AF7]">Fakultas</a>
+            <span>&middot;</span>
+            <a href="{{ route('public.berita') }}" class="hover:text-[#5F4AF7]">Berita PMB</a>
+            <span>&middot;</span>
+            <a href="{{ route('public.tentang-kampus') }}" class="hover:text-[#5F4AF7]">Tentang Kampus</a>
+            <span>&middot;</span>
+            <a href="{{ route('public.bantuan.panduan') }}" class="hover:text-[#5F4AF7]">Panduan Pendaftaran</a>
+            <span>&middot;</span>
+            <a href="{{ route('public.bantuan.faq') }}" class="hover:text-[#5F4AF7]">FAQ</a>
+            <span>&middot;</span>
+            <a href="{{ route('public.bantuan.kontak') }}" class="hover:text-[#5F4AF7]">Hubungi Kami</a>
+        </div>
         <p>© {{ date('Y') }} PMB Online. Sistem Penerimaan Mahasiswa Baru.</p>
     </div>
 </footer>

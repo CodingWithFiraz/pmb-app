@@ -48,7 +48,7 @@
                     <label class="block text-sm font-semibold text-black">Password</label>
                     <span class="text-xs text-[#818CA2]">Min. 8 karakter</span>
                 </div>
-                <input type="password" name="password"
+                <input type="password" name="password" minlength="8"
                     class="w-full border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] @error('password') border-red-500 @enderror"
                     placeholder="Minimal 8 karakter" required>
                 @error('password')
@@ -59,7 +59,7 @@
             {{-- Konfirmasi Password --}}
             <div class="mb-6">
                 <label class="block text-sm font-semibold mb-1.5 text-black">Konfirmasi Password</label>
-                <input type="password" name="password_confirmation"
+                <input type="password" name="password_confirmation" minlength="8"
                     class="w-full border border-[#E5EAFC] rounded-xl px-4 py-2.5 text-sm bg-white text-black focus:outline-none focus:ring-2 focus:ring-[#5F4AF7] focus:border-[#5F4AF7] @error('password_confirmation') border-red-500 @enderror"
                     placeholder="Ulangi password di atas" required>
                 @error('password_confirmation')
