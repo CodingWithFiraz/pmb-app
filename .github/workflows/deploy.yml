@@ -43,8 +43,8 @@ jobs:
             **/.git*/**
             **/node_modules/**
             .env
-            public/**
-            public/build/**
+            public/index.php
+            public/.htaccess
 
       # 5. Robot mengirim TAMPILAN (CSS/JS/Gambar) ke folder subdomain di cPanel
       - name: Kirim ke folder subdomain
