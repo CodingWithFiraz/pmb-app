@@ -7,7 +7,7 @@
     <div class="mx-auto w-full max-w-md px-6 sm:px-8">
         <div class="glass-card-jalur hero-enter rounded-2xl p-8 sm:p-10">
             <div class="text-center">
-                <div class="text-xs font-semibold uppercase tracking-wider text-[#4E566E]">Portal PMB Online</div>
+                <div class="font-heading text-xs font-extrabold uppercase tracking-[0.15em] text-[#4E566E]">Portal PNM</div>
                 <h1 class="mt-2 font-heading text-2xl font-extrabold tracking-[-0.025em] text-[#14141F] sm:text-3xl">
                     Buat Akun Baru
                 </h1>

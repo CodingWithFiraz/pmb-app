@@ -20,12 +20,12 @@ class MidtransCallbackController extends Controller
             $notif = $request->all();
         }
 
-        // Signature_key wajib valid sebelum data notifikasi diproses.
-        if (! $signature->valid($notif)) {
+        // Signature wajib valid sebelum data notifikasi diproses.
+        if (! $signature->valid($notif, $request)) {
             return response()->json(['message' => 'Signature tidak valid.'], 403);
         }
 
-        $orderId = (string) ($notif['order_id'] ?? '');
+        $orderId = (string) ($notif['order']['invoice_number'] ?? $notif['order_id'] ?? '');
 
         $pembayaran = Pembayaran::where('order_id', $orderId)->first();
 
@@ -33,7 +33,8 @@ class MidtransCallbackController extends Controller
             return response()->json(['message' => 'Order ID tidak ditemukan.'], 404);
         }
 
-        $status = $this->mapStatus((string) ($notif['transaction_status'] ?? ''));
+        $rawStatus = (string) ($notif['transaction']['status'] ?? $notif['transaction_status'] ?? '');
+        $status = $this->mapStatus(strtolower($rawStatus));
 
         // Status lunas tidak boleh diturunkan kembali menjadi pending.
         if ($pembayaran->isPaid() && $status !== 'paid') {
@@ -46,8 +47,13 @@ class MidtransCallbackController extends Controller
             $attributes['paid_at'] = now();
         }
 
-        if (! empty($notif['payment_type'])) {
-            $attributes['metode'] = $notif['payment_type'];
+        $paymentChannel = $notif['channel']['id']
+            ?? $notif['service']['id']
+            ?? $notif['payment_type']
+            ?? null;
+
+        if (! empty($paymentChannel)) {
+            $attributes['metode'] = $paymentChannel;
         }
 
         $pembayaran->update($attributes);
@@ -56,15 +62,15 @@ class MidtransCallbackController extends Controller
     }
 
     /**
-     * Pemetaan transaction_status Midtrans ke status tagihan internal.
+     * Pemetaan status transaksi DOKU / gateway ke status tagihan internal.
      */
     private function mapStatus(string $transactionStatus): string
     {
         return match ($transactionStatus) {
-            'settlement', 'capture' => 'paid',
-            'expire'                 => 'expired',
-            'deny', 'cancel', 'failure' => 'failed',
-            default                  => 'pending',
+            'success', 'settlement', 'capture'      => 'paid',
+            'expired', 'expire'                     => 'expired',
+            'failed', 'deny', 'cancel', 'failure'   => 'failed',
+            default                                 => 'pending',
         };
     }
 }

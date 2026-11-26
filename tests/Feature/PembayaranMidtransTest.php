@@ -120,7 +120,12 @@ class PembayaranMidtransTest extends TestCase
             ->assertOk()
             ->assertSeeInOrder(['Biaya Pendaftaran', 'Uang Kuliah Tunggal (UKT)'])
             ->assertSee('Rp 250.000')
-            ->assertSee('Bayar via Midtrans')
+            ->assertSee('Bayar via DOKU')
+            ->assertSee('Virtual Account (Bank)')
+            ->assertSee('Alfamart / Indomaret')
+            ->assertSee('QRIS')
+            ->assertSee('E-Wallet / E-Money')
+            ->assertSee('Coming Soon')
             ->assertSee('Unggah Bukti');
     }
 

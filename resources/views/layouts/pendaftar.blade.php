@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Dashboard') — PMB Pendaftar</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563EB'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='16' fill='white'%3EP%3C/text%3E%3C/svg%3E">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="!bg-[#F8F6F9] text-[#14141F] font-sans antialiased">
@@ -41,8 +42,8 @@
                 <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-[#BF8AFC] to-[#FA7F94] font-heading text-sm font-extrabold text-white">
                     P
                 </span>
-                <span class="font-heading text-lg font-bold tracking-tight text-[#14141F] truncate">
-                    PMB Online
+                <span class="font-heading text-xl font-extrabold tracking-[-0.03em] text-[#14141F] truncate">
+                    PNM
                 </span>
             </a>
 

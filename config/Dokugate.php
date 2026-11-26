@@ -12,10 +12,10 @@ return [
     |
     */
 
-    'server_key' => env('MIDTRANS_SERVER_KEY'),
+    'server_key' => env('DOKU_SECRET_KEY', env('MIDTRANS_SERVER_KEY')),
 
-    'client_key' => env('MIDTRANS_CLIENT_KEY'),
+    'client_key' => env('DOKU_CLIENT_ID', env('MIDTRANS_CLIENT_KEY')),
 
-    'is_production' => (bool) env('MIDTRANS_IS_PRODUCTION', false),
+    'is_production' => (bool) env('DOKU_IS_PRODUCTION', env('MIDTRANS_IS_PRODUCTION', false)),
 
 ];

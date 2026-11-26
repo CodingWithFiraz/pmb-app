@@ -23,8 +23,9 @@ return Application::configure(basePath: dirname(__DIR__))
             : route('pendaftar.dashboard');
     });
 
-    // Notifikasi Midtrans dipanggil dari server Midtrans tanpa token CSRF.
+    // Notifikasi pembayaran dipanggil dari server DOKU tanpa token CSRF.
     $middleware->validateCsrfTokens(except: [
+        'doku/callback',
         'midtrans/callback',
     ]);
 })

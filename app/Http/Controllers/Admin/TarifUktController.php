@@ -80,6 +80,20 @@ class TarifUktController extends Controller
                 ],
                 ['nominal' => (int) $nominal]
             );
+
+            \App\Models\Pembayaran::where('jenis', 'ukt')
+                ->where('status', '!=', 'paid')
+                ->whereHas('pendaftaran', function ($q) use ($periodeId, $jalurId, $prodiId, $golonganId) {
+                    $q->where('periode_id', $periodeId)
+                        ->where('jalur_id', $jalurId)
+                        ->where('prodi_1_id', $prodiId)
+                        ->where('golongan_id', $golonganId);
+                })
+                ->update([
+                    'nominal'    => (int) $nominal,
+                    'snap_token' => null,
+                    'snap_url'   => null,
+                ]);
         }
 
         return redirect()

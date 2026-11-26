@@ -489,7 +489,9 @@
                     @if($item->image_url)
                         <div class="h-48 w-full overflow-hidden bg-[#F1EFF3]">
                             <img src="{{ $item->image_url }}" alt="{{ $item->judul }}"
-                                 class="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]">
+                                 loading="lazy" decoding="async"
+                                 onload="this.classList.add('is-loaded')"
+                                 class="img-blur-up h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]">
                         </div>
                     @else
                         <div class="flex h-36 items-end bg-gradient-to-br from-[#BF8AFC] to-[#FA7F94] p-6 text-white">

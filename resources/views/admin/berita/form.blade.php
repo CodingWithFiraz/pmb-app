@@ -8,7 +8,7 @@
     <h1 class="font-heading text-2xl font-bold tracking-tight text-[#14141F] mb-6">{{ $isEdit ? 'Edit Berita' : 'Tambah Berita' }}</h1>
 
     <div class="rounded-2xl border border-[#E6E1EC] bg-white p-6">
-        <form method="POST" action="{{ $isEdit ? route('admin.berita.update', $berita) : route('admin.berita.store') }}">
+        <form method="POST" action="{{ $isEdit ? route('admin.berita.update', $berita) : route('admin.berita.store') }}" enctype="multipart/form-data">
             @csrf
             @if($isEdit) @method('PUT') @endif
 
@@ -27,12 +27,20 @@
                 @error('slug')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
             </div>
 
-            <div class="mb-4">
-                <label class="block text-sm font-medium mb-1">Link Gambar</label>
-                <input type="url" name="image_url" value="{{ old('image_url', $berita->image_url) }}"
-                    class="w-full border border-[#E6E1EC] rounded-lg bg-white text-[#14141F] px-3 py-2 focus:ring-2 focus:ring-[#BF8AFC]/40 @error('image_url') border-red-500 @enderror"
-                    placeholder="https://... (opsional)">
-                @error('image_url')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+            <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Upload Gambar (ke folder assets/berita)</label>
+                    <input type="file" name="image_file" accept=".jpg,.jpeg,.png,.webp"
+                        class="w-full border border-[#E6E1EC] rounded-lg bg-white text-[#14141F] px-3 py-1.5 text-sm file:mr-3 file:rounded-md file:border-0 file:bg-[#F5EFFB] file:px-3 file:py-1 file:text-xs file:font-semibold file:text-[#7E22CE]">
+                    @error('image_file')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Atau Path / Link Gambar</label>
+                    <input type="text" name="image_url" value="{{ old('image_url', $berita->image_url) }}"
+                        class="w-full border border-[#E6E1EC] rounded-lg bg-white text-[#14141F] px-3 py-2 focus:ring-2 focus:ring-[#BF8AFC]/40 @error('image_url') border-red-500 @enderror"
+                        placeholder="/assets/nama-foto.jpg atau https://...">
+                    @error('image_url')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
+                </div>
             </div>
 
             <div class="mb-4">

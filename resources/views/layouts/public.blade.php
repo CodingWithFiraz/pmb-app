@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'PMB') — Penerimaan Mahasiswa Baru</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563EB'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='sans-serif' font-weight='700' font-size='16' fill='white'%3EP%3C/text%3E%3C/svg%3E">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -11,8 +12,8 @@
 <header class="w-full bg-white border-b border-[#DDE1F5] sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 h-16 flex items-center justify-between gap-4">
         {{-- Logo --}}
-        <a href="{{ route('home') }}" class="inline-flex min-h-11 lg:min-h-0 items-center font-heading text-xl sm:text-2xl font-bold text-black tracking-tight hover:opacity-90 transition shrink-0">
-            PMB Online
+        <a href="{{ route('home') }}" class="inline-flex min-h-11 lg:min-h-0 items-center font-heading text-2xl sm:text-[26px] font-extrabold text-[#14141F] tracking-[-0.03em] hover:opacity-90 transition shrink-0">
+            PNM
         </a>
 
         {{-- Center Desktop Navigation --}}
@@ -137,7 +138,7 @@
 <footer class="mt-16 bg-gray-800 text-gray-400 text-sm">
     <div class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-            <div class="text-white font-bold text-lg mb-2">🎓 PMB Online</div>
+            <div class="text-white font-heading font-extrabold tracking-[-0.03em] text-xl mb-2">🎓 PNM</div>
             <p class="leading-relaxed">Portal resmi Penerimaan Mahasiswa Baru PNM Jakarta.</p>
         </div>
         <div>
@@ -161,7 +162,7 @@
     </div>
     <div class="border-t border-gray-700">
         <div class="max-w-6xl mx-auto px-4 py-4 text-center">
-            <p>© {{ date('Y') }} PMB Online. Sistem Penerimaan Mahasiswa Baru.</p>
+            <p>© {{ date('Y') }} PNM. Sistem Penerimaan Mahasiswa Baru.</p>
         </div>
     </div>
 </footer>

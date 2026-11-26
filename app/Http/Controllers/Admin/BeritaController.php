@@ -38,7 +38,8 @@ class BeritaController extends Controller
         $validated = $request->validate([
             'judul'        => 'required|string|max:255',
             'slug'         => 'nullable|string|max:255',
-            'image_url'    => 'nullable|url|max:255',
+            'image_url'    => 'nullable|string|max:255',
+            'image_file'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'deskripsi'    => 'required|string',
             'author'       => 'required|string|max:255',
             'published_at' => 'nullable|date',
@@ -49,9 +50,18 @@ class BeritaController extends Controller
             'author.required'    => 'Penulis wajib diisi.',
             'status.required'    => 'Status berita wajib dipilih.',
             'status.in'          => 'Status berita tidak valid.',
-            'image_url.url'      => 'Link gambar harus berupa URL yang valid.',
+            'image_file.image'   => 'File yang diunggah harus berupa gambar.',
+            'image_file.max'     => 'Ukuran gambar maksimal 2 MB.',
             'published_at.date'  => 'Tanggal publikasi tidak valid.',
         ]);
+
+        if ($request->hasFile('image_file')) {
+            $file = $request->file('image_file');
+            $filename = time().'-'.Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)).'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('assets/berita'), $filename);
+            $validated['image_url'] = '/assets/berita/'.$filename;
+        }
+        unset($validated['image_file']);
 
         $validated['slug'] = $this->slugUnik(($validated['slug'] ?? '') ?: $validated['judul']);
         $validated['published_at'] = $this->tentukanTanggalPublish($validated);
@@ -71,7 +81,8 @@ class BeritaController extends Controller
         $validated = $request->validate([
             'judul'        => 'required|string|max:255',
             'slug'         => 'nullable|string|max:255',
-            'image_url'    => 'nullable|url|max:255',
+            'image_url'    => 'nullable|string|max:255',
+            'image_file'   => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'deskripsi'    => 'required|string',
             'author'       => 'required|string|max:255',
             'published_at' => 'nullable|date',
@@ -82,9 +93,18 @@ class BeritaController extends Controller
             'author.required'    => 'Penulis wajib diisi.',
             'status.required'    => 'Status berita wajib dipilih.',
             'status.in'          => 'Status berita tidak valid.',
-            'image_url.url'      => 'Link gambar harus berupa URL yang valid.',
+            'image_file.image'   => 'File yang diunggah harus berupa gambar.',
+            'image_file.max'     => 'Ukuran gambar maksimal 2 MB.',
             'published_at.date'  => 'Tanggal publikasi tidak valid.',
         ]);
+
+        if ($request->hasFile('image_file')) {
+            $file = $request->file('image_file');
+            $filename = time().'-'.Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)).'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('assets/berita'), $filename);
+            $validated['image_url'] = '/assets/berita/'.$filename;
+        }
+        unset($validated['image_file']);
 
         $validated['slug'] = $this->slugUnik(($validated['slug'] ?? '') ?: $validated['judul'], $berita->id);
         $validated['published_at'] = $this->tentukanTanggalPublish($validated, $berita);

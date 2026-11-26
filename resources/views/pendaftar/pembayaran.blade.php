@@ -69,15 +69,67 @@
                             Tagihan UKT dapat dibayar setelah tagihan biaya pendaftaran dilunasi.
                         </p>
                     @else
-                        <form method="POST" action="{{ route('pendaftar.pembayaran.snap', $t) }}" class="mt-4" id="form-snap-{{ $t->id }}">
+                        <form method="POST" action="{{ route('pendaftar.pembayaran.snap', $t) }}" class="mt-4 space-y-3" id="form-doku-{{ $t->id }}">
                             @csrf
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-[#4E566E] mb-2">
+                                    Pilih Metode Pembayaran DOKU
+                                </label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                                    {{-- Aktif: Virtual Account --}}
+                                    <label class="relative flex cursor-pointer items-center justify-between gap-2 rounded-xl border border-[#E6E1EC] bg-[#FAF8FC] px-3.5 py-2.5 text-xs font-semibold text-[#14141F] transition hover:border-[#BF8AFC] has-[:checked]:border-[#7E22CE] has-[:checked]:bg-[#F5EFFB] has-[:checked]:text-[#7E22CE]">
+                                        <span class="flex items-center gap-2">
+                                            <input type="radio" name="payment_method" value="virtual_account" class="accent-[#7E22CE]" checked>
+                                            <span>Virtual Account (Bank)</span>
+                                        </span>
+                                        <span class="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">Aktif</span>
+                                    </label>
+
+                                    {{-- Aktif: Convenience Store (Alfamart / Indomaret) --}}
+                                    <label class="relative flex cursor-pointer items-center justify-between gap-2 rounded-xl border border-[#E6E1EC] bg-[#FAF8FC] px-3.5 py-2.5 text-xs font-semibold text-[#14141F] transition hover:border-[#BF8AFC] has-[:checked]:border-[#7E22CE] has-[:checked]:bg-[#F5EFFB] has-[:checked]:text-[#7E22CE]">
+                                        <span class="flex items-center gap-2">
+                                            <input type="radio" name="payment_method" value="convenience_store" class="accent-[#7E22CE]">
+                                            <span>Alfamart / Indomaret</span>
+                                        </span>
+                                        <span class="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">Aktif</span>
+                                    </label>
+
+                                    {{-- Coming Soon: QRIS --}}
+                                    <label class="relative flex cursor-not-allowed items-center justify-between gap-2 rounded-xl border border-[#E6E1EC] bg-gray-100/80 px-3.5 py-2.5 text-xs font-semibold text-gray-400 opacity-75">
+                                        <span class="flex items-center gap-2">
+                                            <input type="radio" name="payment_method" value="qris" disabled class="cursor-not-allowed">
+                                            <span>QRIS</span>
+                                        </span>
+                                        <span class="rounded-md bg-gray-200 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-gray-600">Coming Soon</span>
+                                    </label>
+
+                                    {{-- Coming Soon: E-Wallet --}}
+                                    <label class="relative flex cursor-not-allowed items-center justify-between gap-2 rounded-xl border border-[#E6E1EC] bg-gray-100/80 px-3.5 py-2.5 text-xs font-semibold text-gray-400 opacity-75">
+                                        <span class="flex items-center gap-2">
+                                            <input type="radio" name="payment_method" value="ewallet" disabled class="cursor-not-allowed">
+                                            <span>E-Wallet / E-Money</span>
+                                        </span>
+                                        <span class="rounded-md bg-gray-200 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-gray-600">Coming Soon</span>
+                                    </label>
+
+                                    {{-- Coming Soon: Bank Account / Direct Debit --}}
+                                    <label class="relative flex cursor-not-allowed items-center justify-between gap-2 rounded-xl border border-[#E6E1EC] bg-gray-100/80 px-3.5 py-2.5 text-xs font-semibold text-gray-400 opacity-75">
+                                        <span class="flex items-center gap-2">
+                                            <input type="radio" name="payment_method" value="bank_account" disabled class="cursor-not-allowed">
+                                            <span>Bank Account</span>
+                                        </span>
+                                        <span class="rounded-md bg-gray-200 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-gray-600">Coming Soon</span>
+                                    </label>
+                                </div>
+                            </div>
+
                             <button type="button"
-                                class="btn-snap rounded-lg bg-gradient-to-r from-[#BF8AFC] to-[#FA7F94] px-5 py-2 text-sm font-semibold text-white hover:opacity-95 disabled:opacity-60 disabled:cursor-not-allowed"
+                                class="btn-doku rounded-lg bg-gradient-to-r from-[#BF8AFC] to-[#FA7F94] px-5 py-2.5 text-sm font-semibold text-white hover:opacity-95 disabled:opacity-60 disabled:cursor-not-allowed"
                                 data-tagihan-id="{{ $t->id }}"
-                                data-snap-token="{{ $t->snap_token ?? '' }}"
-                                data-snap-action="{{ route('pendaftar.pembayaran.snap', $t) }}"
+                                data-payment-url="{{ $t->snap_url ?? '' }}"
+                                data-doku-action="{{ route('pendaftar.pembayaran.snap', $t) }}"
                                 data-csrf="{{ csrf_token() }}">
-                                Bayar via Midtrans
+                                Bayar via DOKU
                             </button>
                         </form>
                     @endif
@@ -85,7 +137,7 @@
                     {{-- Fallback manual: unggah bukti bayar --}}
                     <div class="mt-5 border-t border-[#EFEBF4] pt-4">
                         <p class="text-xs text-[#4E566E]">
-                            Belum dapat memakai Midtrans? Unggah bukti transfer manual, bukti akan ditinjau panitia.
+                            Belum dapat memakai DOKU? Unggah bukti transfer manual, bukti akan ditinjau panitia.
                         </p>
 
                         <form method="POST" action="{{ route('pendaftar.pembayaran.bukti', $t) }}"
@@ -161,90 +213,90 @@
 <script>
     (function () {
         // ----------------------------------------------------------------
-        // Konfigurasi Midtrans dari server
+        // Konfigurasi DOKU Jokul Checkout dari server
         // ----------------------------------------------------------------
-        const midtransClientKey    = @json($midtransClientKey);
-        const midtransIsProduction = @json($midtransIsProduction);
-        const snapJsUrl = midtransIsProduction
-            ? 'https://app.midtrans.com/snap/snap.js'
-            : 'https://app.sandbox.midtrans.com/snap/snap.js';
+        const dokuIsProduction = @json($dokuIsProduction ?? false);
+        const dokuCheckoutJsUrl = dokuIsProduction
+            ? 'https://jokul.doku.com/jokul-checkout-js/v1/jokul-checkout-1.0.0.js'
+            : 'https://sandbox.doku.com/jokul-checkout-js/v1/jokul-checkout-1.0.0.js';
 
-        // Load Snap.js secara dinamis
-        (function loadSnapJs() {
+        // Load DOKU Jokul Checkout JS secara dinamis
+        (function loadDokuJs() {
             const s = document.createElement('script');
-            s.src = snapJsUrl;
-            s.setAttribute('data-client-key', midtransClientKey);
+            s.src = dokuCheckoutJsUrl;
             document.head.appendChild(s);
         })();
 
-        // URL halaman pembayaran untuk redirect setelah pop-up ditutup / selesai
+        // URL halaman pembayaran untuk redirect / reload setelah pop-up ditutup
         const pembayaranUrl = @json(route('pendaftar.pembayaran'));
 
         // ----------------------------------------------------------------
-        // Handler tombol "Bayar via Midtrans"
+        // Handler tombol "Bayar via DOKU"
         // ----------------------------------------------------------------
         document.addEventListener('click', async function (e) {
-            const btn = e.target.closest('.btn-snap');
+            const btn = e.target.closest('.btn-doku');
             if (!btn) return;
 
             e.preventDefault();
 
+            const form = btn.closest('form');
+            const selectedMethodInput = form ? form.querySelector('input[name="payment_method"]:checked') : null;
+            const paymentMethod = selectedMethodInput ? selectedMethodInput.value : 'virtual_account';
+
             btn.disabled = true;
             const originalText = btn.textContent;
-            btn.textContent = 'Memuat...';
+            btn.textContent = 'Memuat DOKU...';
 
-            const action    = btn.dataset.snapAction;
-            const csrf      = btn.dataset.csrf;
-            let   snapToken = btn.dataset.snapToken;
+            const action = btn.dataset.dokuAction;
+            const csrf   = btn.dataset.csrf;
 
             try {
-                // Jika token belum ada, minta dari server terlebih dulu
-                if (!snapToken) {
-                    const res = await fetch(action, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': csrf,
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                        },
-                    });
+                const res = await fetch(action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrf,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        payment_method: paymentMethod,
+                    }),
+                });
 
-                    if (!res.ok) {
-                        const err = await res.json().catch(() => ({}));
-                        throw new Error(err.message || 'Gagal membuat transaksi. Silakan coba lagi.');
-                    }
-
-                    const data = await res.json();
-                    snapToken  = data.snap_token;
-                    // Simpan di tombol agar tidak perlu fetch ulang jika pop-up ditutup
-                    btn.dataset.snapToken = snapToken;
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error(err.message || 'Gagal membuat transaksi DOKU. Silakan coba lagi.');
                 }
 
-                // Panggil Snap pop-up Midtrans
-                window.snap.pay(snapToken, {
-                    onSuccess: function (result) {
-                        // Pembayaran berhasil → kembali ke halaman pembayaran
-                        window.location.href = pembayaranUrl;
-                    },
-                    onPending: function (result) {
-                        // Menunggu pembayaran → kembali ke halaman pembayaran
-                        window.location.href = pembayaranUrl;
-                    },
-                    onError: function (result) {
-                        // Terjadi error di pihak Midtrans → kembali ke halaman pembayaran
-                        window.location.href = pembayaranUrl;
-                    },
-                    onClose: function () {
-                        // Pengguna menutup pop-up tanpa menyelesaikan pembayaran
-                        // → kembali ke halaman pembayaran (bukan example.com)
-                        window.location.href = pembayaranUrl;
-                    },
-                });
+                const data = await res.json();
+                const paymentUrl = data.payment_url;
+
+                if (!paymentUrl) {
+                    throw new Error('URL pembayaran DOKU tidak ditemukan.');
+                }
+
+                btn.dataset.paymentUrl = paymentUrl;
+
+                // Panggil pop-up DOKU Jokul Checkout jika library sudah siap, atau fallback redirect ke paymentUrl
+                if (typeof window.loadJokulCheckout === 'function') {
+                    window.loadJokulCheckout(paymentUrl);
+                } else {
+                    window.location.href = paymentUrl;
+                }
             } catch (err) {
-                alert(err.message || 'Terjadi kesalahan. Silakan coba lagi.');
+                alert(err.message || 'Terjadi kesalahan saat memuat DOKU. Silakan coba lagi.');
             } finally {
                 btn.disabled = false;
                 btn.textContent = originalText;
+            }
+        });
+
+        // Tangani event penutupan / penyelesaian pop-up DOKU Checkout agar kembali ke halaman pembayaran
+        window.addEventListener('message', function (event) {
+            if (!event.data) return;
+            const msg = typeof event.data === 'string' ? event.data : (event.data.status || event.data.type || '');
+            if (['close', 'closed', 'CLOSE_CHECKOUT', 'SUCCESS', 'PENDING', 'FAILED'].includes(String(msg))) {
+                window.location.href = pembayaranUrl;
             }
         });
 
@@ -277,16 +329,23 @@
 
                 const data = await response.json();
 
+                let reloadTriggered = false;
                 (data.tagihan || []).forEach(function (item) {
                     document.querySelectorAll('[data-tagihan-status="' + item.id + '"]').forEach(function (el) {
                         if (el.dataset.status === item.status) {
                             return;
                         }
 
+                        const oldStatus = el.dataset.status;
                         el.dataset.status = item.status;
                         el.textContent = labels[item.status] || item.status;
                         el.className = 'tagihan-status rounded-full px-3 py-1 text-xs font-semibold '
                             + (classes[item.status] || '');
+
+                        if (oldStatus !== 'paid' && item.status === 'paid' && !reloadTriggered) {
+                            reloadTriggered = true;
+                            window.location.reload();
+                        }
                     });
                 });
             } catch (error) {

@@ -52,13 +52,15 @@ class BiayaPendaftaranController extends Controller
 
         $validated['nominal'] = ($validated['nominal'] ?? null) === '' ? null : ($validated['nominal'] ?? null);
 
-        BiayaPendaftaran::updateOrCreate(
+        $biayaRecord = BiayaPendaftaran::updateOrCreate(
             [
                 'periode_id' => $validated['periode_id'],
                 'jalur_id'   => $validated['jalur_id'],
             ],
             ['nominal' => $validated['nominal']]
         );
+
+        $this->sinkronkanTagihanPending($biayaRecord);
 
         return redirect()
             ->route('admin.biaya-pendaftaran.index')
@@ -91,6 +93,8 @@ class BiayaPendaftaranController extends Controller
 
         $biaya->update($validated);
 
+        $this->sinkronkanTagihanPending($biaya);
+
         return redirect()
             ->route('admin.biaya-pendaftaran.index')
             ->with('success', 'Biaya pendaftaran berhasil diperbarui.');
@@ -103,5 +107,28 @@ class BiayaPendaftaranController extends Controller
         return redirect()
             ->route('admin.biaya-pendaftaran.index')
             ->with('success', 'Biaya pendaftaran berhasil dihapus.');
+    }
+
+    /**
+     * Perbarui juga nominal tagihan biaya pendaftaran yang masih belum lunas (pending/failed/expired)
+     * agar sesuai dengan tarif terbaru yang diubah admin.
+     */
+    private function sinkronkanTagihanPending(BiayaPendaftaran $biaya): void
+    {
+        if ($biaya->nominal === null) {
+            return;
+        }
+
+        \App\Models\Pembayaran::where('jenis', 'pendaftaran')
+            ->where('status', '!=', 'paid')
+            ->whereHas('pendaftaran', function ($q) use ($biaya) {
+                $q->where('periode_id', $biaya->periode_id)
+                    ->where('jalur_id', $biaya->jalur_id);
+            })
+            ->update([
+                'nominal'    => (int) $biaya->nominal,
+                'snap_token' => null,
+                'snap_url'   => null,
+            ]);
     }
 }

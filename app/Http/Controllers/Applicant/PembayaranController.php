@@ -20,7 +20,7 @@ class PembayaranController extends Controller
     /**
      * Halaman daftar tagihan pendaftar.
      */
-    public function index(Request $request): View|RedirectResponse
+    public function index(Request $request, MidtransGateway $midtrans): View|RedirectResponse
     {
         $pendaftaran = $this->pendaftaran($request);
 
@@ -30,6 +30,8 @@ class PembayaranController extends Controller
                 ->with('info', 'Belum ada tagihan. Selesaikan proses verifikasi pendaftaran terlebih dahulu.');
         }
 
+        $this->sinkronkanStatusDoku($pendaftaran, $midtrans);
+
         $tagihan = $this->urutkanTagihan($pendaftaran);
 
         return view('pendaftar.pembayaran', [
@@ -38,8 +40,8 @@ class PembayaranController extends Controller
             'tagihanPendaftaran'   => $tagihan->firstWhere('jenis', 'pendaftaran'),
             'total'                => $tagihan->sum('nominal'),
             'totalLunas'           => $tagihan->where('status', 'paid')->sum('nominal'),
-            'midtransClientKey'    => config('midtrans.client_key', ''),
-            'midtransIsProduction' => config('midtrans.is_production', false),
+            'dokuClientId'         => config('doku.client_id') ?: config('midtrans.client_key', ''),
+            'dokuIsProduction'     => (bool) (config('doku.is_production') ?? config('midtrans.is_production', false)),
         ]);
     }
 
@@ -53,7 +55,10 @@ class PembayaranController extends Controller
         }
 
         if ($pembayaran->isPaid()) {
-            return back()->with('error', 'Tagihan ini sudah lunas.');
+            $msg = 'Tagihan ini sudah lunas.';
+            return ($request->expectsJson() || $request->ajax())
+                ? response()->json(['message' => $msg], 422)
+                : back()->with('error', $msg);
         }
 
         // Tagihan UKT baru bisa dibayar setelah tagihan pendaftaran lunas.
@@ -61,18 +66,47 @@ class PembayaranController extends Controller
             $tagihanPendaftaran = $pendaftaran->pembayaran()->where('jenis', 'pendaftaran')->first();
 
             if ($tagihanPendaftaran && ! $this->tagihanLunas($tagihanPendaftaran)) {
-                return back()->with('error', 'Selesaikan pembayaran biaya pendaftaran terlebih dahulu.');
+                $msg = 'Selesaikan pembayaran biaya pendaftaran terlebih dahulu.';
+                return ($request->expectsJson() || $request->ajax())
+                    ? response()->json(['message' => $msg], 422)
+                    : back()->with('error', $msg);
             }
         }
 
-        if (! config('midtrans.server_key')) {
-            return back()->with('error', 'Konfigurasi Midtrans belum lengkap (MIDTRANS_SERVER_KEY).');
+        $secretKey = config('doku.secret_key') ?: config('midtrans.server_key');
+        if (! $secretKey) {
+            $msg = 'Konfigurasi DOKU belum lengkap (DOKU_SECRET_KEY).';
+            return ($request->expectsJson() || $request->ajax())
+                ? response()->json(['message' => $msg], 422)
+                : back()->with('error', $msg);
         }
 
         /** @var User $user */
         $user = $request->user();
 
         $orderId = $this->orderId($pembayaran);
+
+        // Pemetaan pilihan metode pembayaran DOKU yang aktif (Virtual Account & Alfamart/Indomaret)
+        $selectedMethod = (string) $request->input('payment_method', 'virtual_account');
+        $dokuMethodMap = [
+            'virtual_account'   => [
+                'VIRTUAL_ACCOUNT_BCA',
+                'VIRTUAL_ACCOUNT_BANK_MANDIRI',
+                'VIRTUAL_ACCOUNT_BNI',
+                'VIRTUAL_ACCOUNT_BRI',
+                'VIRTUAL_ACCOUNT_BANK_SYARIAH_INDONESIA',
+                'VIRTUAL_ACCOUNT_PERMATA',
+                'VIRTUAL_ACCOUNT_CIMB',
+                'VIRTUAL_ACCOUNT_DANAMON',
+                'VIRTUAL_ACCOUNT_DOKU',
+            ],
+            'convenience_store' => [
+                'ONLINE_TO_OFFLINE_ALFA',
+                'ONLINE_TO_OFFLINE_INDOMARET',
+            ],
+        ];
+
+        $dokuPaymentMethods = $dokuMethodMap[$selectedMethod] ?? config('doku.payment_method_types');
 
         $params = [
             'transaction_details' => [
@@ -92,12 +126,8 @@ class PembayaranController extends Controller
                 'email'      => $user->email,
                 'phone'      => $user->phone ?? '',
             ],
-            'enabled_payments' => ['bank_transfer', 'qris', 'gopay'],
-            // blok 'expiry' => [
-               // 'start_time' => now()->format('Y-m-d H:i:s 0'),
-              //  'unit'       => 'hour',
-               // 'duration'   => 24,
-           // ],
+            'enabled_payments'          => ['virtual_account', 'convenience_store'],
+            'doku_payment_method_types' => $dokuPaymentMethods,
         ];
 
         try {
@@ -105,28 +135,41 @@ class PembayaranController extends Controller
         } catch (Throwable $e) {
             report($e);
 
-            return back()->with('error', 'Gagal membuat transaksi pembayaran: '.$e->getMessage());
+            $msg = 'Gagal membuat transaksi pembayaran: '.$e->getMessage();
+            return ($request->expectsJson() || $request->ajax())
+                ? response()->json(['message' => $msg], 422)
+                : back()->with('error', $msg);
         }
 
         if (($result['snap_url'] ?? '') === '' && ($result['snap_token'] ?? '') === '') {
-            return back()->with('error', 'Midtrans tidak mengembalikan Snap token.');
+            $msg = 'DOKU tidak mengembalikan URL pembayaran.';
+            return ($request->expectsJson() || $request->ajax())
+                ? response()->json(['message' => $msg], 422)
+                : back()->with('error', $msg);
         }
+
+        $metodeLabel = match ($selectedMethod) {
+            'virtual_account'   => 'doku - virtual account',
+            'convenience_store' => 'doku - alfamart / indomaret',
+            default             => 'doku',
+        };
 
         $pembayaran->update([
             'order_id'      => $result['order_id'],
             'snap_token'    => $result['snap_token'],
             'snap_url'      => $result['snap_url'],
             'status'        => 'pending',
-            'metode'        => 'midtrans',
+            'metode'        => $metodeLabel,
             'catatan_admin' => null,
         ]);
 
-        // Jika request dari JS (AJAX/fetch), kembalikan token sebagai JSON
+        // Jika request dari JS (AJAX/fetch), kembalikan URL checkout DOKU sebagai JSON
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
+                'payment_url'   => $result['snap_url'],
                 'snap_token'    => $result['snap_token'],
-                'client_key'    => config('midtrans.client_key'),
-                'is_production' => config('midtrans.is_production', false),
+                'client_id'     => config('doku.client_id') ?: config('midtrans.client_key'),
+                'is_production' => (bool) (config('doku.is_production') ?? config('midtrans.is_production', false)),
             ]);
         }
 
@@ -188,13 +231,15 @@ class PembayaranController extends Controller
     /**
      * Endpoint polling status tagihan (realtime).
      */
-    public function status(Request $request): JsonResponse
+    public function status(Request $request, MidtransGateway $midtrans): JsonResponse
     {
         $pendaftaran = $this->pendaftaran($request);
 
         if (! $pendaftaran) {
             return response()->json(['tagihan' => []]);
         }
+
+        $this->sinkronkanStatusDoku($pendaftaran, $midtrans);
 
         $tagihan = $this->urutkanTagihan($pendaftaran)
             ->map(fn (Pembayaran $p): array => [
@@ -245,6 +290,43 @@ class PembayaranController extends Controller
     private function tagihanLunas(Pembayaran $pembayaran): bool
     {
         return $pembayaran->status === 'paid';
+    }
+
+    /**
+     * Cek aktif status transaksi ke API DOKU untuk setiap tagihan pending yang sudah memiliki order_id.
+     * Dengan ini status pembayaran otomatis berubah menjadi Lunas begitu keluar dari pop-up,
+     * bahkan saat dijalankan di localhost (127.0.0.1).
+     */
+    private function sinkronkanStatusDoku(Pendaftaran $pendaftaran, MidtransGateway $midtrans): void
+    {
+        if (! method_exists($midtrans, 'checkTransactionStatus')) {
+            return;
+        }
+
+        $pendingList = $pendaftaran->pembayaran()
+            ->where('status', 'pending')
+            ->whereNotNull('order_id')
+            ->get();
+
+        foreach ($pendingList as $pembayaran) {
+            $check = $midtrans->checkTransactionStatus((string) $pembayaran->order_id);
+
+            if (! $check || ($check['status'] ?? 'pending') === 'pending') {
+                continue;
+            }
+
+            $attributes = ['status' => $check['status']];
+
+            if ($check['status'] === 'paid' && ! $pembayaran->paid_at) {
+                $attributes['paid_at'] = now();
+            }
+
+            if (! empty($check['channel'])) {
+                $attributes['metode'] = $check['channel'];
+            }
+
+            $pembayaran->update($attributes);
+        }
     }
 
   

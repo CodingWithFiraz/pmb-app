@@ -28,8 +28,8 @@
         </a>
 
         {{-- Logo --}}
-        <a href="{{ route('home') }}" class="inline-flex min-h-11 lg:min-h-0 items-center font-heading text-xl sm:text-2xl font-bold text-black tracking-tight hover:opacity-90 transition shrink-0">
-            PMB Online
+        <a href="{{ route('home') }}" class="inline-flex min-h-11 lg:min-h-0 items-center font-heading text-2xl sm:text-[26px] font-extrabold text-[#14141F] tracking-[-0.03em] hover:opacity-90 transition shrink-0">
+            PNM
         </a>
 
         {{-- Center Desktop Navigation --}}
@@ -164,8 +164,8 @@
 <footer class="mt-auto border-t border-[#DDE1F5] bg-white py-10 text-sm text-[#3E465C]">
     <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div class="space-y-1">
-            <a href="{{ route('home') }}" class="inline-flex min-h-11 sm:min-h-0 items-center font-heading text-lg font-bold tracking-tight text-[#14141F]">
-                PMB Online
+            <a href="{{ route('home') }}" class="inline-flex min-h-11 sm:min-h-0 items-center font-heading text-xl font-extrabold tracking-[-0.03em] text-[#14141F]">
+                PNM
             </a>
             <p class="text-sm text-[#3E465C]">&copy; {{ date('Y') }} Sistem Penerimaan Mahasiswa Baru.</p>
         </div>
@@ -187,6 +187,12 @@
         if (!menu) return;
         const isHidden = menu.classList.toggle('hidden');
         this.setAttribute('aria-expanded', String(!isHidden));
+    });
+
+    document.querySelectorAll('img.img-blur-up').forEach(function(img) {
+        if (img.complete && img.naturalWidth > 0) {
+            requestAnimationFrame(function() { img.classList.add('is-loaded'); });
+        }
     });
 </script>
 

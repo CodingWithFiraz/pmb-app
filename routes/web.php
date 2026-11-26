@@ -91,7 +91,8 @@ Route::middleware(['auth', 'pendaftar'])->prefix('pendaftar')->name('pendaftar.'
     Route::get('/kartu', [KartuController::class, 'index'])->name('kartu');
 });
 
-// Callback Midtrans (dipanggil oleh server Midtrans, tanpa login).
+// Callback DOKU / Payment Gateway (dipanggil oleh server gateway, tanpa login).
+Route::post('/doku/callback', MidtransCallbackController::class)->name('doku.callback');
 Route::post('/midtrans/callback', MidtransCallbackController::class)->name('midtrans.callback');
 
 // Admin

@@ -429,6 +429,26 @@ code, kbd, samp, pre, .font-mono {
     animation: bentoPulse 3s ease-in-out infinite;
 }
 
+/* ==========================================================================
+   Progressive Image Loading (Blur-Up) — 400ms transition
+   ========================================================================== */
+.img-blur-up {
+    filter: blur(18px);
+    transform: scale(1.04);
+    opacity: 0.72;
+    transition:
+        filter 400ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: filter, transform, opacity;
+}
+
+.img-blur-up.is-loaded {
+    filter: blur(0);
+    transform: scale(1);
+    opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .hero-enter,
     .hero-enter-delay-1,

@@ -17,7 +17,10 @@
         <article class="glass-card-jalur overflow-hidden rounded-2xl">
             @if($berita->image_url)
                 <div class="h-64 w-full overflow-hidden bg-[#F1EFF3] sm:h-80">
-                    <img src="{{ $berita->image_url }}" alt="{{ $berita->judul }}" class="h-full w-full object-cover">
+                    <img src="{{ $berita->image_url }}" alt="{{ $berita->judul }}"
+                         loading="lazy" decoding="async"
+                         onload="this.classList.add('is-loaded')"
+                         class="img-blur-up h-full w-full object-cover">
                 </div>
             @endif
 
