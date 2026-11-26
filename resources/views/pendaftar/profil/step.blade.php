@@ -5,13 +5,13 @@
 <div class="max-w-3xl mx-auto">
 
     {{-- Indikator langkah --}}
-    <div class="bg-white shadow rounded-xl p-6 mb-6">
+    <div class="rounded-2xl border border-[#E6E1EC] bg-white p-6 mb-6">
         <div class="flex flex-wrap items-center justify-between gap-3">
             <div>
-                <h2 class="text-lg font-bold text-gray-800">Lengkapi Profil Pendaftar</h2>
-                <p class="text-sm text-gray-600">Data disimpan sebagai draft dan dapat dilengkapi bertahap.</p>
+                <h2 class="text-lg font-bold text-[#14141F]">Lengkapi Profil Pendaftar</h2>
+                <p class="text-sm text-[#4E566E]">Data disimpan sebagai draft dan dapat dilengkapi bertahap.</p>
             </div>
-            <span class="rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-700">
+            <span class="rounded-full bg-[#F5EFFB] px-3 py-1 text-sm font-semibold text-[#7E22CE]">
                 {{ $profile?->completionPercentage() ?? 0 }}% lengkap
             </span>
         </div>
@@ -26,10 +26,10 @@
                     <a href="{{ route('pendaftar.profil.step', $nomor) }}"
                         class="block rounded-lg border px-3 py-2 text-sm transition
                             {{ $aktif
-                                ? 'border-blue-600 bg-blue-50 font-semibold text-blue-700'
+                                ? 'border-[#BF8AFC] bg-[#F5EFFB] font-semibold text-[#7E22CE]'
                                 : ($selesai
                                     ? 'border-green-300 bg-green-50 text-green-700'
-                                    : 'border-gray-200 text-gray-600 hover:border-blue-300') }}">
+                                    : 'border-[#E6E1EC] text-[#4E566E] hover:border-[#BF8AFC]') }}">
                         <span class="block text-xs opacity-75">Langkah {{ $nomor }}</span>
                         {{ $info['judul'] }}
                     </a>
@@ -39,9 +39,9 @@
     </div>
 
     {{-- Form langkah aktif --}}
-    <div class="bg-white shadow rounded-xl p-6">
-        <h3 class="text-lg font-bold text-gray-800">Langkah {{ $step }}: {{ $steps[$step]['judul'] }}</h3>
-        <p class="mt-1 text-sm text-gray-500 mb-5">
+    <div class="rounded-2xl border border-[#E6E1EC] bg-white p-6">
+        <h3 class="text-lg font-bold text-[#14141F]">Langkah {{ $step }}: {{ $steps[$step]['judul'] }}</h3>
+        <p class="mt-1 text-sm text-[#4E566E] mb-5">
             @switch($step)
                 @case(1)
                     Isi data identitas sesuai dokumen resmi (KTP/Kartu Keluarga dan ijazah).
@@ -62,27 +62,27 @@
             @csrf
 
             @php
-                $inputClass = 'mt-1 block w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500';
-                $labelClass = 'block text-sm font-medium text-gray-700';
+                $inputClass = 'mt-1 block w-full rounded-lg border-[#E6E1EC] focus:border-[#BF8AFC] focus:ring-[#BF8AFC]/30';
+                $labelClass = 'block text-sm font-medium text-[#14141F]';
                 $errorClass = 'mt-1 text-sm text-red-600';
             @endphp
 
             @include('pendaftar.profil.steps.step-'.$step)
 
-            <div class="mt-6 flex flex-wrap items-center gap-3 border-t border-gray-100 pt-5">
+            <div class="mt-6 flex flex-wrap items-center gap-3 border-t border-[#EFEBF4] pt-5">
                 @if($step > 1)
                     <a href="{{ route('pendaftar.profil.step', $step - 1) }}"
-                        class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                        class="rounded-lg border border-[#E6E1EC] px-4 py-2 text-sm font-medium text-[#14141F] hover:bg-[#FAF8FC]">
                         Kembali
                     </a>
                 @endif
 
                 <button type="submit"
-                    class="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                    class="rounded-lg bg-gradient-to-r from-[#BF8AFC] to-[#FA7F94] px-5 py-2 text-sm font-semibold text-white hover:opacity-95">
                     {{ $step < 4 ? 'Simpan & Lanjut' : 'Simpan & Pilih Jalur' }}
                 </button>
 
-                <a href="{{ route('pendaftar.dashboard') }}" class="text-sm text-gray-500 hover:underline">
+                <a href="{{ route('pendaftar.dashboard') }}" class="text-sm text-[#4E566E] hover:underline">
                     Kembali ke dashboard
                 </a>
             </div>

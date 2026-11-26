@@ -5,11 +5,11 @@
 <div class="max-w-4xl mx-auto">
 
     {{-- Ringkasan tagihan --}}
-    <div class="bg-white shadow rounded-xl p-6 mb-6">
+    <div class="rounded-2xl border border-[#E6E1EC] bg-white p-6 mb-6">
         <div class="flex flex-wrap justify-between gap-4">
             <div>
-                <h2 class="text-lg font-bold text-gray-800">Tagihan Pembayaran</h2>
-                <p class="mt-1 text-sm text-gray-600">
+                <h2 class="text-lg font-bold text-[#14141F]">Tagihan Pembayaran</h2>
+                <p class="mt-1 text-sm text-[#4E566E]">
                     {{ $pendaftaran->nomor_pendaftaran ?? 'Pendaftaran' }} &middot; {{ $pendaftaran->jalur?->nama }}
                     @if($pendaftaran->prodi)
                         &middot; {{ $pendaftaran->prodi->nama }}
@@ -18,9 +18,9 @@
             </div>
 
             <div class="text-right text-sm">
-                <div class="text-gray-500">Total tagihan</div>
-                <div class="text-xl font-bold text-gray-800">Rp {{ number_format($total, 0, ',', '.') }}</div>
-                <div class="mt-1 text-gray-500">Sudah lunas: Rp {{ number_format($totalLunas, 0, ',', '.') }}</div>
+                <div class="text-[#4E566E]">Total tagihan</div>
+                <div class="text-xl font-bold text-[#14141F]">Rp {{ number_format($total, 0, ',', '.') }}</div>
+                <div class="mt-1 text-[#4E566E]">Sudah lunas: Rp {{ number_format($totalLunas, 0, ',', '.') }}</div>
             </div>
         </div>
     </div>
@@ -34,22 +34,22 @@
                     && $tagihanPendaftaran->status !== 'paid';
             @endphp
 
-            <div class="bg-white shadow rounded-xl p-5">
+            <div class="rounded-2xl border border-[#E6E1EC] bg-white p-5">
                 <div class="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                        <h3 class="font-bold text-gray-800">{{ $t->jenisLabel() }}</h3>
-                        <div class="mt-1 text-2xl font-bold text-blue-700">Rp {{ number_format($t->nominal, 0, ',', '.') }}</div>
+                        <h3 class="font-bold text-[#14141F]">{{ $t->jenisLabel() }}</h3>
+                        <div class="mt-1 text-2xl font-bold text-[#7E22CE]">Rp {{ number_format($t->nominal, 0, ',', '.') }}</div>
 
                         @if($t->order_id)
-                            <div class="mt-1 font-mono text-xs text-gray-500">Order ID: {{ $t->order_id }}</div>
+                            <div class="mt-1 font-mono text-xs text-[#4E566E]">Order ID: {{ $t->order_id }}</div>
                         @endif
 
                         @if($t->bukti_path)
-                            <div class="mt-1 text-xs text-gray-500">Bukti transfer: {{ basename($t->bukti_path) }}</div>
+                            <div class="mt-1 text-xs text-[#4E566E]">Bukti transfer: {{ basename($t->bukti_path) }}</div>
                         @endif
                     </div>
 
-                    <span class="tagihan-status rounded-full px-3 py-1 text-xs font-semibold {{ $t->status === 'paid' ? 'bg-green-100 text-green-700' : ($t->status === 'failed' ? 'bg-red-100 text-red-700' : ($t->status === 'expired' ? 'bg-gray-100 text-gray-600' : 'bg-amber-100 text-amber-700')) }}"
+                    <span class="tagihan-status rounded-full px-3 py-1 text-xs font-semibold {{ $t->status === 'paid' ? 'bg-green-100 text-green-700' : ($t->status === 'failed' ? 'bg-red-100 text-red-700' : ($t->status === 'expired' ? 'bg-gray-100 text-[#4E566E]' : 'bg-amber-100 text-amber-700')) }}"
                         data-tagihan-status="{{ $t->id }}" data-status="{{ $t->status }}">
                         {{ $t->statusLabel() }}
                     </span>
@@ -72,7 +72,7 @@
                         <form method="POST" action="{{ route('pendaftar.pembayaran.snap', $t) }}" class="mt-4" id="form-snap-{{ $t->id }}">
                             @csrf
                             <button type="button"
-                                class="btn-snap rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:opacity-60 disabled:cursor-not-allowed"
+                                class="btn-snap rounded-lg bg-gradient-to-r from-[#BF8AFC] to-[#FA7F94] px-5 py-2 text-sm font-semibold text-white hover:opacity-95 disabled:opacity-60 disabled:cursor-not-allowed"
                                 data-tagihan-id="{{ $t->id }}"
                                 data-snap-token="{{ $t->snap_token ?? '' }}"
                                 data-snap-action="{{ route('pendaftar.pembayaran.snap', $t) }}"
@@ -83,8 +83,8 @@
                     @endif
 
                     {{-- Fallback manual: unggah bukti bayar --}}
-                    <div class="mt-5 border-t border-gray-100 pt-4">
-                        <p class="text-xs text-gray-500">
+                    <div class="mt-5 border-t border-[#EFEBF4] pt-4">
+                        <p class="text-xs text-[#4E566E]">
                             Belum dapat memakai Midtrans? Unggah bukti transfer manual, bukti akan ditinjau panitia.
                         </p>
 
@@ -93,20 +93,20 @@
                             @csrf
 
                             <div>
-                                <label for="bukti-{{ $t->id }}" class="block text-xs font-medium text-gray-600">
+                                <label for="bukti-{{ $t->id }}" class="block text-xs font-medium text-[#4E566E]">
                                     Bukti transfer (JPG, PNG, PDF, maks 2 MB)
                                 </label>
                                 <input type="file" id="bukti-{{ $t->id }}" name="bukti"
                                     accept=".jpg,.jpeg,.png,.pdf"
-                                    class="mt-1 block text-sm text-gray-600
-                                        file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-blue-700">
+                                    class="mt-1 block text-sm text-[#4E566E]
+                                        file:mr-3 file:rounded-lg file:border-0 file:bg-[#F5EFFB] file:px-3 file:py-2 file:text-sm file:font-medium file:text-[#7E22CE]">
                                 @error('bukti')
                                     <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                                 @enderror
                             </div>
 
                             <button type="submit"
-                                class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                class="rounded-lg border border-[#E6E1EC] px-4 py-2 text-sm font-medium text-[#14141F] hover:bg-[#FAF8FC]">
                                 Unggah Bukti
                             </button>
                         </form>
@@ -114,18 +114,18 @@
                 @endif
             </div>
         @empty
-            <p class="text-gray-500">Belum ada tagihan pembayaran.</p>
+            <p class="text-[#4E566E]">Belum ada tagihan pembayaran.</p>
         @endforelse
     </div>
 
     {{-- Riwayat pembayaran --}}
     @if($tagihan->isNotEmpty())
-        <div class="bg-white shadow rounded-xl p-6">
+        <div class="rounded-2xl border border-[#E6E1EC] bg-white p-6">
             <h3 class="font-bold text-lg mb-3">Riwayat Pembayaran</h3>
 
             <div class="overflow-x-auto">
                 <table class="w-full text-sm">
-                    <thead class="bg-gray-50 text-gray-600">
+                    <thead class="bg-[#FAF8FC] text-[#4E566E]">
                         <tr>
                             <th class="text-left px-3 py-2">Tagihan</th>
                             <th class="text-left px-3 py-2">Nominal</th>
@@ -139,14 +139,14 @@
                             <tr class="border-t">
                                 <td class="px-3 py-2">{{ $t->jenisLabel() }}</td>
                                 <td class="px-3 py-2">Rp {{ number_format($t->nominal, 0, ',', '.') }}</td>
-                                <td class="px-3 py-2 text-gray-600">{{ $t->metode ?? '-' }}</td>
+                                <td class="px-3 py-2 text-[#4E566E]">{{ $t->metode ?? '-' }}</td>
                                 <td class="px-3 py-2">
-                                    <span class="tagihan-status rounded-full px-3 py-1 text-xs font-semibold {{ $t->status === 'paid' ? 'bg-green-100 text-green-700' : ($t->status === 'failed' ? 'bg-red-100 text-red-700' : ($t->status === 'expired' ? 'bg-gray-100 text-gray-600' : 'bg-amber-100 text-amber-700')) }}"
+                                    <span class="tagihan-status rounded-full px-3 py-1 text-xs font-semibold {{ $t->status === 'paid' ? 'bg-green-100 text-green-700' : ($t->status === 'failed' ? 'bg-red-100 text-red-700' : ($t->status === 'expired' ? 'bg-gray-100 text-[#4E566E]' : 'bg-amber-100 text-amber-700')) }}"
                                         data-tagihan-status="{{ $t->id }}" data-status="{{ $t->status }}">
                                         {{ $t->statusLabel() }}
                                     </span>
                                 </td>
-                                <td class="px-3 py-2 text-gray-600">
+                                <td class="px-3 py-2 text-[#4E566E]">
                                     {{ $t->paid_at?->translatedFormat('d M Y H:i') ?? $t->updated_at?->translatedFormat('d M Y H:i') ?? '-' }}
                                 </td>
                             </tr>
@@ -263,7 +263,7 @@
         const classes = {
             pending: 'bg-amber-100 text-amber-700',
             paid: 'bg-green-100 text-green-700',
-            expired: 'bg-gray-100 text-gray-600',
+            expired: 'bg-gray-100 text-[#4E566E]',
             failed: 'bg-red-100 text-red-700',
         };
 

@@ -2,63 +2,116 @@
 @section('title', 'FAQ')
 
 @section('content')
-<div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold">Pertanyaan Umum</h1>
-    <a href="{{ route('admin.faq.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700">+ Tambah Pertanyaan</a>
+<div class="max-w-6xl mx-auto py-2 space-y-6" data-dt2-root>
+    {{-- Header halaman --}}
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <h1 class="font-heading text-2xl font-bold tracking-tight text-[#14141F] sm:text-3xl">Pertanyaan Umum</h1>
+            <p class="mt-1 text-sm text-[#4E566E] sm:text-base">Kelola daftar pertanyaan dan jawaban yang tampil pada halaman FAQ publik.</p>
+        </div>
+        <a href="{{ route('admin.faq.create') }}"
+           class="inline-flex h-10 shrink-0 items-center justify-center rounded-xl bg-black px-4 text-sm font-semibold text-white transition duration-150 hover:-translate-y-0.5 hover:bg-[#14141F]/85 active:translate-y-0">
+            + Tambah Pertanyaan
+        </a>
+    </div>
+
+    {{-- DataTable 2 (sama dengan admin/fakultas): Filter + Density selector + tabel bersih ber-checkbox --}}
+    <div class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+            <form method="GET" class="flex flex-wrap items-center gap-2.5">
+                <select name="kategori" aria-label="Filter kategori FAQ"
+                        class="h-9 rounded-lg border border-[#E6E1EC] bg-white px-3 text-sm font-medium text-[#14141F] focus:border-[#BF8AFC] focus:outline-none focus:ring-2 focus:ring-[#BF8AFC]/25">
+                    <option value="">Semua Kategori</option>
+                    @foreach($kategori as $k)
+                        <option value="{{ $k }}" {{ request('kategori') === $k ? 'selected' : '' }}>{{ $k }}</option>
+                    @endforeach
+                </select>
+                <button type="submit"
+                        class="inline-flex h-9 items-center justify-center rounded-lg bg-black px-3.5 text-sm font-semibold text-white transition hover:bg-[#14141F]/85">
+                    Filter
+                </button>
+                @if(request('kategori'))
+                    <a href="{{ route('admin.faq.index') }}"
+                       class="inline-flex h-9 items-center justify-center rounded-lg border border-[#E6E1EC] bg-white px-3 text-sm font-medium text-[#4E566E] transition hover:bg-[#FAF8FC] hover:text-[#14141F]">
+                        Reset
+                    </a>
+                @endif
+            </form>
+
+            <div class="inline-flex items-center gap-2.5">
+                <label for="dt2-density-faq" class="text-xs font-medium text-[#4E566E]">Kerapatan</label>
+                <select id="dt2-density-faq" data-dt2-density aria-label="Pilih kerapatan tabel"
+                        class="h-9 rounded-lg border border-[#E6E1EC] bg-white px-3 text-sm font-medium text-[#14141F] focus:border-[#BF8AFC] focus:outline-none focus:ring-2 focus:ring-[#BF8AFC]/25">
+                    <option value="compact">Compact</option>
+                    <option value="standard" selected>Standard</option>
+                    <option value="flexible">Flexible</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl border border-[#E6E1EC] bg-white">
+            <div class="overflow-x-auto">
+                <table data-dt2-table class="w-full text-left text-sm [&_td]:py-3 [&_th]:py-2.5">
+                    <thead class="border-b border-[#EFEBF4] bg-[#FAF8FC] text-xs font-semibold text-[#4E566E]">
+                        <tr>
+                            <th class="w-11 pl-5 pr-2">
+                                <input type="checkbox" data-dt2-select-all aria-label="Pilih semua pertanyaan"
+                                       class="size-4 rounded border-[#D9D0E5] text-[#BF8AFC] accent-[#BF8AFC] focus:ring-[#BF8AFC]/30">
+                            </th>
+                            <th class="px-4">Urutan</th>
+                            <th class="px-4">Kategori</th>
+                            <th class="px-4">Pertanyaan</th>
+                            <th class="pl-4 pr-5 text-right">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#EFEBF4]">
+                        @forelse($faq as $f)
+                            <tr class="transition-colors hover:bg-[#FAF8FC] data-[state=selected]:bg-[#F5EFFB]">
+                                <td class="pl-5 pr-2">
+                                    <input type="checkbox" data-dt2-row-check aria-label="Pilih {{ $f->pertanyaan }}"
+                                           class="size-4 rounded border-[#D9D0E5] text-[#BF8AFC] accent-[#BF8AFC] focus:ring-[#BF8AFC]/30">
+                                </td>
+                                <td class="px-4 font-numeric font-medium text-[#4E566E] tabular-nums">{{ $f->urutan }}</td>
+                                <td class="px-4">
+                                    <span class="inline-flex items-center rounded-md bg-[#F5EFFB] px-2.5 py-0.5 text-xs font-semibold text-[#7E22CE]">
+                                        {{ $f->kategori }}
+                                    </span>
+                                </td>
+                                <td class="px-4">
+                                    <div class="font-semibold text-[#14141F]">{{ $f->pertanyaan }}</div>
+                                    <div class="mt-0.5 text-xs text-[#4E566E] line-clamp-2">{{ $f->jawaban }}</div>
+                                </td>
+                                <td class="pl-4 pr-5 text-right">
+                                    <div class="inline-flex items-center justify-end gap-2">
+                                        <a href="{{ route('admin.faq.edit', $f) }}"
+                                           class="inline-flex items-center rounded-lg border border-[#E6E1EC] bg-white px-2.5 py-1 text-xs font-semibold text-[#14141F] transition hover:border-[#BF8AFC] hover:text-[#7E22CE]">
+                                            Edit
+                                        </a>
+                                        <form method="POST" action="{{ route('admin.faq.destroy', $f) }}"
+                                              onsubmit="return confirm('Hapus pertanyaan ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="inline-flex items-center rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1 text-xs font-semibold text-rose-700 transition hover:bg-rose-100">
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="py-10 text-center text-sm text-[#4E566E]">Belum ada pertanyaan.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div>{{ $faq->links() }}</div>
 </div>
 
-<form method="GET" class="bg-white shadow rounded-xl p-4 mb-6 flex flex-wrap gap-3 items-end">
-    <select name="kategori" class="border rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500">
-        <option value="">Semua Kategori</option>
-        @foreach($kategori as $k)
-            <option value="{{ $k }}" {{ request('kategori') === $k ? 'selected' : '' }}>{{ $k }}</option>
-        @endforeach
-    </select>
-
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">Filter</button>
-    <a href="{{ route('admin.faq.index') }}" class="border border-gray-300 text-gray-600 px-4 py-2 rounded-lg text-sm hover:bg-gray-50">Reset</a>
-</form>
-
-<div class="bg-white shadow rounded-xl overflow-hidden">
-    <table class="w-full text-sm">
-        <thead class="bg-gray-50 text-gray-600">
-            <tr>
-                <th class="text-left px-4 py-3">Urutan</th>
-                <th class="text-left px-4 py-3">Kategori</th>
-                <th class="text-left px-4 py-3">Pertanyaan</th>
-                <th class="px-4 py-3"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($faq as $f)
-                <tr class="border-t">
-                    <td class="px-4 py-3 text-gray-600">{{ $f->urutan }}</td>
-                    <td class="px-4 py-3">
-                        <span class="px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700">{{ $f->kategori }}</span>
-                    </td>
-                    <td class="px-4 py-3">
-                        <div class="font-medium">{{ $f->pertanyaan }}</div>
-                        <div class="text-xs text-gray-500 mt-1 line-clamp-2">{{ $f->jawaban }}</div>
-                    </td>
-                    <td class="px-4 py-3">
-                        <div class="flex items-center gap-3">
-                            <a href="{{ route('admin.faq.edit', $f) }}" class="text-blue-600 hover:underline text-xs">Edit</a>
-
-                            <form method="POST" action="{{ route('admin.faq.destroy', $f) }}"
-                                onsubmit="return confirm('Hapus pertanyaan ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:underline text-xs">Hapus</button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            @empty
-                <tr><td colspan="4" class="text-center py-8 text-gray-500">Belum ada pertanyaan.</td></tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
-
-<div class="mt-4">{{ $faq->links() }}</div>
+@include('admin.partials.dt2-script')
 @endsection

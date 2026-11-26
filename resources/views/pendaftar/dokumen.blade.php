@@ -5,11 +5,11 @@
 <div class="max-w-4xl mx-auto">
 
     {{-- Ringkasan pendaftaran --}}
-    <div class="bg-white shadow rounded-xl p-6 mb-6">
+    <div class="rounded-2xl border border-[#E6E1EC] bg-white p-6 mb-6">
         <div class="flex flex-wrap items-start justify-between gap-3">
             <div>
-                <h2 class="text-lg font-bold text-gray-800">Dokumen Pendaftaran</h2>
-                <p class="mt-1 text-sm text-gray-600">
+                <h2 class="text-lg font-bold text-[#14141F]">Dokumen Pendaftaran</h2>
+                <p class="mt-1 text-sm text-[#4E566E]">
                     Persyaratan dokumen untuk jalur
                     <strong>{{ $pendaftaran->jalur?->nama ?? '-' }}</strong>
                     @if($pendaftaran->prodi)
@@ -19,11 +19,11 @@
             </div>
 
             <div class="text-right text-sm">
-                <span class="inline-block rounded-full px-3 py-1 text-xs font-semibold {{ $pendaftaran->isDraft() ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700' }}">
+                <span class="inline-block rounded-full px-3 py-1 text-xs font-semibold {{ $pendaftaran->isDraft() ? 'bg-[#F5EFFB] text-[#7E22CE]' : 'bg-amber-100 text-amber-700' }}">
                     {{ $pendaftaran->statusLabel() }}
                 </span>
                 @if($pendaftaran->nomor_pendaftaran)
-                    <div class="mt-2 font-mono text-xs text-gray-600">{{ $pendaftaran->nomor_pendaftaran }}</div>
+                    <div class="mt-2 font-mono text-xs text-[#4E566E]">{{ $pendaftaran->nomor_pendaftaran }}</div>
                 @endif
             </div>
         </div>
@@ -54,18 +54,18 @@
                 $status = $item['status'];
             @endphp
 
-            <div class="bg-white shadow rounded-xl p-5">
+            <div class="rounded-2xl border border-[#E6E1EC] bg-white p-5">
                 <div class="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                        <h3 class="font-semibold text-gray-800">
+                        <h3 class="font-semibold text-[#14141F]">
                             {{ $master->nama }}
                             @if($item['wajib'])
                                 <span class="ml-1 rounded bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-600">Wajib</span>
                             @else
-                                <span class="ml-1 rounded bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-600">Opsional</span>
+                                <span class="ml-1 rounded bg-gray-100 px-2 py-0.5 text-xs font-semibold text-[#4E566E]">Opsional</span>
                             @endif
                         </h3>
-                        <p class="mt-1 text-xs text-gray-500">
+                        <p class="mt-1 text-xs text-[#4E566E]">
                             Kode {{ $master->kode }} &middot; Maksimal {{ $master->max_size }} KB &middot; Format JPG, PNG, atau PDF
                         </p>
                     </div>
@@ -78,7 +78,7 @@
                         @elseif($status === 'ditolak')
                             bg-red-100 text-red-700
                         @else
-                            bg-gray-100 text-gray-600
+                            bg-gray-100 text-[#4E566E]
                         @endif">
                         {{ $item['label'] }}
                     </span>
@@ -86,9 +86,9 @@
 
                 @if($upload && $upload->file_path)
                     <div class="mt-3 flex flex-wrap items-center gap-3 text-sm">
-                        <span class="text-gray-600">Berkas: {{ basename($upload->file_path) }}</span>
+                        <span class="text-[#4E566E]">Berkas: {{ basename($upload->file_path) }}</span>
                         <a href="{{ route('pendaftar.dokumen.download', $master) }}"
-                            class="text-blue-600 hover:underline">Unduh berkas</a>
+                            class="text-[#4E566E] hover:text-[#14141F] hover:underline">Unduh berkas</a>
                     </div>
                 @endif
 
@@ -104,35 +104,35 @@
                         @csrf
 
                         <div class="flex-1 min-w-[220px]">
-                            <label for="file-{{ $master->id }}" class="block text-sm font-medium text-gray-700">
+                            <label for="file-{{ $master->id }}" class="block text-sm font-medium text-[#14141F]">
                                 {{ $upload ? 'Ganti berkas' : 'Unggah berkas' }}
                             </label>
                             <input type="file" id="file-{{ $master->id }}" name="file"
-                                accept=".jpg,.jpeg,.png,.pdf" class="mt-1 block w-full text-sm text-gray-600
-                                    file:mr-3 file:rounded-lg file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-sm file:font-medium file:text-blue-700">
+                                accept=".jpg,.jpeg,.png,.pdf" class="mt-1 block w-full text-sm text-[#4E566E]
+                                    file:mr-3 file:rounded-lg file:border-0 file:bg-[#F5EFFB] file:px-3 file:py-2 file:text-sm file:font-medium file:text-[#7E22CE]">
                             @error('file')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <button type="submit"
-                            class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700">
+                            class="rounded-lg bg-gradient-to-r from-[#BF8AFC] to-[#FA7F94] px-4 py-2 text-sm font-semibold text-white hover:opacity-95">
                             {{ $upload ? 'Ganti' : 'Upload' }}
                         </button>
                     </form>
                 @endif
             </div>
         @empty
-            <p class="text-gray-500">Belum ada dokumen yang dipersyaratkan untuk jalur ini.</p>
+            <p class="text-[#4E566E]">Belum ada dokumen yang dipersyaratkan untuk jalur ini.</p>
         @endforelse
     </div>
 
     {{-- Ajukan verifikasi --}}
-    <div class="bg-white shadow rounded-xl p-6">
+    <div class="rounded-2xl border border-[#E6E1EC] bg-white p-6">
         <h3 class="font-bold text-lg">Ajukan Verifikasi</h3>
 
         @if($bolehAjukan)
-            <p class="mt-2 text-sm text-gray-600">
+            <p class="mt-2 text-sm text-[#4E566E]">
                 Semua dokumen wajib sudah diunggah. Setelah diajukan, jalur dan program studi terkunci
                 dan pendaftaran menunggu pemeriksaan panitia.
             </p>
@@ -145,7 +145,7 @@
                 </button>
             </form>
         @else
-            <p class="mt-2 text-sm text-gray-600">
+            <p class="mt-2 text-sm text-[#4E566E]">
                 Tombol pengajuan aktif setelah semua dokumen wajib berstatus
                 <strong>Menunggu Verifikasi</strong> atau <strong>Valid</strong>.
             </p>

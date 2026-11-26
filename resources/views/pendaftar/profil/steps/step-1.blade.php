@@ -43,12 +43,12 @@
         <span class="{{ $labelClass }}">Jenis Kelamin <span class="text-red-500">*</span></span>
 
         <div class="mt-2 flex gap-6">
-            <label class="flex items-center gap-2 text-sm text-gray-700">
+            <label class="flex items-center gap-2 text-sm text-[#14141F]">
                 <input type="radio" name="jenis_kelamin" value="L"
                     @checked(old('jenis_kelamin', $profile?->jenis_kelamin) === 'L')>
                 Laki-laki
             </label>
-            <label class="flex items-center gap-2 text-sm text-gray-700">
+            <label class="flex items-center gap-2 text-sm text-[#14141F]">
                 <input type="radio" name="jenis_kelamin" value="P"
                     @checked(old('jenis_kelamin', $profile?->jenis_kelamin) === 'P')>
                 Perempuan

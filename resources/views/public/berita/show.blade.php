@@ -1,32 +1,47 @@
-@extends('layouts.public')
+@extends('layouts.app')
 @section('title', $berita->judul)
+@section('body-class', '!bg-[#F8F6F9]')
 
-@section('content')
-<nav class="text-sm text-gray-500 mb-4">
-    <a href="{{ route('home') }}" class="hover:text-blue-600">Beranda</a>
-    <span class="mx-1">/</span>
-    <a href="{{ route('public.berita') }}" class="hover:text-blue-600">Berita</a>
-    <span class="mx-1">/</span>
-    <span class="text-gray-700 truncate">{{ $berita->judul }}</span>
-</nav>
+@section('full-width-content')
+<section class="w-full bg-[#F8F6F9] pt-10 pb-14 lg:pt-12 lg:pb-20">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+        {{-- Breadcrumb --}}
+        <nav aria-label="Breadcrumb" class="mb-8 flex items-center gap-1.5 text-sm text-[#4E566E]">
+            <a href="{{ route('home') }}" class="shrink-0 transition hover:text-[#14141F]">Beranda</a>
+            <span aria-hidden="true">/</span>
+            <a href="{{ route('public.berita') }}" class="shrink-0 transition hover:text-[#14141F]">Berita</a>
+            <span aria-hidden="true">/</span>
+            <span class="truncate font-medium text-[#14141F]">{{ $berita->judul }}</span>
+        </nav>
 
-<article class="bg-white shadow rounded-xl overflow-hidden">
-    @if($berita->image_url)
-        <img src="{{ $berita->image_url }}" alt="{{ $berita->judul }}" class="w-full h-64 object-cover">
-    @endif
+        <article class="glass-card-jalur overflow-hidden rounded-2xl">
+            @if($berita->image_url)
+                <div class="h-64 w-full overflow-hidden bg-[#F1EFF3] sm:h-80">
+                    <img src="{{ $berita->image_url }}" alt="{{ $berita->judul }}" class="h-full w-full object-cover">
+                </div>
+            @endif
 
-    <div class="p-6 md:p-8">
-        <div class="text-sm text-gray-400 mb-2">
-            {{ $berita->published_at?->translatedFormat('d F Y') }} · {{ $berita->author }}
+            <div class="p-7 sm:p-10">
+                <div class="text-sm font-medium text-[#3E465C]">
+                    {{ $berita->published_at?->translatedFormat('d F Y') }}@if($berita->author) &middot; {{ $berita->author }}@endif
+                </div>
+
+                <h1 class="mt-3 font-heading text-3xl font-extrabold leading-[1.12] tracking-[-0.025em] text-[#14141F] sm:text-4xl">
+                    {{ $berita->judul }}
+                </h1>
+
+                <div class="mt-6 text-base leading-relaxed text-[#3E465C] whitespace-pre-line">
+                    {{ $berita->deskripsi }}
+                </div>
+            </div>
+        </article>
+
+        <div class="mt-8">
+            <a href="{{ route('public.berita') }}"
+               class="inline-flex items-center gap-1.5 text-base font-semibold text-[#4E566E] transition hover:text-[#14141F] hover:underline">
+                <span aria-hidden="true">&larr;</span> Kembali ke daftar berita
+            </a>
         </div>
-
-        <h1 class="text-2xl md:text-3xl font-bold text-gray-800 leading-tight">{{ $berita->judul }}</h1>
-
-        <div class="mt-4 text-gray-700 leading-relaxed whitespace-pre-line">{{ $berita->deskripsi }}</div>
     </div>
-</article>
-
-<div class="mt-6">
-    <a href="{{ route('public.berita') }}" class="text-blue-600 hover:underline text-sm">← Kembali ke daftar berita</a>
-</div>
+</section>
 @endsection

@@ -24,7 +24,7 @@
         <input type="number" name="penghasilan_ortu" id="penghasilan_ortu" min="0" step="100000"
             value="{{ old('penghasilan_ortu', $profile?->penghasilan_ortu) }}" class="{{ $inputClass }}"
             placeholder="Contoh: 4500000">
-        <p class="mt-1 text-xs text-gray-500">Masukkan angka tanpa titik atau koma. Golongan UKT terisi otomatis.</p>
+        <p class="mt-1 text-xs text-[#4E566E]">Masukkan angka tanpa titik atau koma. Golongan UKT terisi otomatis.</p>
         @error('penghasilan_ortu')
             <p class="{{ $errorClass }}">{{ $message }}</p>
         @enderror
@@ -32,7 +32,7 @@
 
     <div>
         <span class="{{ $labelClass }}">Golongan UKT</span>
-        <p class="mt-1 text-xs text-gray-500">
+        <p class="mt-1 text-xs text-[#4E566E]">
             Ditentukan otomatis dari penghasilan orang tua. Besaran UKT juga bergantung pada jalur masuk dan program studi.
         </p>
 
@@ -45,19 +45,19 @@
         @endphp
 
         {{-- Kartu Hasil Penetapan Golongan UKT Otomatis --}}
-        <div id="ukt-hasil" class="mt-3 rounded-lg border border-blue-200 bg-blue-50/80 p-4 transition-all duration-200 {{ $kodeAktif ? '' : 'hidden' }}">
+        <div id="ukt-hasil" class="mt-3 rounded-lg border border-[#E6D8FA] bg-[#F5EFFB]/80 p-4 transition-all duration-200 {{ $kodeAktif ? '' : 'hidden' }}">
             <div class="flex items-start gap-3">
-                <div class="flex-shrink-0 text-blue-600 mt-0.5">
+                <div class="flex-shrink-0 text-[#4E566E] hover:text-[#14141F] mt-0.5">
                     <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
                 <div>
-                    <p class="text-xs font-semibold uppercase tracking-wider text-blue-700">Golongan UKT yang Ditetapkan</p>
-                    <p id="ukt-hasil-nama" class="mt-0.5 text-lg font-bold text-blue-950">
+                    <p class="text-xs font-semibold uppercase tracking-wider text-[#7E22CE]">Golongan UKT yang Ditetapkan</p>
+                    <p id="ukt-hasil-nama" class="mt-0.5 text-lg font-bold text-[#14141F]">
                         {{ $golonganAktif?->nama ?? ($kodeAktif ? 'Golongan '.$kodeAktif : '') }}
                     </p>
-                    <p id="ukt-hasil-deskripsi" class="mt-1 text-xs text-blue-800">
+                    <p id="ukt-hasil-deskripsi" class="mt-1 text-xs text-[#581C87]">
                         {{ $golonganAktif?->deskripsi ?? '' }}
                     </p>
                 </div>
@@ -65,7 +65,7 @@
         </div>
 
         {{-- Pesan jika belum mengisi nominal penghasilan --}}
-        <div id="ukt-placeholder" class="mt-3 rounded-lg border border-dashed border-gray-300 bg-gray-50 p-4 text-sm text-gray-500 {{ $kodeAktif ? 'hidden' : '' }}">
+        <div id="ukt-placeholder" class="mt-3 rounded-lg border border-dashed border-[#E6E1EC] bg-[#FAF8FC] p-4 text-sm text-[#4E566E] {{ $kodeAktif ? 'hidden' : '' }}">
             <div class="flex items-center gap-2.5">
                 <svg class="h-5 w-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
