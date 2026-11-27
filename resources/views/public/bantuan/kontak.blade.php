@@ -11,7 +11,7 @@
                 Hubungi Kami
             </h1>
             <p class="hero-enter-delay-1 mt-4 text-base leading-relaxed text-[#3E465C] sm:text-lg">
-                Informasi kontak panitia PMB {{ $pengaturan['nama_singkat'] ?? 'Politeknik Negeri Media Banten' }}.
+                Informasi kontak panitia PMB {{ $pengaturan['nama_singkat'] ?? 'Politeknik Negeri Media Banten (PNM Banten)' }}.
             </p>
         </div>
 

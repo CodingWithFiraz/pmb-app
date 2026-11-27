@@ -11,21 +11,21 @@ class PengaturanSeeder extends Seeder
     {
         $pengaturan = [
             // Identitas kampus
-            'nama_kampus'        => 'Politeknik Negeri Media Banten',
-            'nama_singkat'       => 'Politeknik Negeri Media Banten',
+            'nama_kampus'        => 'Politeknik Negeri Media Banten (PNM Banten)',
+            'nama_singkat'       => 'Politeknik Negeri Media Banten (PNM Banten)',
             'tagline'            => 'Membangun talenta kreatif digital yang siap bersaing di industri global.',
             'alamat_kampus'     => 'Jl. Raya Bekasi No. 45, Jakarta Timur, DKI Jakarta 12560',
             'email_kampus'       => 'info@pnmjakarta.ac.id',
             'telepon_kampus'     => '021-5001234',
             'wa_kampus'          => '0812-5000-1234',
-            'nama_pendaftaran'   => 'Panitia PMB Politeknik Negeri Media Banten',
+            'nama_pendaftaran'   => 'Panitia PMB Politeknik Negeri Media Banten (PNM Banten)',
             'biaya_pendaftaran' => '250000',
 
             // Halaman Tentang Kampus
             'visi' => 'Menjadi institusi pendidikan tinggi bertaraf dunia yang menghasilkan lulusan berdaya saing global di bidang teknologi dan bisnis kreatif.',
             'misi' => "Menyelenggarakan pendidikan tinggi yang berorientasi pada semangat berkarya.\nMengembangkan riset terapan yang menjawab persoalan industri dan masyarakat.\nMenyelenggarakan pembelajaran berbasis proyek bersama mitra industri.\nMembina lingkungan kampus yang inklusif, kolaboratif, dan berkarakter.",
-            'sejarah' => 'Politeknik Negeri Media Banten lahir dari penggabungan politeknik teknik dan sekolah tinggi desain yang telah lama melayani industri kreatif dan manufaktur. Gabungan ini membentuk sebuah ekosistem pendidikan yang menyatukan bidang teknik, desain, dan bisnis dalam satu rumah studi.',
-            'sambutan' => 'Selamat datang di Politeknik Negeri Media Banten. Sebagai Ketua Institusi, kami menyampaikan sambutan hangat bagi seluruh calon mahasiswa. Kami percaya bahwa pendidikan tinggi bukan sekadar gelar, melainkan proses panjang untuk membentuk karakter, etos kerja, dan kemampuan praktis dalam berkarya.',
+            'sejarah' => 'Politeknik Negeri Media Banten (PNM Banten) lahir dari penggabungan politeknik teknik dan sekolah tinggi desain yang telah lama melayani industri kreatif dan manufaktur. Gabungan ini membentuk sebuah ekosistem pendidikan yang menyatukan bidang teknik, desain, dan bisnis dalam satu rumah studi.',
+            'sambutan' => 'Selamat datang di Politeknik Negeri Media Banten (PNM Banten). Sebagai Ketua Institusi, kami menyampaikan sambutan hangat bagi seluruh calon mahasiswa. Kami percaya bahwa pendidikan tinggi bukan sekadar gelar, melainkan proses panjang untuk membentuk karakter, etos kerja, dan kemampuan praktis dalam berkarya.',
             'sambutan_nama' => 'Dr. Hendra Wijaya, M.M.',
             'sambutan_jabatan' => 'Ketua Institusi',
 
