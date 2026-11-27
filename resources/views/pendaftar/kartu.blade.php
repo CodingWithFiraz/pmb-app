@@ -8,7 +8,7 @@
     <div class="rounded-2xl border border-[#E6E1EC] bg-white p-6 mb-6 border border-[#E6E1EC]">
         <div class="flex items-start justify-between mb-4">
             <div>
-                <div class="text-xs font-mono text-[#4E566E] mb-1">PNM JAKARTA</div>
+                <div class="text-xs font-mono text-[#4E566E] mb-1">POLITEKNIK NEGERI MEDIA BANTEN</div>
                 <h1 class="text-2xl font-bold text-[#14141F]">Kartu Peserta PMB</h1>
             </div>
             <div class="text-right hidden sm:block">

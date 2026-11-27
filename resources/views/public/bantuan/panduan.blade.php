@@ -11,7 +11,7 @@
                 Panduan Pendaftaran
             </h1>
             <p class="hero-enter-delay-1 mt-4 text-base leading-relaxed text-[#3E465C] sm:text-lg">
-                Langkah-langkah pendaftaran mahasiswa baru di PNM Jakarta.
+                Langkah-langkah pendaftaran mahasiswa baru di Politeknik Negeri Media Banten.
             </p>
         </div>
 

@@ -139,7 +139,7 @@
     <div class="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
             <div class="text-white font-heading font-extrabold tracking-[-0.03em] text-xl mb-2">🎓 PNM</div>
-            <p class="leading-relaxed">Portal resmi Penerimaan Mahasiswa Baru PNM Jakarta.</p>
+            <p class="leading-relaxed">Portal resmi Penerimaan Mahasiswa Baru Politeknik Negeri Media Banten.</p>
         </div>
         <div>
             <div class="text-white font-semibold mb-2">Menu</div>

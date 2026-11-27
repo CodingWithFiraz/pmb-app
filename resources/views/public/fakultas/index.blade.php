@@ -10,7 +10,7 @@
                 Fakultas
             </h1>
             <p class="hero-enter-delay-1 mt-4 text-base leading-relaxed text-[#3E465C] sm:text-lg">
-                Daftar fakultas yang menaungi seluruh program studi di {{ $pengaturan['nama_singkat'] ?? 'PNM Jakarta' }}.
+                Daftar fakultas yang menaungi seluruh program studi di {{ $pengaturan['nama_singkat'] ?? 'Politeknik Negeri Media Banten' }}.
             </p>
         </div>
 

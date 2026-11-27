@@ -93,7 +93,7 @@
                     Berita Terpopuler
                 </h2>
                 <p class="hero-enter-delay-1 mt-2 max-w-xl text-sm leading-relaxed text-[#3E465C] sm:text-base">
-                    Temukan informasi dan berita paling populer seputar Penerimaan Mahasiswa Baru PNM Jakarta
+                    Temukan informasi dan berita paling populer seputar Penerimaan Mahasiswa Baru Politeknik Negeri Media Banten
                 </p>
             </div>
 

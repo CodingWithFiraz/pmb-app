@@ -12,8 +12,8 @@
     $biaya         = $biaya ?? collect();
     $uktMulai      = $uktMulai ?? collect();
     $berita        = $berita ?? collect();
-    $namaSingkat   = $pengaturan['nama_singkat'] ?? 'PNM Jakarta';
-    $namaKampus    = $pengaturan['nama_kampus'] ?? 'Institut Teknologi dan Bisnis Jakarta (PNM Jakarta)';
+    $namaSingkat   = $pengaturan['nama_singkat'] ?? 'Politeknik Negeri Media Banten';
+    $namaKampus    = $pengaturan['nama_kampus'] ?? 'Politeknik Negeri Media Banten';
     $tagline       = $pengaturan['tagline'] ?? 'Portal resmi penerimaan mahasiswa baru secara daring, transparan, dan terintegrasi.';
     $totalProdi    = $fakultas->sum('prodi_count');
 @endphp
