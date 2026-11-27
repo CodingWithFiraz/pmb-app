@@ -206,6 +206,37 @@ Stella juga menjelaskan bahwa proses tersebut menjadi salah satu nilai tambah ya
 “Menurut saya, penelitian yang kita hasilkan bukan hanya menghasilkan definisi atau teorema, tetapi juga pemahaman yang mendalam, termasuk tentang apa yang benar dan bukan hanya apa yang salah. Apakah LPB masih akan ada? Saya yakin masih ada jika adik-adik semua mengerti dan memahami apa tujuan kita melakukan penelitian," tutup Stella. (WEB)
 EOT,
             ],
+            [
+                'judul'        => 'Sultra berikan beasiswa prestasi senilai Rp300 juta bagi 108 pelajar',
+                'slug'         => 'sultra-berikan-beasiswa-prestasi-senilai-rp300-juta-bagi-108-pelajar',
+                'image_url'    => '/assets/images/BeasiswaPrestasi.jpg',
+                'author'       => 'ANTARASULTRA',
+                'status'       => 'publish',
+                'published_at' => now()->subDays(6),
+                'deskripsi'    => <<<'EOT'
+Pemerintah Provinsi (Pemprov) Sulawesi Tenggara (Sultra) memberikan beasiswa pendidikan senilai Rp300 juta kepada 108 pelajar Sekolah Menengah Atas (SMA) dan Sekolah Menengah Kejuruan (SMK) berprestasi di tingkat nasional maupun internasional.
+
+Pelaksana Tugas (Plt) Kepala Dinas Pendidikan dan Kebudayaan (Dikbud) Provinsi Sultra Mukhtar di Kendari, Jumat, mengatakan bahwa program apresiasi ini merupakan wujud komitmen Pemprov Sultra di bawah kepemimpinan Gubernur Andi Sumangerukka dan Wakil Gubernur Hugua dalam meningkatkan kualitas sumber daya manusia (SDM) daerah.
+
+"Jadi, Pemprov Sultra tidak hanya berupaya memperluas akses pendidikan, tetapi juga memberikan penghargaan kepada siswa yang mampu mengharumkan nama daerah melalui berbagai kompetisi," kata Mukhtar.
+
+Ia merinci, dari total 108 penerima beasiswa pada tahun 2026, sebanyak 104 siswa merupakan peraih prestasi tingkat nasional yang terdiri atas 52 siswa SMA dan 52 siswa SMK. Masing-masing siswa dalam kategori ini menerima bantuan pendidikan sebesar Rp2,5 juta dengan total alokasi anggaran Rp260 juta.
+
+Sementara itu, empat siswa lainnya merupakan peraih prestasi di tingkat internasional yang terdiri atas dua siswa SMA dan dua siswa SMK. Setiap peraih prestasi internasional memperoleh beasiswa sebesar Rp10 juta dengan total anggaran Rp40 juta.
+
+Para penerima beasiswa prestasi tingkat nasional tersebut tersebar di sejumlah kabupaten/kota di Sultra. Pada jenjang SMA meliputi SMAN 1 Kendari, SMAN 4 Kendari, SMAN 1 Raha, SMAN 1 Konawe Selatan, SMAN 3 Baubau, SMAN 1 Gu, hingga SMAN 2 Wangi-Wangi.
+
+Adapun pada jenjang SMK berasal dari SMKN 1 Kendari, SMKN 2 Kendari, SMKN 3 Kendari, SMKN 4 Kendari, SMKN 7 Kendari, serta sejumlah sekolah kejuruan di Kabupaten Konawe, Bombana, Buton Utara, dan Kolaka Utara.
+
+"Kalau penerima beasiswa prestasi internasional berasal dari SMAN 2 Kendari, SMAN 1 Raha, dan dua siswa SMKN 1 Kendari," ujarnya.
+
+Mukhtar memastikan program beasiswa bagi pelajar berprestasi ini akan terus berlanjut pada tahun 2027 dengan target kuota penerima yang lebih banyak, sejalan dengan arah kebijakan pembangunan pendidikan dalam Rencana Pembangunan Jangka Menengah Daerah (RPJMD) Sultra.
+
+"Pada 2027 akan dilanjutkan lagi dan pasti ditambah karena sudah ada targetnya dalam RPJMD," jelas Mukhtar.
+
+Ia berharap keberlanjutan program tersebut dapat memotivasi para pelajar di seluruh wilayah Sultra untuk terus mengembangkan potensi diri serta berani bersaing dalam berbagai ajang kompetisi demi melahirkan generasi muda yang unggul.
+EOT,
+            ],
         ];
 
         foreach ($berita as $item) {
